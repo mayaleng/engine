@@ -1,1 +1,13 @@
 language: go
+before_install:
+  - git clone https://github.com/citiususc/Linguakit.git
+  - cd Linguakit
+  - sudo cpan < /dev/null 
+  - sudo perl -MCPAN -e 'install (Getopt::ArgParse)'
+  - sudo perl -MCPAN -e 'install (LWP::UserAgent)'
+  - sudo perl -MCPAN -e 'install (HTTP::Request::Common)'
+  - sudo perl -MCPAN -e 'install (Storable)'
+  - sudo make deps
+  - sudo make install
+  - cd ../
+  
