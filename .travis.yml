@@ -1,13 +1,31 @@
 language: go
+
+go:
+  - "1.14.2"
+
+services:
+  - docker
+
+cache:
+  directories:
+    - Linguakit
+
 before_install:
-  - git clone https://github.com/citiususc/Linguakit.git
-  - cd Linguakit
-  - sudo cpan < /dev/null 
+  - sudo cpan < /dev/null
   - sudo perl -MCPAN -e 'install (Getopt::ArgParse)'
   - sudo perl -MCPAN -e 'install (LWP::UserAgent)'
   - sudo perl -MCPAN -e 'install (HTTP::Request::Common)'
   - sudo perl -MCPAN -e 'install (Storable)'
+  - if [ -d "Linguakit" ]; then echo "Linguakit found in cache"; else git clone https://github.com/citiususc/Linguakit.git; fi
+  - cd Linguakit
   - sudo make deps
   - sudo make install
   - cd ../
-  
+
+script:
+  - go test -race -coverprofile=coverage.txt -covermode=atomic ./...
+
+after_success:
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+  - bash <(curl -s https://codecov.io/bash)
+  - ./push-docker-image.sh

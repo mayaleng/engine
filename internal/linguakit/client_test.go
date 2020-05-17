@@ -6,7 +6,7 @@ import (
 )
 
 func TestSentence(t *testing.T) {
-	result, error := anaylizeSentence("Hola qué tal")
+	result, error := AnaylizeSentence("Hola qué tal")
 
 	if error != nil {
 		t.Error(error)
@@ -17,6 +17,6 @@ func TestSentence(t *testing.T) {
 
 func BenchmarkListCommand(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		anaylizeSentence(fmt.Sprintf("sentence #%d", i))
+		AnaylizeSentence(fmt.Sprintf("sentence #%d", i))
 	}
 }
