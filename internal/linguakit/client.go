@@ -6,7 +6,8 @@ import (
 	"os/exec"
 )
 
-func anaylizeSentence(setence string) (string, error) {
+// AnaylizeSentence Get information about the given word using Linguakit
+func AnaylizeSentence(setence string) (string, error) {
 	var outbuf, errbuf bytes.Buffer
 
 	cmd := exec.Command("linguakit", "dep", "es", setence, "-s")
