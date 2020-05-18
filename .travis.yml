@@ -6,17 +6,13 @@ go:
 services:
   - docker
 
-cache:
-  directories:
-    - Linguakit
-
 before_install:
   - sudo cpan < /dev/null
   - sudo perl -MCPAN -e 'install (Getopt::ArgParse)'
   - sudo perl -MCPAN -e 'install (LWP::UserAgent)'
   - sudo perl -MCPAN -e 'install (HTTP::Request::Common)'
   - sudo perl -MCPAN -e 'install (Storable)'
-  - if [ -d "Linguakit" ]; then echo "Linguakit found in cache"; else git clone https://github.com/citiususc/Linguakit.git; fi
+  - git clone https://github.com/citiususc/Linguakit.git
   - cd Linguakit
   - sudo make deps
   - sudo make install
