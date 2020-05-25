@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"log"
-	"mayaleng.org/engine/internal/linguakit"
+	"mayaleng.org/engine/internal/translation/linguakit"
 	"mayaleng.org/engine/version"
 	"net/http"
 )
