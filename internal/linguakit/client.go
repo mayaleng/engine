@@ -6,21 +6,28 @@ import (
 	"os/exec"
 )
 
-// AnaylizeSentence Get information about the given word using Linguakit
-func AnaylizeSentence(setence string) (string, error) {
+// AnalyzePhrase get the given phrase and decompose it in an array
+// of sentences
+func AnalyzePhrase(phrase string) ([]Sentence, error) {
 	var outbuf, errbuf bytes.Buffer
 
-	cmd := exec.Command("linguakit", "dep", "es", setence, "-s")
+	cmd := exec.Command("linguakit", "dep", "es", phrase, "-s")
 	cmd.Stdout = &outbuf
 	cmd.Stderr = &errbuf
 
 	errorRunning := cmd.Run()
 	result := outbuf.String()
-	error := errbuf.String()
+	errorString := errbuf.String()
 
 	if errorRunning != nil {
-		return "", fmt.Errorf("%s", error)
+		return []Sentence{}, fmt.Errorf("%s", errorString)
 	}
 
-	return result, nil
+	sentences, error := Parse(result)
+
+	if error != nil {
+		return []Sentence{}, error
+	}
+
+	return sentences, nil
 }
