@@ -6,17 +6,27 @@ import (
 )
 
 func TestSentence(t *testing.T) {
-	result, error := AnaylizeSentence("Hola qué tal")
+	t.Run("Get a valid analysis with a valid phrase", func(t *testing.T) {
+		result, error := AnalyzePhrase("Hola qué tal")
 
-	if error != nil {
-		t.Error(error)
-	}
+		if error != nil {
+			t.Error(error)
+		}
 
-	t.Logf("analysis result: %s", result)
+		t.Logf("analysis result: %s", result)
+	})
+
+	t.Run("Get an error with an empty phrase", func(t *testing.T) {
+		_, error := AnalyzePhrase("")
+
+		if error == nil {
+			t.Error(fmt.Errorf("Empty phrases are not allowed"))
+		}
+	})
 }
 
 func BenchmarkListCommand(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		AnaylizeSentence(fmt.Sprintf("sentence #%d", i))
+		AnalyzePhrase(fmt.Sprintf("sentence #%d", i))
 	}
 }
