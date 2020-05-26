@@ -10,7 +10,6 @@ import (
 // Config contains the values to be used to connect to the database
 type Config struct {
 	StringConnection string
-	Database         string
 }
 
 // Open return a new connection to MongoDB
