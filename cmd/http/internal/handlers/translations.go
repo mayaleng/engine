@@ -6,7 +6,8 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"go.mongodb.org/mongo-driver/mongo"
 	"log"
-	"mayaleng.org/engine/internal/translation/linguakit"
+	"mayaleng.org/engine/internal/translation"
+	"mayaleng.org/engine/internal/translation/data"
 	"net/http"
 )
 
@@ -17,7 +18,7 @@ type body struct {
 }
 
 type translator struct {
-	db *mongo.Client
+	db *mongo.Database
 }
 
 func (t *translator) tranlsate(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -33,8 +34,26 @@ func (t *translator) tranlsate(w http.ResponseWriter, r *http.Request, ps httpro
 		return
 	}
 
-	log.Printf("Translion from %s to %s. Pharsae: %s", body.From, body.To, body.Phrase)
-	words, error := linguakit.AnalyzePhrase(body.Phrase)
+	log.Printf("Translation from %s to %s. Pharsae: %s", body.From, body.To, body.Phrase)
+
+	translationsHelper := data.Translations{
+		Collection: t.db.Collection("translations"),
+	}
+
+	wordsHelper := data.Words{
+		Database: t.db,
+	}
+
+	translator := translation.Translator{
+		TranslationsHelper: translationsHelper,
+		WordsHelper:        wordsHelper,
+	}
+
+	translation, error := translator.Translate(r.Context(), body.Phrase, body.From, body.To)
+
+	result := map[string]string{
+		"result": translation,
+	}
 
 	if error != nil {
 		log.Printf("error: %s", error)
@@ -43,7 +62,7 @@ func (t *translator) tranlsate(w http.ResponseWriter, r *http.Request, ps httpro
 		return
 	}
 
-	bytes, error := json.Marshal(words)
+	bytes, error := json.Marshal(result)
 
 	if error != nil {
 		log.Printf("error: %s", error)

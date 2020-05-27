@@ -72,7 +72,7 @@ To make a translation you can execute an `HTTP POST`
 curl -L -X POST 'http://localhost:8080/v1/translations' \
 -H 'Content-Type: application/json' \
 --data-raw '{
-	"from": "spanish",
+	"from": "espaol",
 	"to": "kaqchikel",
 	"phrase": "Hola! Estoy muy feliz."
 }'

@@ -1,4 +1,4 @@
-package mongo
+package database
 
 import (
 	"context"
@@ -10,6 +10,7 @@ import (
 // Config contains the values to be used to connect to the database
 type Config struct {
 	StringConnection string
+	Timeout          time.Duration
 }
 
 // Open return a new connection to MongoDB
@@ -20,7 +21,12 @@ func Open(cfg Config) (*mongo.Client, error) {
 	if error != nil {
 		return nil, error
 	}
-	ctx, cancelFunc := context.WithTimeout(context.Background(), 10*time.Second)
+
+	if cfg.Timeout == 0 {
+		cfg.Timeout = time.Second * 10
+	}
+
+	ctx, cancelFunc := context.WithTimeout(context.Background(), cfg.Timeout)
 	defer cancelFunc()
 
 	error = client.Connect(ctx)
