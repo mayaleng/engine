@@ -78,6 +78,10 @@ func getWordsList(wordsLine string) ([]Word, error) {
 			return nil, error
 		}
 
+		if parsedWord.Lemma == "\\<blank>" {
+			continue
+		}
+
 		result = append(result, parsedWord)
 	}
 

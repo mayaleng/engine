@@ -5,6 +5,7 @@ go:
 
 services:
   - docker
+  - mongodb
 
 before_install:
   - sudo cpan < /dev/null
@@ -19,6 +20,7 @@ before_install:
   - cd ../
 
 script:
+  - export APP_DATABASE_CONNECTION=mongodb://localhost:27017
   - go test -race -coverprofile=coverage.txt -covermode=atomic ./...
 
 after_success:

@@ -7,8 +7,8 @@ import (
 	"github.com/sirupsen/logrus"
 	"log"
 	"mayaleng.org/engine/cmd/http/internal/handlers"
-	"mayaleng.org/engine/internal/envs"
-	"mayaleng.org/engine/internal/platform/mongo"
+	"mayaleng.org/engine/internal/platform/database"
+	"mayaleng.org/engine/internal/platform/envs"
 	"mayaleng.org/engine/version"
 	"net/http"
 	"os"
@@ -23,7 +23,7 @@ func all(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 }
 
 func main() {
-	var envs envs.ENVs
+	var envs envs.Envs
 	envError := envconfig.Process("app", &envs)
 
 	logrus.SetFormatter(&logrus.JSONFormatter{})
@@ -34,7 +34,7 @@ func main() {
 		logrus.Fatal(envError)
 	}
 
-	if envs.ENV == "dev" {
+	if envs.Env == "dev" {
 		logrus.SetFormatter(&logrus.TextFormatter{
 			ForceColors: true,
 		})
@@ -42,7 +42,7 @@ func main() {
 
 	logrus.Info("Initializing database connection")
 
-	database, mongoError := mongo.Open(mongo.Config{
+	database, mongoError := database.Open(database.Config{
 		StringConnection: envs.DatabaseConnection,
 	})
 
@@ -62,7 +62,7 @@ func main() {
 
 	api := http.Server{
 		Addr:    envs.Host,
-		Handler: handlers.NewAPI(database),
+		Handler: handlers.NewAPI(envs, database),
 	}
 
 	serverErrors := make(chan error, 1)
