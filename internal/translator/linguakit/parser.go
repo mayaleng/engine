@@ -22,8 +22,15 @@ func Parse(linguakitOutput string) ([]Sentence, error) {
 			return nil, error
 		}
 
+		var pattern = make([]string, 0)
+
+		for _, word := range words {
+			pattern = append(pattern, word.Type)
+		}
+
 		result = append(result, Sentence{
-			Words: words,
+			Words:   words,
+			Pattern: strings.Join(pattern, ","),
 		})
 	}
 
@@ -42,7 +49,7 @@ func parseSentences(result string) ([]string, error) {
 	sentences := make([]string, 0)
 
 	for _, rawSentence := range rawSentences {
-		sentence, error := getSetenceFromRaw(rawSentence)
+		sentence, error := getSetenceLineFromRaw(rawSentence)
 		if error != nil {
 			return []string{}, error
 		}
@@ -53,7 +60,7 @@ func parseSentences(result string) ([]string, error) {
 	return sentences, nil
 }
 
-func getSetenceFromRaw(input string) (string, error) {
+func getSetenceLineFromRaw(input string) (string, error) {
 	input = strings.Replace(input, "SENT::", "", 1)
 	if len(input) == 0 {
 		return "", fmt.Errorf("empty setence passed")

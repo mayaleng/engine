@@ -2,11 +2,9 @@ package main
 
 import (
 	"context"
-	"github.com/julienschmidt/httprouter"
 	"github.com/kelseyhightower/envconfig"
 	"github.com/sirupsen/logrus"
-	"log"
-	"mayaleng.org/engine/cmd/http/internal/handlers"
+	"mayaleng.org/engine/cmd/httpd/internal/handlers"
 	"mayaleng.org/engine/internal/platform/database"
 	"mayaleng.org/engine/internal/platform/envs"
 	"mayaleng.org/engine/version"
@@ -16,29 +14,28 @@ import (
 	"syscall"
 )
 
-func all(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	log.Printf("%s %s", r.Method, r.URL)
-	w.WriteHeader(404)
-	w.Write([]byte("Not found"))
-}
-
 func main() {
 	var envs envs.Envs
 	envError := envconfig.Process("app", &envs)
 
-	logrus.SetFormatter(&logrus.JSONFormatter{})
+	logrus.SetFormatter(&logrus.TextFormatter{
+		ForceColors: true,
+	})
 
-	log.Printf("Version %s built at: %s", version.BuildNumber, version.BuildTime)
+	logrus.WithFields(logrus.Fields{
+		"version": version.BuildNumber,
+		"date":    version.BuildTime,
+	}).Info("Build information")
 
 	if envError != nil {
 		logrus.Fatal(envError)
 	}
 
-	if envs.Env == "dev" {
-		logrus.SetFormatter(&logrus.TextFormatter{
-			ForceColors: true,
-		})
+	if envs.Env == "production" {
+		logrus.SetFormatter(&logrus.JSONFormatter{})
 	}
+
+	// Database setup
 
 	logrus.Info("Initializing database connection")
 
@@ -55,6 +52,8 @@ func main() {
 		database.Disconnect(context.Background())
 	}()
 
+	// API setup
+
 	logrus.Info("Initializing API")
 
 	shutdown := make(chan os.Signal, 1)
@@ -62,7 +61,7 @@ func main() {
 
 	api := http.Server{
 		Addr:    envs.Host,
-		Handler: handlers.NewAPI(envs, database),
+		Handler: handlers.NewAPI(&envs, database),
 	}
 
 	serverErrors := make(chan error, 1)
