@@ -2,38 +2,37 @@ package data
 
 import (
 	"context"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// Translation represents the relation of a same word in multiple languages
-type Translation map[string]primitive.ObjectID
+type translation map[string]primitive.ObjectID
 
 // Translations is a reference of a db collection
 type Translations struct {
 	Collection *mongo.Collection
 }
 
-// TranslationsHelper has useful functions to work with words
+// TranslationsHelper has useful functions to work with the collection
 type TranslationsHelper interface {
-	Find(ctx context.Context, from string, wordID primitive.ObjectID, to string) (*Translation, error)
+	Find(ctx context.Context, wordID primitive.ObjectID, from string, to string) (*primitive.ObjectID, error)
 }
 
 // Find gets a translation
-func (t Translations) Find(ctx context.Context, from string, wordID primitive.ObjectID, to string) (*Translation, error) {
-	var result Translation
+func (t Translations) Find(ctx context.Context, wordID primitive.ObjectID, sourceLanguage, targetLanguage string) (*primitive.ObjectID, error) {
+	var result translation
 	var filter = make(map[string]interface{})
 
-	filter[from] = wordID
-	filter[to] = map[string]bool{
+	filter[sourceLanguage] = wordID
+	filter[targetLanguage] = map[string]bool{
 		"$exists": true,
 	}
 
 	options := &options.FindOneOptions{
 		Projection: map[string]bool{
-			"created_at": false,
-			"updated_at": false,
+			fmt.Sprintf("%s", targetLanguage): true,
 		},
 	}
 
@@ -43,5 +42,7 @@ func (t Translations) Find(ctx context.Context, from string, wordID primitive.Ob
 		return nil, error
 	}
 
-	return &result, nil
+	id := result[targetLanguage]
+
+	return &id, nil
 }

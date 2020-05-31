@@ -74,7 +74,7 @@ curl -L -X POST 'http://localhost:8080/v1/translations' \
 --data-raw '{
 	"from": "espaol",
 	"to": "kaqchikel",
-	"phrase": "Hola! Estoy muy feliz."
+	"phrase": "Estoy muy feliz."
 }'
 ```
 

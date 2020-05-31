@@ -16,7 +16,7 @@ This is an example of a definiton rule structure.
 
 ```js
 {
-    "pattern": "DET+NOUN+VERB" // Generated based on the rules
+    "pattern": "DET,NOUN,VERB", // Generated based on the rules
     "details": [
         {
             "type": "DET",

@@ -10,4 +10,4 @@ function on_exit() {
 
 docker-compose up -d
 
-export $(cat .env | xargs) && go run ./cmd/http/httpd.go
+export $(cat .env | xargs) && go run ./cmd/httpd/main.go
