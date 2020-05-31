@@ -12,7 +12,7 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -v -ldflags="-X 'version.BuildVersion=${BUILD_VERSION}}' -X 'version.BuildTime=${BUILD_TIME}'" -o /tmp/httpd ./cmd/http/httpd.go
+RUN go build -v -ldflags="-X 'version.BuildVersion=${BUILD_VERSION}}' -X 'version.BuildTime=${BUILD_TIME}'" -o /tmp/httpd ./cmd/httpd/main.go
 
 FROM mayaleng/linguakit:alpine3.11
 
