@@ -32,13 +32,18 @@ func (t *Translator) TranslateByRule(ctx context.Context, sourceLanguage, target
 					Word:           value,
 				}
 				unknownWords = append(unknownWords, uw)
+
+				output = append(output, value)
+				continue
 			}
 
 			output = append(output, t)
+		case "literal":
+			output = append(output, value)
 		}
 	}
 
-	return strings.Join(output, " "), unknownWords
+	return strings.Join(output, ""), unknownWords
 }
 
 func (t *Translator) filterWordsByRule(words []linguakit.Word, rule data.Rule) []linguakit.Word {

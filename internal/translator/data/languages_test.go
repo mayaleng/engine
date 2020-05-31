@@ -29,7 +29,7 @@ func TestLanguages(t *testing.T) {
 		testInfo.db.Disconnect(context.Background())
 	}(t)
 
-	t.Run("save a new document with success", func(t *testing.T) {
+	t.Run("save a new document with success when the strucutre is valid", func(t *testing.T) {
 		newWord := NewLanguage{
 			ID:   "argentino",
 			Name: "Español Argentino",

@@ -60,6 +60,10 @@ func (r Rules) FindByPattern(ctx context.Context, sourceLanguage, targetLanguage
 				"value": "{{(index .Words 2).Lemma}}",
 			},
 			{
+				"type":  "literal",
+				"value": " ",
+			},
+			{
 				"type":  "direct-translation",
 				"value": "{{(index .Words 1).Lemma}}",
 			},
