@@ -16,8 +16,8 @@ This is an example of a definiton rule structure.
 
 ```js
 {
-    "pattern": "DET+NOUN+VERB" // Generated based on the rules
-    "words": [
+    "pattern": "DET,NOUN,VERB", // Generated based on the rules
+    "details": [
         {
             "type": "DET",
             "properties": {
@@ -65,14 +65,14 @@ This is an example of a definiton rule structure.
 
 ### `pattern`
 
-It is used to represent the `words` array. Basically it represents the form of the sentences.
+It is used to represent the `details` array. Basically it represents the form of the sentences.
 
 e.g
 1. `DET+NOUN`
 2. `DET+NOUN+VERB`
 3. `VERB`
 
-### `words`
+### `details`
 
 
 The structure of a single word mapping directly with the results of the `DepPattern` module of `Linguakit`.
@@ -109,7 +109,7 @@ There are 3 possible values:
 
 We provide a simple way to access to dyanmic values.
 
-For example to the word values. As you can see, the `words` property is a list, so the most natural way to access to them is via indexes.
+For example to the word values. As you can see, the `details` property is a list, so the most natural way to access to them is via indexes.
 
 ```
 ${0.lemma}

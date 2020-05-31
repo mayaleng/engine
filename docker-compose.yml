@@ -5,3 +5,14 @@ services:
     image: mongo:4
     ports:
       - 27017:27017
+  app:
+    build:
+      dockerfile: ./build/package/Dockerfile
+      context: .
+    environment:
+      - APP_DATABASE_CONNECTION=mongodb://mongo
+      - APP_HOST=0.0.0.0:8080
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongo
