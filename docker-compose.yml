@@ -11,8 +11,8 @@ services:
       context: .
     environment:
       - APP_DATABASE_CONNECTION=mongodb://mongo
-      - APP_HOST=0.0.0.0:8080
+      - APP_HOST=0.0.0.0:8000
     ports:
-      - 8080:8080
+      - 8000:8000
     depends_on:
       - mongo
