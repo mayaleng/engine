@@ -57,4 +57,20 @@ func TestWords(t *testing.T) {
 		}
 	})
 
+	t.Run("update a word with success", func(t *testing.T) {
+		filter := map[string]string{
+			"word": "ingenieros",
+		}
+
+		update := map[string]interface{}{
+			"word": "semidios",
+		}
+
+		error = helper.UpdateOne(context.Background(), "words_test", filter, update)
+
+		if error != nil {
+			t.Errorf("It should not be an error: %v", error)
+		}
+	})
+
 }

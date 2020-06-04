@@ -2,6 +2,7 @@ package data
 
 import (
 	"context"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"time"
@@ -37,6 +38,7 @@ type WordsHelper interface {
 	New(ctx context.Context, collectionName string, newWord NewWord) (*primitive.ObjectID, error)
 	FindByID(ctx context.Context, collectionName string, ID primitive.ObjectID) (*Word, error)
 	FindOneByText(ctx context.Context, collectionName string, text string) (*Word, error)
+	UpdateOne(ctx context.Context, collectionName string, filter map[string]string, update map[string]interface{}) error
 }
 
 // New creates a new word in the database
@@ -93,4 +95,25 @@ func (w Words) FindByID(ctx context.Context, collectionName string, id primitive
 	}
 
 	return &word, nil
+}
+
+// UpdateOne return a single word by the object id
+func (w Words) UpdateOne(ctx context.Context, collectionName string, filter map[string]string, update map[string]interface{}) error {
+	set := map[string]interface{}{
+		"$set": update,
+	}
+
+	collection := w.Database.Collection(collectionName)
+
+	result, error := collection.UpdateOne(ctx, filter, set)
+
+	if result.ModifiedCount == 0 {
+		return fmt.Errorf("0 documents updated")
+	}
+
+	if error != nil {
+		return error
+	}
+
+	return nil
 }
