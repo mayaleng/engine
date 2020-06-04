@@ -57,4 +57,24 @@ func TestWords(t *testing.T) {
 		}
 	})
 
+	t.Run("update an existing word", func(t *testing.T) {
+		filter := map[string]string{
+			"word": "ingeniero",
+		}
+
+		update := map[string]interface{}{
+			"word": "ingeniero_change",
+		}
+
+		error := helper.Update(context.Background(), "words_test", filter, update)
+
+		word, error := helper.FindOneByText(context.Background(), "words_test", "ingeniero_change")
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		t.Logf("Found word %v", word.Text)
+	})
+
 }

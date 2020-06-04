@@ -2,9 +2,11 @@ package data
 
 import (
 	"context"
+	"fmt"
+	"time"
+
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"time"
 )
 
 // Categories represents words' properties like: transitivity, intransitivity etc.
@@ -51,6 +53,27 @@ func (w Words) New(ctx context.Context, collectionName string, newWord NewWord) 
 	newObjectID := result.InsertedID.(primitive.ObjectID)
 
 	return &newObjectID, nil
+}
+
+// Update an existing word in the database
+func (w Words) Update(ctx context.Context, collectionName string, filter map[string]string, update map[string]interface{}) error {
+	collection := w.Database.Collection(collectionName)
+
+	set := map[string]interface{}{
+		"$set": update,
+	}
+
+	updateResult, error := collection.UpdateOne(ctx, filter, set)
+
+	if updateResult.ModifiedCount == 0 {
+		return fmt.Errorf("no documents updated")
+	}
+
+	if error != nil {
+		return error
+	}
+
+	return error
 }
 
 // FindOneByText return a single word
