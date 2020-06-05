@@ -2,8 +2,9 @@ package data
 
 import (
 	"context"
-	"go.mongodb.org/mongo-driver/mongo"
 	"testing"
+
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type languagesWrapper struct {
@@ -58,5 +59,44 @@ func TestLanguages(t *testing.T) {
 		if error == nil {
 			t.Fatalf("An error was excpected. Language does not exist")
 		}
+	})
+
+	t.Run("update an existing document", func(t *testing.T) {
+		filter := map[string]string{
+			"collection_name": "argentino",
+		}
+
+		update := map[string]interface{}{
+			"collection_name": "kaqchikel",
+			"name":            "Español Kaqchikel",
+		}
+
+		error := helper.Update(context.Background(), filter, update)
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		language, error := helper.FindOneByID(context.Background(), "kaqchikel")
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		t.Logf("Language found it %v", language)
+	})
+
+	t.Run("delete an existing document", func(t *testing.T) {
+		filter := map[string]string{
+			"collection_name": "kaqchikel",
+		}
+
+		error := helper.Delete(context.Background(), filter)
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		t.Logf("Language deleted")
 	})
 }

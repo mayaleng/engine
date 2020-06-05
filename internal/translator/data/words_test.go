@@ -63,12 +63,16 @@ func TestWords(t *testing.T) {
 		}
 
 		update := map[string]interface{}{
-			"word": "ingeniero_change",
+			"word": "graduated_engineer",
 		}
 
 		error := helper.Update(context.Background(), "words_test", filter, update)
 
-		word, error := helper.FindOneByText(context.Background(), "words_test", "ingeniero_change")
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		word, error := helper.FindOneByText(context.Background(), "words_test", "graduated_engineer")
 
 		if error != nil {
 			t.Fatal(error)
@@ -77,4 +81,17 @@ func TestWords(t *testing.T) {
 		t.Logf("Found word %v", word.Text)
 	})
 
+	t.Run("delete an existing word", func(t *testing.T) {
+		filter := map[string]string{
+			"word": "graduated_engineer",
+		}
+
+		error := helper.Delete(context.Background(), "words_test", filter)
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		t.Logf("Word deleted")
+	})
 }

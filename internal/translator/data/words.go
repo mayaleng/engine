@@ -39,6 +39,8 @@ type WordsHelper interface {
 	New(ctx context.Context, collectionName string, newWord NewWord) (*primitive.ObjectID, error)
 	FindByID(ctx context.Context, collectionName string, ID primitive.ObjectID) (*Word, error)
 	FindOneByText(ctx context.Context, collectionName string, text string) (*Word, error)
+	Update(ctx context.Context, collectionName string, filter map[string]string, updateValue map[string]interface{}) error
+	Delete(ctx context.Context, collectionName string, deleteValue map[string]string) error
 }
 
 // New creates a new word in the database
@@ -55,25 +57,42 @@ func (w Words) New(ctx context.Context, collectionName string, newWord NewWord) 
 	return &newObjectID, nil
 }
 
-// Update an existing word in the database
-func (w Words) Update(ctx context.Context, collectionName string, filter map[string]string, update map[string]interface{}) error {
+// Update an existing word in database
+func (w Words) Update(ctx context.Context, collectionName string, filter map[string]string, updateValue map[string]interface{}) error {
 	collection := w.Database.Collection(collectionName)
 
 	set := map[string]interface{}{
-		"$set": update,
+		"$set": updateValue,
 	}
 
 	updateResult, error := collection.UpdateOne(ctx, filter, set)
-
-	if updateResult.ModifiedCount == 0 {
-		return fmt.Errorf("no documents updated")
-	}
 
 	if error != nil {
 		return error
 	}
 
-	return error
+	if updateResult.ModifiedCount == 0 {
+		return fmt.Errorf("no documents updated")
+	}
+
+	return nil
+}
+
+// Delete an existing word in database
+func (w Words) Delete(ctx context.Context, collectionName string, deleteValue map[string]string) error {
+	collection := w.Database.Collection(collectionName)
+
+	deleteResult, error := collection.DeleteOne(ctx, deleteValue)
+
+	if error != nil {
+		return error
+	}
+
+	if deleteResult.DeletedCount == 0 {
+		return fmt.Errorf("document didn't find")
+	}
+
+	return nil
 }
 
 // FindOneByText return a single word

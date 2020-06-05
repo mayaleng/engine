@@ -2,9 +2,11 @@ package data
 
 import (
 	"context"
+	"fmt"
+	"time"
+
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"time"
 )
 
 // Language represents the relation between language and the collection that
@@ -34,6 +36,8 @@ type LanguagesHelper interface {
 	FindOneByID(ctx context.Context, ID string) (*Language, error)
 	New(ctx context.Context, newLanguage NewLanguage) (*primitive.ObjectID, error)
 	GetCollection() *mongo.Collection
+	Update(ctx context.Context, filter map[string]string, updateValue map[string]interface{}) error
+	Delete(ctx context.Context, deleteValue map[string]string) error
 }
 
 // New creates a new document in the database
@@ -46,6 +50,40 @@ func (l Languages) New(ctx context.Context, newLanguage NewLanguage) (*primitive
 	newObjectID := result.InsertedID.(primitive.ObjectID)
 
 	return &newObjectID, nil
+}
+
+// Update an existing word in database
+func (l Languages) Update(ctx context.Context, filter map[string]string, updateValue map[string]interface{}) error {
+	set := map[string]interface{}{
+		"$set": updateValue,
+	}
+
+	updateResult, error := l.Collection.UpdateOne(ctx, filter, set)
+
+	if error != nil {
+		return error
+	}
+
+	if updateResult.ModifiedCount == 0 {
+		return fmt.Errorf("no documents updated")
+	}
+
+	return nil
+}
+
+// Delete an existing word in database
+func (l Languages) Delete(ctx context.Context, deleteValue map[string]string) error {
+	deleteResult, error := l.Collection.DeleteOne(ctx, deleteValue)
+
+	if error != nil {
+		return error
+	}
+
+	if deleteResult.DeletedCount == 0 {
+		return fmt.Errorf("document didn't find")
+	}
+
+	return nil
 }
 
 // FindOneByID returns one languagy by id
