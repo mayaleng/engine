@@ -39,8 +39,8 @@ type WordsHelper interface {
 	New(ctx context.Context, collectionName string, newWord NewWord) (*primitive.ObjectID, error)
 	FindByID(ctx context.Context, collectionName string, ID primitive.ObjectID) (*Word, error)
 	FindOneByText(ctx context.Context, collectionName string, text string) (*Word, error)
-	Update(ctx context.Context, collectionName string, filter map[string]string, updateValue map[string]interface{}) error
-	Delete(ctx context.Context, collectionName string, deleteValue map[string]string) error
+	UpdateOne(ctx context.Context, collectionName string, filter map[string]string, updateValue map[string]interface{}) error
+	DeleteOne(ctx context.Context, collectionName string, deleteValue map[string]string) error
 }
 
 // New creates a new word in the database
@@ -58,7 +58,7 @@ func (w Words) New(ctx context.Context, collectionName string, newWord NewWord) 
 }
 
 // Update an existing word in database
-func (w Words) Update(ctx context.Context, collectionName string, filter map[string]string, updateValue map[string]interface{}) error {
+func (w Words) UpdateOne(ctx context.Context, collectionName string, filter map[string]string, updateValue map[string]interface{}) error {
 	collection := w.Database.Collection(collectionName)
 
 	set := map[string]interface{}{
@@ -79,7 +79,7 @@ func (w Words) Update(ctx context.Context, collectionName string, filter map[str
 }
 
 // Delete an existing word in database
-func (w Words) Delete(ctx context.Context, collectionName string, deleteValue map[string]string) error {
+func (w Words) DeleteOne(ctx context.Context, collectionName string, deleteValue map[string]string) error {
 	collection := w.Database.Collection(collectionName)
 
 	deleteResult, error := collection.DeleteOne(ctx, deleteValue)

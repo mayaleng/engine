@@ -3,6 +3,7 @@ package data
 import (
 	"context"
 	"testing"
+	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -32,8 +33,9 @@ func TestLanguages(t *testing.T) {
 
 	t.Run("save a new document with success when the strucutre is valid", func(t *testing.T) {
 		newWord := NewLanguage{
-			ID:   "argentino",
-			Name: "Español Argentino",
+			ID:        "argentino",
+			Name:      "Español Argentino",
+			CreatedAt: time.Now(),
 		}
 
 		newID, error := helper.New(context.Background(), newWord)
@@ -61,7 +63,7 @@ func TestLanguages(t *testing.T) {
 		}
 	})
 
-	t.Run("update an existing document", func(t *testing.T) {
+	t.Run("update a document when exists", func(t *testing.T) {
 		filter := map[string]string{
 			"collection_name": "argentino",
 		}
@@ -69,9 +71,10 @@ func TestLanguages(t *testing.T) {
 		update := map[string]interface{}{
 			"collection_name": "kaqchikel",
 			"name":            "Español Kaqchikel",
+			"updated_at":      time.Now(),
 		}
 
-		error := helper.Update(context.Background(), filter, update)
+		error := helper.UpdateOne(context.Background(), filter, update)
 
 		if error != nil {
 			t.Fatal(error)
@@ -86,12 +89,12 @@ func TestLanguages(t *testing.T) {
 		t.Logf("Language found it %v", language)
 	})
 
-	t.Run("delete an existing document", func(t *testing.T) {
+	t.Run("delete a document when exists", func(t *testing.T) {
 		filter := map[string]string{
 			"collection_name": "kaqchikel",
 		}
 
-		error := helper.Delete(context.Background(), filter)
+		error := helper.DeleteOne(context.Background(), filter)
 
 		if error != nil {
 			t.Fatal(error)

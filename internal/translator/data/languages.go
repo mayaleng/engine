@@ -36,8 +36,8 @@ type LanguagesHelper interface {
 	FindOneByID(ctx context.Context, ID string) (*Language, error)
 	New(ctx context.Context, newLanguage NewLanguage) (*primitive.ObjectID, error)
 	GetCollection() *mongo.Collection
-	Update(ctx context.Context, filter map[string]string, updateValue map[string]interface{}) error
-	Delete(ctx context.Context, deleteValue map[string]string) error
+	UpdateOne(ctx context.Context, filter map[string]string, updateValue map[string]interface{}) error
+	DeleteOne(ctx context.Context, deleteValue map[string]string) error
 }
 
 // New creates a new document in the database
@@ -53,7 +53,7 @@ func (l Languages) New(ctx context.Context, newLanguage NewLanguage) (*primitive
 }
 
 // Update an existing word in database
-func (l Languages) Update(ctx context.Context, filter map[string]string, updateValue map[string]interface{}) error {
+func (l Languages) UpdateOne(ctx context.Context, filter map[string]string, updateValue map[string]interface{}) error {
 	set := map[string]interface{}{
 		"$set": updateValue,
 	}
@@ -72,7 +72,7 @@ func (l Languages) Update(ctx context.Context, filter map[string]string, updateV
 }
 
 // Delete an existing word in database
-func (l Languages) Delete(ctx context.Context, deleteValue map[string]string) error {
+func (l Languages) DeleteOne(ctx context.Context, deleteValue map[string]string) error {
 	deleteResult, error := l.Collection.DeleteOne(ctx, deleteValue)
 
 	if error != nil {
