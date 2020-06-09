@@ -2,8 +2,10 @@ package data
 
 import (
 	"context"
-	"go.mongodb.org/mongo-driver/mongo"
 	"testing"
+	"time"
+
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type languagesWrapper struct {
@@ -31,8 +33,9 @@ func TestLanguages(t *testing.T) {
 
 	t.Run("save a new document with success when the strucutre is valid", func(t *testing.T) {
 		newWord := NewLanguage{
-			ID:   "argentino",
-			Name: "Español Argentino",
+			ID:        "argentino",
+			Name:      "Español Argentino",
+			CreatedAt: time.Now(),
 		}
 
 		newID, error := helper.New(context.Background(), newWord)
@@ -58,5 +61,45 @@ func TestLanguages(t *testing.T) {
 		if error == nil {
 			t.Fatalf("An error was excpected. Language does not exist")
 		}
+	})
+
+	t.Run("update a document with success when exists", func(t *testing.T) {
+		filter := map[string]string{
+			"collection_name": "argentino",
+		}
+
+		update := map[string]interface{}{
+			"collection_name": "kaqchikel",
+			"name":            "Español Kaqchikel",
+			"updated_at":      time.Now(),
+		}
+
+		error := helper.UpdateOne(context.Background(), filter, update)
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		language, error := helper.FindOneByID(context.Background(), "kaqchikel")
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		t.Logf("Language found it %v", language)
+	})
+
+	t.Run("delete a document with success when exists", func(t *testing.T) {
+		filter := map[string]string{
+			"collection_name": "kaqchikel",
+		}
+
+		error := helper.DeleteOne(context.Background(), filter)
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		t.Logf("Language deleted")
 	})
 }

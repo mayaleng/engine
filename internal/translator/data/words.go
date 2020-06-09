@@ -3,9 +3,10 @@ package data
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"time"
 )
 
 // Categories represents words' properties like: transitivity, intransitivity etc.
@@ -38,7 +39,8 @@ type WordsHelper interface {
 	New(ctx context.Context, collectionName string, newWord NewWord) (*primitive.ObjectID, error)
 	FindByID(ctx context.Context, collectionName string, ID primitive.ObjectID) (*Word, error)
 	FindOneByText(ctx context.Context, collectionName string, text string) (*Word, error)
-	UpdateOne(ctx context.Context, collectionName string, filter map[string]string, update map[string]interface{}) error
+	UpdateOne(ctx context.Context, collectionName string, filter map[string]string, updateValue map[string]interface{}) error
+	DeleteOne(ctx context.Context, collectionName string, deleteValue map[string]string) error
 }
 
 // New creates a new word in the database
@@ -53,6 +55,44 @@ func (w Words) New(ctx context.Context, collectionName string, newWord NewWord) 
 	newObjectID := result.InsertedID.(primitive.ObjectID)
 
 	return &newObjectID, nil
+}
+
+// Update an existing word in database
+func (w Words) UpdateOne(ctx context.Context, collectionName string, filter map[string]string, updateValue map[string]interface{}) error {
+	collection := w.Database.Collection(collectionName)
+
+	set := map[string]interface{}{
+		"$set": updateValue,
+	}
+
+	updateResult, error := collection.UpdateOne(ctx, filter, set)
+
+	if error != nil {
+		return error
+	}
+
+	if updateResult.ModifiedCount == 0 {
+		return fmt.Errorf("no documents updated")
+	}
+
+	return nil
+}
+
+// Delete an existing word in database
+func (w Words) DeleteOne(ctx context.Context, collectionName string, deleteValue map[string]string) error {
+	collection := w.Database.Collection(collectionName)
+
+	deleteResult, error := collection.DeleteOne(ctx, deleteValue)
+
+	if error != nil {
+		return error
+	}
+
+	if deleteResult.DeletedCount == 0 {
+		return fmt.Errorf("document didn't find")
+	}
+
+	return nil
 }
 
 // FindOneByText return a single word
@@ -95,25 +135,4 @@ func (w Words) FindByID(ctx context.Context, collectionName string, id primitive
 	}
 
 	return &word, nil
-}
-
-// UpdateOne return a single word by the object id
-func (w Words) UpdateOne(ctx context.Context, collectionName string, filter map[string]string, update map[string]interface{}) error {
-	set := map[string]interface{}{
-		"$set": update,
-	}
-
-	collection := w.Database.Collection(collectionName)
-
-	result, error := collection.UpdateOne(ctx, filter, set)
-
-	if result.ModifiedCount == 0 {
-		return fmt.Errorf("0 documents updated")
-	}
-
-	if error != nil {
-		return error
-	}
-
-	return nil
 }

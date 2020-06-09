@@ -3,6 +3,7 @@ package data
 import (
 	"context"
 	"testing"
+	"time"
 )
 
 func TestWords(t *testing.T) {
@@ -29,6 +30,7 @@ func TestWords(t *testing.T) {
 			Categories: Categories{
 				"m-y-f": true,
 			},
+			CreatedAt: time.Now(),
 		}
 		newID, error := helper.New(context.Background(), "words_test", newWord)
 
@@ -57,20 +59,42 @@ func TestWords(t *testing.T) {
 		}
 	})
 
-	t.Run("update a word with success", func(t *testing.T) {
+	t.Run("update word with success when it exists", func(t *testing.T) {
 		filter := map[string]string{
-			"word": "ingenieros",
+			"word": "ingeniero",
 		}
 
 		update := map[string]interface{}{
-			"word": "semidios",
+			"word":       "graduated_engineer",
+			"updated_at": time.Now(),
 		}
 
-		error = helper.UpdateOne(context.Background(), "words_test", filter, update)
+		error := helper.UpdateOne(context.Background(), "words_test", filter, update)
 
 		if error != nil {
-			t.Errorf("It should not be an error: %v", error)
+			t.Fatal(error)
 		}
+
+		word, error := helper.FindOneByText(context.Background(), "words_test", "graduated_engineer")
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		t.Logf("Found word %v", word)
 	})
 
+	t.Run("delete word with success when exists", func(t *testing.T) {
+		filter := map[string]string{
+			"word": "graduated_engineer",
+		}
+
+		error := helper.DeleteOne(context.Background(), "words_test", filter)
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		t.Logf("Word deleted")
+	})
 }
