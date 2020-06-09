@@ -136,24 +136,3 @@ func (w Words) FindByID(ctx context.Context, collectionName string, id primitive
 
 	return &word, nil
 }
-
-// UpdateOne return a single word by the object id
-func (w Words) UpdateOne(ctx context.Context, collectionName string, filter map[string]string, update map[string]interface{}) error {
-	set := map[string]interface{}{
-		"$set": update,
-	}
-
-	collection := w.Database.Collection(collectionName)
-
-	result, error := collection.UpdateOne(ctx, filter, set)
-
-	if result.ModifiedCount == 0 {
-		return fmt.Errorf("0 documents updated")
-	}
-
-	if error != nil {
-		return error
-	}
-
-	return nil
-}
