@@ -2,7 +2,9 @@ package data
 
 import (
 	"context"
+	"fmt"
 	"go.mongodb.org/mongo-driver/mongo"
+	"strings"
 )
 
 // RuleDetail represents a word in the rule
@@ -73,5 +75,10 @@ func (r Rules) FindByPattern(ctx context.Context, sourceLanguage, targetLanguage
 			},
 		},
 	}
+
+	if !strings.Contains(rule.Pattern, pattern) {
+		return []Rule{}, fmt.Errorf("No pattern found")
+	}
+
 	return []Rule{rule}, nil
 }

@@ -2,6 +2,7 @@ package translator
 
 import (
 	"context"
+	"fmt"
 	"mayaleng.org/engine/internal/translator/linguakit"
 	"strings"
 )
@@ -9,9 +10,14 @@ import (
 // TranslateWordByWord does a translation word by word using the database
 func (t *Translator) TranslateWordByWord(ctx context.Context, sourceLanguage, targetLanguage string, sentence linguakit.Sentence) (string, []UnknownWord) {
 	var unknownWords = make([]UnknownWord, 0)
-	var words = make([]string, 0)
+	var translation string
 
 	for _, word := range sentence.Words {
+		if word.Type == "SENT" || strings.HasPrefix(word.Type, "F") {
+			translation = fmt.Sprintf("%s%s", translation, word.Lemma)
+			continue
+		}
+
 		translatedWord, error := t.getTranslationFromDB(ctx, sourceLanguage, targetLanguage, word.Lemma)
 		if error != nil {
 			uw := UnknownWord{
@@ -22,14 +28,13 @@ func (t *Translator) TranslateWordByWord(ctx context.Context, sourceLanguage, ta
 
 			unknownWords = append(unknownWords, uw)
 
-			words = append(words, word.Lemma)
+			translatedWord = word.Lemma
 		}
 
-		words = append(words, translatedWord)
+		translation = fmt.Sprintf("%s %s", translation, translatedWord)
 	}
 
-	translation := strings.Join(words, " ")
-	return translation, unknownWords
+	return strings.Trim(translation, " "), unknownWords
 }
 
 func (t *Translator) getTranslationFromDB(ctx context.Context, sourceLanguage, targetLanguage, word string) (string, error) {
