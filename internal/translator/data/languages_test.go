@@ -63,7 +63,7 @@ func TestLanguages(t *testing.T) {
 		}
 	})
 
-	t.Run("update a document when exists", func(t *testing.T) {
+	t.Run("update a document with success when exists", func(t *testing.T) {
 		filter := map[string]string{
 			"collection_name": "argentino",
 		}
@@ -89,7 +89,7 @@ func TestLanguages(t *testing.T) {
 		t.Logf("Language found it %v", language)
 	})
 
-	t.Run("delete a document when exists", func(t *testing.T) {
+	t.Run("delete a document with success when exists", func(t *testing.T) {
 		filter := map[string]string{
 			"collection_name": "kaqchikel",
 		}

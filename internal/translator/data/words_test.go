@@ -59,7 +59,7 @@ func TestWords(t *testing.T) {
 		}
 	})
 
-	t.Run("update word when it exists", func(t *testing.T) {
+	t.Run("update word with success when it exists", func(t *testing.T) {
 		filter := map[string]string{
 			"word": "ingeniero",
 		}
@@ -84,7 +84,7 @@ func TestWords(t *testing.T) {
 		t.Logf("Found word %v", word)
 	})
 
-	t.Run("delete word when exists", func(t *testing.T) {
+	t.Run("delete word with success when exists", func(t *testing.T) {
 		filter := map[string]string{
 			"word": "graduated_engineer",
 		}
