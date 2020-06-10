@@ -7,7 +7,7 @@ import (
 	"strings"
 	"text/template"
 
-	"mayaleng.org/engine/internal/translator/data"
+	"mayaleng.org/engine/internal/platform/data"
 	"mayaleng.org/engine/internal/translator/linguakit"
 )
 
