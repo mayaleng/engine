@@ -57,7 +57,7 @@ func (w Words) New(ctx context.Context, collectionName string, newWord NewWord) 
 	return &newObjectID, nil
 }
 
-// Update an existing word in database
+// UpdateOne updates an existing word in database
 func (w Words) UpdateOne(ctx context.Context, collectionName string, filter map[string]string, updateValue map[string]interface{}) error {
 	collection := w.Database.Collection(collectionName)
 
@@ -78,7 +78,7 @@ func (w Words) UpdateOne(ctx context.Context, collectionName string, filter map[
 	return nil
 }
 
-// Delete an existing word in database
+// DeleteOne deletes an existing word in database
 func (w Words) DeleteOne(ctx context.Context, collectionName string, deleteValue map[string]string) error {
 	collection := w.Database.Collection(collectionName)
 
