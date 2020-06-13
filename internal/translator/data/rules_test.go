@@ -84,6 +84,52 @@ func TestRules(t *testing.T) {
 		t.Logf("New rule created with id %s", newID.Hex())
 	})
 
+	t.Run("save a new rule with success and with the same last pattern but different detail when the strucutre is valid", func(t *testing.T) {
+		newRule := Rule{
+			SourceLanguage: "espaol",
+			TargetLanguage: "kaqchikel",
+			Pattern:        "VERB,ADV,ADJ",
+			Details: []RuleDetail{
+				{
+					Type: "VERB",
+					Properties: map[string]string{
+						"type": "M",
+					},
+				},
+				{
+					Type: "ADV",
+					Properties: map[string]string{
+						"type": "G",
+					},
+				},
+				{
+					Type: "ADJ",
+					Properties: map[string]string{
+						"type": "O",
+					},
+				},
+			},
+			Output: []RuleOutput{
+				{
+					"type":  "direct-translation",
+					"value": "{{(index .Words 1).Lemma}}",
+				},
+				{
+					"type":  "direct-translation",
+					"value": "{{(index .Words 0).Lemma}}",
+				},
+			},
+		}
+
+		newID, error := helper.NewRule(context.Background(), newRule)
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		t.Logf("New rule created with id %s", newID.Hex())
+	})
+
 	t.Run("find rule with success when the value exists", func(t *testing.T) {
 		rule, error := helper.FindRuleByPattern(context.Background(), "espaol", "kaqchikel", "VERB,ADV,ADJ")
 
@@ -91,6 +137,112 @@ func TestRules(t *testing.T) {
 			t.Fatal(error)
 		}
 
-		t.Logf("Found rule %v", rule)
+		t.Logf("Found rules %v", rule)
+	})
+
+	t.Run("get and error finding non existing rule", func(t *testing.T) {
+		rule, error := helper.FindRuleByPattern(context.Background(), "espaol", "kaqchikel", "ADJ,ADJ,ADV")
+
+		if error == nil {
+			t.Errorf("the pattern ADJ,ADJ,ADV doesn't exist")
+		}
+
+		if rule == nil {
+			t.Logf("pattern doesn't exist")
+		}
+	})
+
+	t.Run("delete a group of rules with success when the rules exist", func(t *testing.T) {
+		error := helper.DeleteMany(context.Background(), "espaol", "kaqchikel", "VERB,ADV,ADJ")
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		t.Logf("Rules deleted")
+	})
+
+	t.Run("add short new rule with success when the strucutre is valid", func(t *testing.T) {
+		newRule := Rule{
+			SourceLanguage: "espaol",
+			TargetLanguage: "kaqchikel",
+			Pattern:        "VERB",
+			Details: []RuleDetail{
+				{
+					Type: "VERB",
+					Properties: map[string]string{
+						"type": "M",
+					},
+				},
+			},
+			Output: []RuleOutput{
+				{
+					"type":  "direct-translation",
+					"value": "{{(index .Words 0).Lemma}}",
+				},
+			},
+		}
+
+		newID, error := helper.NewRule(context.Background(), newRule)
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		t.Logf("New rule created with id %s", newID.Hex())
+	})
+
+	t.Run("update one rule with success when the rule exists", func(t *testing.T) {
+		filter, error := helper.FindRuleByPattern(context.Background(), "espaol", "kaqchikel", "VERB")
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		sameRuleChange := Rule{
+			SourceLanguage: "espaol",
+			TargetLanguage: "kaqchikel",
+			Pattern:        "ADJ",
+			Details: []RuleDetail{
+				{
+					Type: "ADJ",
+					Properties: map[string]string{
+						"type": "Q",
+					},
+				},
+			},
+			Output: []RuleOutput{
+				{
+					"type":  "direct-translation",
+					"value": "{{(index .Words 0).Lemma}}",
+				},
+			},
+		}
+
+		erroru := helper.UpdateOne(context.Background(), filter[0], sameRuleChange)
+
+		if erroru != nil {
+			t.Fatal(erroru)
+		}
+
+		rule, error := helper.FindRuleByPattern(context.Background(), "espaol", "kaqchikel", "ADJ")
+
+		t.Logf("Rule updated %v", rule)
+	})
+
+	t.Run("delete one rule with success when the rule exists", func(t *testing.T) {
+		rule, error := helper.FindRuleByPattern(context.Background(), "espaol", "kaqchikel", "ADJ")
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		errord := helper.DeleteOne(context.Background(), rule[0])
+
+		if errord != nil {
+			t.Fatal(errord)
+		}
+
+		t.Logf("Rule found it and deleted")
 	})
 }

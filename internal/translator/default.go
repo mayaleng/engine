@@ -3,8 +3,9 @@ package translator
 import (
 	"context"
 	"fmt"
-	"mayaleng.org/engine/internal/translator/linguakit"
 	"strings"
+
+	"mayaleng.org/engine/internal/translator/linguakit"
 )
 
 // TranslateWordByWord does a translation word by word using the database

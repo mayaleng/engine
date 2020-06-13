@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"context"
 	"log"
-	"mayaleng.org/engine/internal/translator/data"
-	"mayaleng.org/engine/internal/translator/linguakit"
 	"strings"
 	"text/template"
+
+	"mayaleng.org/engine/internal/translator/data"
+	"mayaleng.org/engine/internal/translator/linguakit"
 )
 
 // TranslateByRule use a given rule to generate the output translation

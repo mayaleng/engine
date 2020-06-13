@@ -38,6 +38,9 @@ type RulesHelper interface {
 	FindByPattern(ctx context.Context, source, target, pattern string) ([]Rule, error)
 	NewRule(ctx context.Context, ruleStruct Rule) (*primitive.ObjectID, error)
 	FindRuleByPattern(ctx context.Context, sourceLanguage, targetLanguage, pattern string) ([]Rule, error)
+	UpdateOne(ctx context.Context, filter Rule, updateValue Rule) error
+	DeleteOne(ctx context.Context, rule Rule) error
+	DeleteMany(ctx context.Context, sourceLanguage, targetLanguage, pattern string) error
 }
 
 // NewRule creates a rule in database
@@ -55,7 +58,7 @@ func (r Rules) NewRule(ctx context.Context, ruleStruct Rule) (*primitive.ObjectI
 
 // FindRuleByPattern return a list of rules that match with the given pattern
 func (r Rules) FindRuleByPattern(ctx context.Context, sourceLanguage, targetLanguage, pattern string) ([]Rule, error) {
-	var rule Rule
+	var rule []Rule
 
 	filter := map[string]string{
 		"source_language": sourceLanguage,
@@ -63,19 +66,80 @@ func (r Rules) FindRuleByPattern(ctx context.Context, sourceLanguage, targetLang
 		"pattern":         pattern,
 	}
 
-	singleResult := r.Collection.FindOne(ctx, filter)
+	cursor, error := r.Collection.Find(ctx, filter)
 
-	error := singleResult.Decode(&rule)
+	defer cursor.Close(ctx)
 
 	if error != nil {
 		return nil, error
 	}
 
-	if !strings.Contains(rule.Pattern, pattern) {
-		return []Rule{}, fmt.Errorf("No pattern found")
+	err := cursor.All(ctx, &rule)
+
+	if err != nil {
+		return nil, err
 	}
 
-	return []Rule{rule}, nil
+	if len(rule) == 0 {
+		return nil, fmt.Errorf("No patterns found")
+	}
+
+	return rule, nil
+}
+
+// UpdateOne updates one rule
+func (r Rules) UpdateOne(ctx context.Context, filter Rule, updateValue Rule) error {
+	set := map[string]interface{}{
+		"$set": updateValue,
+	}
+
+	updateResult, error := r.Collection.UpdateOne(ctx, filter, set)
+
+	if error != nil {
+		return error
+	}
+
+	if updateResult.ModifiedCount == 0 {
+		return fmt.Errorf("no rules updated")
+	}
+
+	return nil
+}
+
+// DeleteOne deletes one rule that match with a pattern and detail
+func (r Rules) DeleteOne(ctx context.Context, rule Rule) error {
+	deleteResult, error := r.Collection.DeleteOne(ctx, rule)
+
+	if error != nil {
+		return error
+	}
+
+	if deleteResult.DeletedCount == 0 {
+		return fmt.Errorf("rule didn't find")
+	}
+
+	return nil
+}
+
+// DeleteMany deletes all of the rules that match with a pattern
+func (r Rules) DeleteMany(ctx context.Context, sourceLanguage, targetLanguage, pattern string) error {
+	filter := map[string]string{
+		"source_language": sourceLanguage,
+		"target_language": targetLanguage,
+		"pattern":         pattern,
+	}
+
+	deleteResult, error := r.Collection.DeleteMany(ctx, filter)
+
+	if error != nil {
+		return error
+	}
+
+	if deleteResult.DeletedCount == 0 {
+		return fmt.Errorf("rules didn't find")
+	}
+
+	return nil
 }
 
 // FindByPattern return a list of rules that match with the given pattern
