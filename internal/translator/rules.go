@@ -22,6 +22,9 @@ func (t *Translator) TranslateByRule(ctx context.Context, sourceLanguage, target
 		ruleType := outputRule["type"]
 		value := t.replaceTemplates(words, outputRule["value"])
 
+		// TODO dynamic translation
+		// TODO predefined translation
+
 		switch ruleType {
 		case "direct-translation":
 			t, error := t.directTranslation(ctx, sourceLanguage, targetLanguage, value)
@@ -52,7 +55,7 @@ func (t *Translator) filterWordsByRule(words []linguakit.Word, rule data.Rule) [
 
 	var detailIndex = 0
 	for _, word := range words {
-		if rule.Details[detailIndex].Type == word.Type {
+		if rule.Details[detailIndex].Tag == word.Tag {
 			filteredWords = append(filteredWords, word)
 			detailIndex++
 			if detailIndex == len(rule.Details) {

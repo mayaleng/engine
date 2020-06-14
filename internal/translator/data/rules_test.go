@@ -37,22 +37,16 @@ func TestRules(t *testing.T) {
 			Pattern:        "VERB,ADV,ADJ",
 			Details: []RuleDetail{
 				{
-					Type: "VERB",
-					Properties: map[string]string{
-						"type": "A",
-					},
+					Tag:  "VERB",
+					Type: "A",
 				},
 				{
-					Type: "ADV",
-					Properties: map[string]string{
-						"type": "G",
-					},
+					Tag:  "ADV",
+					Type: "G",
 				},
 				{
-					Type: "ADJ",
-					Properties: map[string]string{
-						"type": "Q",
-					},
+					Tag:  "ADJ",
+					Type: "Q",
 				},
 			},
 			Output: []RuleOutput{
@@ -91,22 +85,16 @@ func TestRules(t *testing.T) {
 			Pattern:        "VERB,ADV,ADJ",
 			Details: []RuleDetail{
 				{
-					Type: "VERB",
-					Properties: map[string]string{
-						"type": "M",
-					},
+					Tag:  "VERB",
+					Type: "M",
 				},
 				{
-					Type: "ADV",
-					Properties: map[string]string{
-						"type": "G",
-					},
+					Tag:  "ADV",
+					Type: "G",
 				},
 				{
-					Type: "ADJ",
-					Properties: map[string]string{
-						"type": "O",
-					},
+					Tag:  "ADJ",
+					Type: "O",
 				},
 			},
 			Output: []RuleOutput{
@@ -169,10 +157,8 @@ func TestRules(t *testing.T) {
 			Pattern:        "VERB",
 			Details: []RuleDetail{
 				{
-					Type: "VERB",
-					Properties: map[string]string{
-						"type": "M",
-					},
+					Tag:  "VERB",
+					Type: "M",
 				},
 			},
 			Output: []RuleOutput{
@@ -205,10 +191,8 @@ func TestRules(t *testing.T) {
 			Pattern:        "ADJ",
 			Details: []RuleDetail{
 				{
-					Type: "ADJ",
-					Properties: map[string]string{
-						"type": "Q",
-					},
+					Tag:  "ADJ",
+					Type: "",
 				},
 			},
 			Output: []RuleOutput{

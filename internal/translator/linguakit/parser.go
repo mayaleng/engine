@@ -25,7 +25,7 @@ func Parse(linguakitOutput string) ([]Sentence, error) {
 		var pattern = make([]string, 0)
 
 		for _, word := range words {
-			pattern = append(pattern, word.Type)
+			pattern = append(pattern, word.Tag)
 		}
 
 		result = append(result, Sentence{
@@ -105,8 +105,9 @@ func parseWord(word string) (Word, error) {
 	wordProperties := parseWordProperties(elements[3])
 
 	result := Word{
-		Type:       elements[1],
+		Tag:        elements[1],
 		Lemma:      wordProperties["lemma"],
+		Type:       wordProperties["type"],
 		Properties: wordProperties,
 	}
 

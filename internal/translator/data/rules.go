@@ -11,8 +11,8 @@ import (
 
 // RuleDetail represents a word in the rule
 type RuleDetail struct {
-	Type       string            `bson:"type"`
-	Properties map[string]string `bson:"properties"`
+	Tag  string `bson:"tag"`
+	Type string `bson:"type"`
 }
 
 // RuleOutput represents a single rule to make an element of the
@@ -146,16 +146,16 @@ func (r Rules) FindByPattern(ctx context.Context, sourceLanguage, targetLanguage
 		Pattern:        "VERB,ADV,ADJ",
 		Details: []RuleDetail{
 			{
-				Type:       "VERB",
-				Properties: map[string]string{},
+				Tag:  "VERB",
+				Type: "",
 			},
 			{
-				Type:       "ADV",
-				Properties: map[string]string{},
+				Tag:  "ADV",
+				Type: "",
 			},
 			{
-				Type:       "ADJ",
-				Properties: map[string]string{},
+				Tag:  "ADJ",
+				Type: "",
 			},
 		},
 		Output: []RuleOutput{
