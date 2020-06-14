@@ -143,12 +143,12 @@ func TestRules(t *testing.T) {
 	t.Run("get and error finding non existing rule", func(t *testing.T) {
 		rule, error := helper.FindRuleByPattern(context.Background(), "espaol", "kaqchikel", "ADJ,ADJ,ADV")
 
-		if error == nil {
-			t.Errorf("the pattern ADJ,ADJ,ADV doesn't exist")
+		if error != nil {
+			t.Fatal(error)
 		}
 
-		if rule == nil {
-			t.Logf("pattern doesn't exist")
+		if len(rule) == 0 {
+			t.Logf("pattern ADJ,ADJ,ADV doesn't exist")
 		}
 	})
 

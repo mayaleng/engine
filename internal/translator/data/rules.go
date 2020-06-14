@@ -80,10 +80,6 @@ func (r Rules) FindRuleByPattern(ctx context.Context, sourceLanguage, targetLang
 		return nil, err
 	}
 
-	if len(rule) == 0 {
-		return nil, fmt.Errorf("No patterns found")
-	}
-
 	return rule, nil
 }
 
