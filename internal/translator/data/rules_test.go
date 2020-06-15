@@ -31,7 +31,7 @@ func TestRules(t *testing.T) {
 	}(t)
 
 	t.Run("save a new rule with success when the strucutre is valid", func(t *testing.T) {
-		newRule := Rule{
+		newRule := NewRule{
 			SourceLanguage: "espaol",
 			TargetLanguage: "kaqchikel",
 			Pattern:        "VERB,ADV,ADJ",
@@ -75,11 +75,11 @@ func TestRules(t *testing.T) {
 			t.Fatal(error)
 		}
 
-		t.Logf("New rule created with id %s", newID.Hex())
+		t.Logf("First rule created with id %s", newID.Hex())
 	})
 
 	t.Run("save a new rule with success and with the same last pattern but different detail when the strucutre is valid", func(t *testing.T) {
-		newRule := Rule{
+		newRule := NewRule{
 			SourceLanguage: "espaol",
 			TargetLanguage: "kaqchikel",
 			Pattern:        "VERB,ADV,ADJ",
@@ -115,7 +115,7 @@ func TestRules(t *testing.T) {
 			t.Fatal(error)
 		}
 
-		t.Logf("New rule created with id %s", newID.Hex())
+		t.Logf("Second rule created with id %s", newID.Hex())
 	})
 
 	t.Run("find rule with success when the value exists", func(t *testing.T) {
@@ -157,7 +157,7 @@ func TestRules(t *testing.T) {
 	})
 
 	t.Run("add short new rule with success when the strucutre is valid", func(t *testing.T) {
-		newRule := Rule{
+		newRule := NewRule{
 			SourceLanguage: "espaol",
 			TargetLanguage: "kaqchikel",
 			Pattern:        "VERB",
@@ -191,7 +191,7 @@ func TestRules(t *testing.T) {
 			t.Fatal(error)
 		}
 
-		sameRuleChange := Rule{
+		sameRuleChange := NewRule{
 			SourceLanguage: "espaol",
 			TargetLanguage: "kaqchikel",
 			Pattern:        "ADJ",
@@ -230,7 +230,7 @@ func TestRules(t *testing.T) {
 		if len(rule) == 0 {
 			t.Logf("Rule doesn't exist")
 		} else {
-			errord := helper.DeleteOne(context.Background(), rule[0])
+			errord := helper.DeleteOne(context.Background(), rule[0].ID)
 
 			if errord != nil {
 				t.Fatal(errord)

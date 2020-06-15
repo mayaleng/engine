@@ -20,11 +20,21 @@ type RuleOutput map[string]string
 
 // Rule represents a translation rule
 type Rule struct {
-	SourceLanguage string       `bson:"source_language"`
-	TargetLanguage string       `bson:"target_language"`
-	Pattern        string       `bson:"pattern"`
-	Details        []RuleDetail `bson:"details"`
-	Output         []RuleOutput `bson:"output"`
+	ID             primitive.ObjectID `bson:"_id" json:"id" omitempty:"true"`
+	SourceLanguage string             `bson:"source_language" json:"source_language"`
+	TargetLanguage string             `bson:"target_language" json:"target_language"`
+	Pattern        string             `bson:"pattern" json:"pattern"`
+	Details        []RuleDetail       `bson:"details" json:"details"`
+	Output         []RuleOutput       `bson:"output" json:"output"`
+}
+
+// NewRule represents a rule to be created
+type NewRule struct {
+	SourceLanguage string       `bson:"source_language" json:"source_language"`
+	TargetLanguage string       `bson:"target_language" json:"target_language"`
+	Pattern        string       `bson:"pattern" json:"pattern"`
+	Details        []RuleDetail `bson:"details" json:"details"`
+	Output         []RuleOutput `bson:"output" json:"output"`
 }
 
 // Rules is a reference of a db collection
@@ -34,15 +44,15 @@ type Rules struct {
 
 // RulesHelper has useful functions to work with the collection
 type RulesHelper interface {
-	New(ctx context.Context, ruleStruct Rule) (*primitive.ObjectID, error)
+	New(ctx context.Context, ruleStruct NewRule) (*primitive.ObjectID, error)
 	Find(ctx context.Context, sourceLanguage, targetLanguage, pattern string) ([]Rule, error)
-	UpdateOne(ctx context.Context, filter Rule, updateValue Rule) error
-	DeleteOne(ctx context.Context, rule Rule) error
+	UpdateOne(ctx context.Context, filter Rule, updateValue NewRule) error
+	DeleteOne(ctx context.Context, ObjectID primitive.ObjectID) error
 	DeleteMany(ctx context.Context, filter map[string]string) error
 }
 
 // New creates a rule in database
-func (r Rules) New(ctx context.Context, ruleStruct Rule) (*primitive.ObjectID, error) {
+func (r Rules) New(ctx context.Context, ruleStruct NewRule) (*primitive.ObjectID, error) {
 	result, error := r.Collection.InsertOne(ctx, ruleStruct)
 
 	if error != nil {
@@ -82,7 +92,7 @@ func (r Rules) Find(ctx context.Context, sourceLanguage, targetLanguage, pattern
 }
 
 // UpdateOne updates one rule
-func (r Rules) UpdateOne(ctx context.Context, filter Rule, updateValue Rule) error {
+func (r Rules) UpdateOne(ctx context.Context, filter Rule, updateValue NewRule) error {
 	set := map[string]interface{}{
 		"$set": updateValue,
 	}
@@ -101,8 +111,12 @@ func (r Rules) UpdateOne(ctx context.Context, filter Rule, updateValue Rule) err
 }
 
 // DeleteOne deletes one rule that match with a pattern and detail
-func (r Rules) DeleteOne(ctx context.Context, rule Rule) error {
-	deleteResult, error := r.Collection.DeleteOne(ctx, rule)
+func (r Rules) DeleteOne(ctx context.Context, ObjectID primitive.ObjectID) error {
+	filter := map[string]interface{}{
+		"_id": ObjectID,
+	}
+
+	deleteResult, error := r.Collection.DeleteOne(ctx, filter)
 
 	if error != nil {
 		return error
