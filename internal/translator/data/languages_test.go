@@ -86,7 +86,7 @@ func TestLanguages(t *testing.T) {
 			t.Fatal(error)
 		}
 
-		t.Logf("Language updated, found it %v", language)
+		t.Logf("Language updated, found it %v", language.ID)
 	})
 
 	t.Run("delete a document with success when exists", func(t *testing.T) {

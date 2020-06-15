@@ -3,7 +3,6 @@ package data
 import (
 	"context"
 	"fmt"
-	"strings"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -35,16 +34,15 @@ type Rules struct {
 
 // RulesHelper has useful functions to work with the collection
 type RulesHelper interface {
-	FindByPattern(ctx context.Context, source, target, pattern string) ([]Rule, error)
-	NewRule(ctx context.Context, ruleStruct Rule) (*primitive.ObjectID, error)
-	FindRuleByPattern(ctx context.Context, sourceLanguage, targetLanguage, pattern string) ([]Rule, error)
+	New(ctx context.Context, ruleStruct Rule) (*primitive.ObjectID, error)
+	Find(ctx context.Context, sourceLanguage, targetLanguage, pattern string) ([]Rule, error)
 	UpdateOne(ctx context.Context, filter Rule, updateValue Rule) error
 	DeleteOne(ctx context.Context, rule Rule) error
-	DeleteMany(ctx context.Context, sourceLanguage, targetLanguage, pattern string) error
+	DeleteMany(ctx context.Context, filter map[string]string) error
 }
 
-// NewRule creates a rule in database
-func (r Rules) NewRule(ctx context.Context, ruleStruct Rule) (*primitive.ObjectID, error) {
+// New creates a rule in database
+func (r Rules) New(ctx context.Context, ruleStruct Rule) (*primitive.ObjectID, error) {
 	result, error := r.Collection.InsertOne(ctx, ruleStruct)
 
 	if error != nil {
@@ -56,8 +54,8 @@ func (r Rules) NewRule(ctx context.Context, ruleStruct Rule) (*primitive.ObjectI
 	return &newObjectID, nil
 }
 
-// FindRuleByPattern return a list of rules that match with the given pattern
-func (r Rules) FindRuleByPattern(ctx context.Context, sourceLanguage, targetLanguage, pattern string) ([]Rule, error) {
+// Find return a list of rules that match with the given pattern
+func (r Rules) Find(ctx context.Context, sourceLanguage, targetLanguage, pattern string) ([]Rule, error) {
 	var rule []Rule
 
 	filter := map[string]string{
@@ -118,13 +116,7 @@ func (r Rules) DeleteOne(ctx context.Context, rule Rule) error {
 }
 
 // DeleteMany deletes all of the rules that match with a pattern
-func (r Rules) DeleteMany(ctx context.Context, sourceLanguage, targetLanguage, pattern string) error {
-	filter := map[string]string{
-		"source_language": sourceLanguage,
-		"target_language": targetLanguage,
-		"pattern":         pattern,
-	}
-
+func (r Rules) DeleteMany(ctx context.Context, filter map[string]string) error {
 	deleteResult, error := r.Collection.DeleteMany(ctx, filter)
 
 	if error != nil {
@@ -136,51 +128,4 @@ func (r Rules) DeleteMany(ctx context.Context, sourceLanguage, targetLanguage, p
 	}
 
 	return nil
-}
-
-// FindByPattern return a list of rules that match with the given pattern
-func (r Rules) FindByPattern(ctx context.Context, sourceLanguage, targetLanguage, pattern string) ([]Rule, error) {
-	var rule = Rule{
-		SourceLanguage: sourceLanguage,
-		TargetLanguage: targetLanguage,
-		Pattern:        "VERB,ADV,ADJ",
-		Details: []RuleDetail{
-			{
-				Tag:  "VERB",
-				Type: "",
-			},
-			{
-				Tag:  "ADV",
-				Type: "",
-			},
-			{
-				Tag:  "ADJ",
-				Type: "",
-			},
-		},
-		Output: []RuleOutput{
-			{
-				"type":  "direct-translation",
-				"value": "{{(index .Words 2).Lemma}}",
-			},
-			{
-				"type":  "literal",
-				"value": " ",
-			},
-			{
-				"type":  "direct-translation",
-				"value": "{{(index .Words 1).Lemma}}",
-			},
-			{
-				"type":  "direct-translation",
-				"value": "{{(index .Words 0).Lemma}}",
-			},
-		},
-	}
-
-	if !strings.Contains(rule.Pattern, pattern) {
-		return []Rule{}, fmt.Errorf("No pattern found")
-	}
-
-	return []Rule{rule}, nil
 }

@@ -69,7 +69,7 @@ func TestRules(t *testing.T) {
 			},
 		}
 
-		newID, error := helper.NewRule(context.Background(), newRule)
+		newID, error := helper.New(context.Background(), newRule)
 
 		if error != nil {
 			t.Fatal(error)
@@ -109,7 +109,7 @@ func TestRules(t *testing.T) {
 			},
 		}
 
-		newID, error := helper.NewRule(context.Background(), newRule)
+		newID, error := helper.New(context.Background(), newRule)
 
 		if error != nil {
 			t.Fatal(error)
@@ -119,7 +119,7 @@ func TestRules(t *testing.T) {
 	})
 
 	t.Run("find rule with success when the value exists", func(t *testing.T) {
-		rule, error := helper.FindRuleByPattern(context.Background(), "espaol", "kaqchikel", "VERB,ADV,ADJ")
+		rule, error := helper.Find(context.Background(), "espaol", "kaqchikel", "VERB,ADV,ADJ")
 
 		if error != nil {
 			t.Fatal(error)
@@ -129,7 +129,7 @@ func TestRules(t *testing.T) {
 	})
 
 	t.Run("get and error finding non existing rule", func(t *testing.T) {
-		rule, error := helper.FindRuleByPattern(context.Background(), "espaol", "kaqchikel", "ADJ,ADJ,ADV")
+		rule, error := helper.Find(context.Background(), "espaol", "kaqchikel", "ADJ,ADJ,ADV")
 
 		if error != nil {
 			t.Fatal(error)
@@ -141,7 +141,13 @@ func TestRules(t *testing.T) {
 	})
 
 	t.Run("delete a group of rules with success when the rules exist", func(t *testing.T) {
-		error := helper.DeleteMany(context.Background(), "espaol", "kaqchikel", "VERB,ADV,ADJ")
+		filter := map[string]string{
+			"source_language": "espaol",
+			"target_language": "kaqchikel",
+			"pattern":         "VERB,ADV,ADJ",
+		}
+
+		error := helper.DeleteMany(context.Background(), filter)
 
 		if error != nil {
 			t.Fatal(error)
@@ -169,7 +175,7 @@ func TestRules(t *testing.T) {
 			},
 		}
 
-		newID, error := helper.NewRule(context.Background(), newRule)
+		newID, error := helper.New(context.Background(), newRule)
 
 		if error != nil {
 			t.Fatal(error)
@@ -179,7 +185,7 @@ func TestRules(t *testing.T) {
 	})
 
 	t.Run("update one rule with success when the rule exists", func(t *testing.T) {
-		filter, error := helper.FindRuleByPattern(context.Background(), "espaol", "kaqchikel", "VERB")
+		filter, error := helper.Find(context.Background(), "espaol", "kaqchikel", "VERB")
 
 		if error != nil {
 			t.Fatal(error)
@@ -209,24 +215,28 @@ func TestRules(t *testing.T) {
 			t.Fatal(erroru)
 		}
 
-		rule, error := helper.FindRuleByPattern(context.Background(), "espaol", "kaqchikel", "ADJ")
+		rule, error := helper.Find(context.Background(), "espaol", "kaqchikel", "ADJ")
 
 		t.Logf("Rule updated %v", rule)
 	})
 
 	t.Run("delete one rule with success when the rule exists", func(t *testing.T) {
-		rule, error := helper.FindRuleByPattern(context.Background(), "espaol", "kaqchikel", "ADJ")
+		rule, error := helper.Find(context.Background(), "espaol", "kaqchikel", "ADJ")
 
 		if error != nil {
 			t.Fatal(error)
 		}
 
-		errord := helper.DeleteOne(context.Background(), rule[0])
+		if len(rule) == 0 {
+			t.Logf("Rule doesn't exist")
+		} else {
+			errord := helper.DeleteOne(context.Background(), rule[0])
 
-		if errord != nil {
-			t.Fatal(errord)
+			if errord != nil {
+				t.Fatal(errord)
+			}
+
+			t.Logf("Rule found it and deleted")
 		}
-
-		t.Logf("Rule found it and deleted")
 	})
 }
