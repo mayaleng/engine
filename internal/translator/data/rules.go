@@ -30,11 +30,11 @@ type Rule struct {
 
 // NewRule represents a rule to be created
 type NewRule struct {
-	SourceLanguage string       `bson:"source_language" json:"source_language"`
-	TargetLanguage string       `bson:"target_language" json:"target_language"`
-	Pattern        string       `bson:"pattern" json:"pattern"`
-	Details        []RuleDetail `bson:"details" json:"details"`
-	Output         []RuleOutput `bson:"output" json:"output"`
+	SourceLanguage string       `bson:"source_language"`
+	TargetLanguage string       `bson:"target_language"`
+	Pattern        string       `bson:"pattern"`
+	Details        []RuleDetail `bson:"details"`
+	Output         []RuleOutput `bson:"output"`
 }
 
 // Rules is a reference of a db collection

@@ -217,7 +217,7 @@ func TestRules(t *testing.T) {
 
 		rule, error := helper.Find(context.Background(), "espaol", "kaqchikel", "ADJ")
 
-		t.Logf("Rule updated %v", rule)
+		t.Logf("Rule updated %v", rule[0])
 	})
 
 	t.Run("delete one rule with success when the rule exists", func(t *testing.T) {
