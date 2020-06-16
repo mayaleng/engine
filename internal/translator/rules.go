@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"context"
 	"log"
-	"mayaleng.org/engine/internal/translator/data"
-	"mayaleng.org/engine/internal/translator/linguakit"
 	"strings"
 	"text/template"
+
+	"mayaleng.org/engine/internal/platform/data"
+	"mayaleng.org/engine/internal/translator/linguakit"
 )
 
 // TranslateByRule use a given rule to generate the output translation
@@ -20,6 +21,9 @@ func (t *Translator) TranslateByRule(ctx context.Context, sourceLanguage, target
 	for _, outputRule := range rule.Output {
 		ruleType := outputRule["type"]
 		value := t.replaceTemplates(words, outputRule["value"])
+
+		// TODO dynamic translation
+		// TODO predefined translation
 
 		switch ruleType {
 		case "direct-translation":
@@ -51,7 +55,7 @@ func (t *Translator) filterWordsByRule(words []linguakit.Word, rule data.Rule) [
 
 	var detailIndex = 0
 	for _, word := range words {
-		if rule.Details[detailIndex].Type == word.Type {
+		if rule.Details[detailIndex].Tag == word.Tag {
 			filteredWords = append(filteredWords, word)
 			detailIndex++
 			if detailIndex == len(rule.Details) {

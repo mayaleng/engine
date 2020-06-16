@@ -3,8 +3,9 @@ package translator
 import (
 	"context"
 	"fmt"
-	"mayaleng.org/engine/internal/translator/linguakit"
 	"strings"
+
+	"mayaleng.org/engine/internal/translator/linguakit"
 )
 
 // TranslateWordByWord does a translation word by word using the database
@@ -13,7 +14,7 @@ func (t *Translator) TranslateWordByWord(ctx context.Context, sourceLanguage, ta
 	var translation string
 
 	for _, word := range sentence.Words {
-		if word.Type == "SENT" || strings.HasPrefix(word.Type, "F") {
+		if word.Tag == "SENT" || strings.HasPrefix(word.Tag, "F") {
 			translation = fmt.Sprintf("%s%s", translation, word.Lemma)
 			continue
 		}
