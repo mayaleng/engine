@@ -2,9 +2,10 @@ package translator
 
 import (
 	"context"
+	"strings"
+
 	"mayaleng.org/engine/internal/translator/data"
 	"mayaleng.org/engine/internal/translator/linguakit"
-	"strings"
 )
 
 // Translator represents the entity capable of translate words
@@ -62,7 +63,7 @@ func (t *Translator) TranslatePhrase(ctx context.Context, phrase, source, target
 func (t *Translator) TranslateSentence(ctx context.Context, sourceLanguage, targetLanguage string, sentence linguakit.Sentence) TranslatedSentence {
 	var result = TranslatedSentence{}
 
-	rules, error := t.RulesHelper.FindByPattern(ctx, sourceLanguage, targetLanguage, sentence.Pattern)
+	rules, error := t.RulesHelper.Find(ctx, sourceLanguage, targetLanguage, sentence.Pattern)
 
 	if error != nil || len(rules) == 0 {
 		result.Sentence, result.UnknownWords = t.TranslateWordByWord(ctx, sourceLanguage, targetLanguage, sentence)

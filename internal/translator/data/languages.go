@@ -52,7 +52,7 @@ func (l Languages) New(ctx context.Context, newLanguage NewLanguage) (*primitive
 	return &newObjectID, nil
 }
 
-// Update an existing word in database
+// UpdateOne updates an existing word in database
 func (l Languages) UpdateOne(ctx context.Context, filter map[string]string, updateValue map[string]interface{}) error {
 	set := map[string]interface{}{
 		"$set": updateValue,
@@ -71,7 +71,7 @@ func (l Languages) UpdateOne(ctx context.Context, filter map[string]string, upda
 	return nil
 }
 
-// Delete an existing word in database
+// DeleteOne deletes an existing word in database
 func (l Languages) DeleteOne(ctx context.Context, deleteValue map[string]string) error {
 	deleteResult, error := l.Collection.DeleteOne(ctx, deleteValue)
 
