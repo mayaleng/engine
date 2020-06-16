@@ -9,27 +9,27 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-// Categories represents words' properties like: transitivity, intransitivity etc.
+// Categories represents words' properties as key-value pairs. E.g transitive: true, noun: true...
 type Categories map[string]bool
 
-// Word represents a word in a language
+// Word represents a word in a language.
 type Word struct {
 	ID         primitive.ObjectID `bson:"_id" json:"id"`
-	Text       string             `bson:"word" json:"text"`
+	Text       string             `bson:"text" json:"text"`
 	Categories Categories         `bson:"categories" json:"categories"`
 	CreatedAt  time.Time          `bson:"created_at" json:"created_at"`
 	UpdatedAt  time.Time          `bson:"updated_at" json:"updated_at"`
 }
 
-// NewWord represent a word to be created
+// NewWord has the needed properties to create a new word
 type NewWord struct {
-	Text       string     `bson:"word" json:"text"`
+	Text       string     `bson:"text" json:"text"`
 	Categories Categories `bson:"categories" json:"categories"`
 	UpdatedAt  time.Time  `bson:"updated_at" json:"updated_at"`
 	CreatedAt  time.Time  `bson:"created_at" json:"created_at"`
 }
 
-// Words is a reference of a db collection
+// Words contains the reference to the database
 type Words struct {
 	Database *mongo.Database
 }
@@ -39,8 +39,8 @@ type WordsHelper interface {
 	New(ctx context.Context, collectionName string, newWord NewWord) (*primitive.ObjectID, error)
 	FindByID(ctx context.Context, collectionName string, ID primitive.ObjectID) (*Word, error)
 	FindOneByText(ctx context.Context, collectionName string, text string) (*Word, error)
-	UpdateOne(ctx context.Context, collectionName string, filter map[string]string, updateValue map[string]interface{}) error
-	DeleteOne(ctx context.Context, collectionName string, deleteValue map[string]string) error
+	UpdateOne(ctx context.Context, collectionName string, filter map[string]string, newValue map[string]interface{}) error
+	DeleteOne(ctx context.Context, collectionName string, filter map[string]string) error
 }
 
 // New creates a new word in the database
@@ -57,52 +57,14 @@ func (w Words) New(ctx context.Context, collectionName string, newWord NewWord) 
 	return &newObjectID, nil
 }
 
-// UpdateOne updates an existing word in database
-func (w Words) UpdateOne(ctx context.Context, collectionName string, filter map[string]string, updateValue map[string]interface{}) error {
-	collection := w.Database.Collection(collectionName)
-
-	set := map[string]interface{}{
-		"$set": updateValue,
-	}
-
-	updateResult, error := collection.UpdateOne(ctx, filter, set)
-
-	if error != nil {
-		return error
-	}
-
-	if updateResult.ModifiedCount == 0 {
-		return fmt.Errorf("no documents updated")
-	}
-
-	return nil
-}
-
-// DeleteOne deletes an existing word in database
-func (w Words) DeleteOne(ctx context.Context, collectionName string, deleteValue map[string]string) error {
-	collection := w.Database.Collection(collectionName)
-
-	deleteResult, error := collection.DeleteOne(ctx, deleteValue)
-
-	if error != nil {
-		return error
-	}
-
-	if deleteResult.DeletedCount == 0 {
-		return fmt.Errorf("document didn't find")
-	}
-
-	return nil
-}
-
-// FindOneByText return a single word
+// FindOneByText returns the first word that match with the given text
 func (w Words) FindOneByText(ctx context.Context, collectionName, text string) (*Word, error) {
 	var word Word
 
 	collection := w.Database.Collection(collectionName)
 
 	filter := map[string]string{
-		"word": text,
+		"text": text,
 	}
 
 	singleResult := collection.FindOne(ctx, filter)
@@ -116,7 +78,7 @@ func (w Words) FindOneByText(ctx context.Context, collectionName, text string) (
 	return &word, nil
 }
 
-// FindByID return a single word by the object id
+// FindByID returns a document that has the given id
 func (w Words) FindByID(ctx context.Context, collectionName string, id primitive.ObjectID) (*Word, error) {
 	var word Word
 
@@ -135,4 +97,42 @@ func (w Words) FindByID(ctx context.Context, collectionName string, id primitive
 	}
 
 	return &word, nil
+}
+
+// UpdateOne updates the first document that match with the given filter
+func (w Words) UpdateOne(ctx context.Context, collectionName string, filter map[string]string, newValue map[string]interface{}) error {
+	collection := w.Database.Collection(collectionName)
+
+	set := map[string]interface{}{
+		"$set": newValue,
+	}
+
+	updateResult, error := collection.UpdateOne(ctx, filter, set)
+
+	if error != nil {
+		return error
+	}
+
+	if updateResult.ModifiedCount == 0 {
+		return fmt.Errorf("no documents updated")
+	}
+
+	return nil
+}
+
+// DeleteOne removes the first document that match with the given filter
+func (w Words) DeleteOne(ctx context.Context, collectionName string, filter map[string]string) error {
+	collection := w.Database.Collection(collectionName)
+
+	deleteResult, error := collection.DeleteOne(ctx, filter)
+
+	if error != nil {
+		return error
+	}
+
+	if deleteResult.DeletedCount == 0 {
+		return fmt.Errorf("document didn't find")
+	}
+
+	return nil
 }

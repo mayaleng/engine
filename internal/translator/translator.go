@@ -4,7 +4,7 @@ import (
 	"context"
 	"strings"
 
-	"mayaleng.org/engine/internal/translator/data"
+	"mayaleng.org/engine/internal/platform/data"
 	"mayaleng.org/engine/internal/translator/linguakit"
 )
 
