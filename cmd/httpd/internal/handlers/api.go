@@ -6,13 +6,13 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"go.mongodb.org/mongo-driver/mongo"
 	helpers "mayaleng.org/engine/internal/platform/data"
-	"mayaleng.org/engine/internal/platform/envs"
+	"mayaleng.org/engine/internal/platform/types"
 	"mayaleng.org/engine/internal/translator"
 )
 
 // NewAPI creates the routes for the HTTP API. Also the handlers for
 // the functionality.
-func NewAPI(envs *envs.Envs, dbConnection *mongo.Client) http.Handler {
+func NewAPI(envs *types.Envs, dbConnection *mongo.Client) http.Handler {
 	router := httprouter.New()
 
 	database := dbConnection.Database(envs.DatabaseName)

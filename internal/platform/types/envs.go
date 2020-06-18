@@ -1,8 +1,4 @@
-/*
-Package envs contains the definition of environment variables
-required by the app
-*/
-package envs
+package types
 
 // Envs represents the env vars for non-testing
 type Envs struct {

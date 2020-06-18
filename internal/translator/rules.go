@@ -1,91 +1,60 @@
 package translator
 
 import (
-	"bytes"
 	"context"
-	"log"
 	"strings"
-	"text/template"
 
 	"mayaleng.org/engine/internal/platform/data"
-	"mayaleng.org/engine/internal/translator/linguakit"
+	"mayaleng.org/engine/internal/platform/linguakit"
+	"mayaleng.org/engine/internal/platform/types"
+	"mayaleng.org/engine/internal/translator/utils"
 )
 
 // TranslateByRule use a given rule to generate the output translation
-func (t *Translator) TranslateByRule(ctx context.Context, sourceLanguage, targetLanguage string, rule data.Rule, sentence linguakit.Sentence) (string, []UnknownWord) {
+func (t *Translator) TranslateByRule(ctx context.Context, sentence linguakit.Sentence, rule data.Rule) (string, []types.UnknownWord) {
 	var output = make([]string, 0)
-	var unknownWords = make([]UnknownWord, 0)
+	var unknownWords = make([]types.UnknownWord, 0)
 
-	words := t.filterWordsByRule(sentence.Words, rule)
+	words := utils.FilterWordsByRule(sentence.Words, rule)
 
 	for _, outputRule := range rule.Output {
+		var error error
+		var translation string
+
 		ruleType := outputRule["type"]
-		value := t.replaceTemplates(words, outputRule["value"])
+		value := utils.ReplaceValues(outputRule["value"], words)
 
 		// TODO dynamic translation
 		// TODO predefined translation
 
 		switch ruleType {
 		case "direct-translation":
-			t, error := t.directTranslation(ctx, sourceLanguage, targetLanguage, value)
+			translation, error = t.directTranslation(ctx, rule.SourceLanguage, rule.TargetLanguage, value)
+		case "literal":
+			translation = value
+		}
 
-			if error != nil {
-				uw := UnknownWord{
-					SourceLanguage: sourceLanguage,
-					TargetLanguage: targetLanguage,
-					Word:           value,
-				}
-				unknownWords = append(unknownWords, uw)
-
-				output = append(output, value)
-				continue
+		if error != nil {
+			uw := types.UnknownWord{
+				SourceLanguage: rule.SourceLanguage,
+				TargetLanguage: rule.TargetLanguage,
+				Word:           value,
 			}
 
-			output = append(output, t)
-		case "literal":
+			unknownWords = append(unknownWords, uw)
 			output = append(output, value)
+
+			continue
 		}
+
+		output = append(output, translation)
 	}
 
 	return strings.Join(output, ""), unknownWords
 }
 
-func (t *Translator) filterWordsByRule(words []linguakit.Word, rule data.Rule) []linguakit.Word {
-	var filteredWords = make([]linguakit.Word, 0)
-
-	var detailIndex = 0
-	for _, word := range words {
-		if rule.Details[detailIndex].Tag == word.Tag {
-			filteredWords = append(filteredWords, word)
-			detailIndex++
-			if detailIndex == len(rule.Details) {
-				break
-			}
-		}
-	}
-
-	return filteredWords
-}
-
-func (t *Translator) replaceTemplates(words []linguakit.Word, value string) string {
-	input := map[string]interface{}{
-		"Words": words,
-	}
-
-	var buf bytes.Buffer
-	valueTemplate := template.Must(template.New("tmp").Parse(value))
-
-	error := valueTemplate.Execute(&buf, input)
-	if error != nil {
-		log.Println(error)
-		return value
-	}
-
-	return buf.String()
-}
-
 func (t *Translator) directTranslation(ctx context.Context, sourceLanguage, targetLanguage, word string) (string, error) {
-	translation, error := t.getTranslationFromDB(ctx, sourceLanguage, targetLanguage, word)
+	translation, error := t.TranslateWord(ctx, word, sourceLanguage, targetLanguage)
 	if error != nil {
 		return "", error
 	}
