@@ -4,42 +4,16 @@ import (
 	"context"
 	"strings"
 
-	"mayaleng.org/engine/internal/platform/data"
-	"mayaleng.org/engine/internal/translator/linguakit"
+	"mayaleng.org/engine/internal/platform/linguakit"
+	"mayaleng.org/engine/internal/platform/types"
 )
 
-// Translator represents the entity capable of translate words
-type Translator struct {
-	WordsHelper        data.WordsHelper
-	TranslationsHelper data.TranslationsHelper
-	RulesHelper        data.RulesHelper
-}
-
-// TranslatedPhrase represents the translation of a phrase
-type TranslatedPhrase struct {
-	Phrase       string        `json:"phrase"`
-	UnknownWords []UnknownWord `json:"unknown_words"`
-}
-
-// TranslatedSentence represents the translation of a single sentence
-type TranslatedSentence struct {
-	Sentence     string        `json:"sentence"`
-	UnknownWords []UnknownWord `json:"unknown_words,omitempty"`
-}
-
-// UnknownWord is used as feedback in trasnlations
-type UnknownWord struct {
-	SourceLanguage string `json:"source,omitempty"`
-	TargetLanguage string `json:"target,omitempty"`
-	Word           string `json:"word,omitempty"`
-}
-
-// TranslatePhrase receives a phrase, a source and target language to
+// TranslatePhrase receives a phrase, a source and a target language to
 // make a translation.
-func (t *Translator) TranslatePhrase(ctx context.Context, phrase, source, target string) (*TranslatedPhrase, error) {
-	var result TranslatedPhrase
+func (t *Translator) TranslatePhrase(ctx context.Context, phrase, source, target string) (*types.TranslatedPhrase, error) {
+	var result types.TranslatedPhrase
 	var sentences = make([]string, 0)
-	var unknownWords = make([]UnknownWord, 0)
+	var unknownWords = make([]types.UnknownWord, 0)
 
 	analyzedSentences, error := linguakit.AnalyzePhrase(phrase)
 
@@ -48,7 +22,7 @@ func (t *Translator) TranslatePhrase(ctx context.Context, phrase, source, target
 	}
 
 	for _, sentence := range analyzedSentences {
-		translation := t.TranslateSentence(ctx, source, target, sentence)
+		translation := t.TranslateSentence(ctx, sentence, source, target)
 		sentences = append(sentences, translation.Sentence)
 		unknownWords = append(unknownWords, translation.UnknownWords...)
 	}
@@ -60,19 +34,19 @@ func (t *Translator) TranslatePhrase(ctx context.Context, phrase, source, target
 }
 
 // TranslateSentence process an output in format of Linguakit
-func (t *Translator) TranslateSentence(ctx context.Context, sourceLanguage, targetLanguage string, sentence linguakit.Sentence) TranslatedSentence {
-	var result = TranslatedSentence{}
+func (t *Translator) TranslateSentence(ctx context.Context, sentence linguakit.Sentence, sourceLanguage, targetLanguage string) types.TranslatedSentence {
+	var result = types.TranslatedSentence{}
 
 	rules, error := t.RulesHelper.Find(ctx, sourceLanguage, targetLanguage, sentence.Pattern)
 
 	if error != nil || len(rules) == 0 {
-		result.Sentence, result.UnknownWords = t.TranslateWordByWord(ctx, sourceLanguage, targetLanguage, sentence)
+		result.Sentence, result.UnknownWords = t.TranslateWordByWord(ctx, sentence, sourceLanguage, targetLanguage)
 		return result
 	}
 
 	// TODO filter by details
 	rule := rules[0]
 
-	result.Sentence, result.UnknownWords = t.TranslateByRule(ctx, sourceLanguage, targetLanguage, rule, sentence)
+	result.Sentence, result.UnknownWords = t.TranslateByRule(ctx, sentence, rule)
 	return result
 }

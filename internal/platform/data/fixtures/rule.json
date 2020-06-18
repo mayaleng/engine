@@ -1,18 +1,21 @@
 {
-  "source_language": "es",
-  "target_language": "en",
+  "source_language": "espaol",
+  "target_language": "kaqchikel",
   "pattern": "VERB,ADV,ADJ",
   "details": [
     {
-      "type": "VERB",
+      "tag": "VERB",
+      "type": "",
       "properties": {}
     },
     {
-      "type": "ADV",
+      "tag": "ADV",
+      "type": "",
       "properties": {}
     },
     {
-      "type": "ADJ",
+      "tag": "ADJ",
+      "type": "",
       "properties": {}
     }
   ],
