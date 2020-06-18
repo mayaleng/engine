@@ -25,6 +25,10 @@ func Parse(linguakitOutput string) ([]Sentence, error) {
 		var pattern = make([]string, 0)
 
 		for _, word := range words {
+			if word.Tag == "SENT" || strings.HasPrefix(word.Tag, "F") {
+				continue
+			}
+
 			pattern = append(pattern, word.Tag)
 		}
 

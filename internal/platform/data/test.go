@@ -1,20 +1,21 @@
 package data
 
 import (
+	"time"
+
 	"github.com/kelseyhightower/envconfig"
 	"go.mongodb.org/mongo-driver/mongo"
 	"mayaleng.org/engine/internal/platform/database"
-	"mayaleng.org/engine/internal/platform/envs"
-	"time"
+	"mayaleng.org/engine/internal/platform/types"
 )
 
 type testInfo struct {
-	envs *envs.TestEnvs
+	envs *types.TestEnvs
 	db   *mongo.Client
 }
 
 func setupTestInfo() (*testInfo, error) {
-	envs := envs.TestEnvs{}
+	envs := types.TestEnvs{}
 	error := envconfig.Process("app", &envs)
 
 	if error != nil {
