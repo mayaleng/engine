@@ -209,15 +209,13 @@ func TestRules(t *testing.T) {
 			},
 		}
 
-		erroru := helper.UpdateOne(context.Background(), filter[0], sameRuleChange)
+		error = helper.UpdateOne(context.Background(), filter[0], sameRuleChange)
 
-		if erroru != nil {
-			t.Fatal(erroru)
+		if error != nil {
+			t.Fatal(error)
 		}
 
-		rule, error := helper.Find(context.Background(), "espaol", "kaqchikel", "ADJ")
-
-		t.Logf("Rule updated %v", rule[0])
+		t.Logf("Rule updated with success")
 	})
 
 	t.Run("delete one rule with success when the rule exists", func(t *testing.T) {
