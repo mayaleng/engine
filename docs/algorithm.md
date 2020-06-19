@@ -19,18 +19,21 @@ This is an example of a definiton rule structure.
     "pattern": "DET,NOUN,VERB", // Generated based on the rules
     "details": [
         {
-            "type": "DET",
+            "tag": "DET",
+            "type: "",
             "properties": {
             }
         },
         {
-            "type": "NOUN",
+            "tag": "NOUN",
+            "type: "",
             "properties": {
                 "gender": "M"
             }
         },
         {
-            "type": "VERB",
+            "tag": "VERB",
+            "type: "",
             "properties": {
                 "tense": "P"
             }
@@ -45,19 +48,19 @@ This is an example of a definiton rule structure.
         },
         {
             "type": "literal",
-            "value": "<blank>"
+            "value": " "
         },
         {
             "type": "direct-translation",
-            "value": "${1.lemma}",
+            "value": "{{(index .Words 1).Lemma}}",
         },
         {
             "type": "literal",
-            "value": "<blank>"
+            "value": " "
         },
         {
             "type": "direct-translation",
-            "value": "${2.lemma}",
+            "value": "{{(index .Words 2).Lemma}}",
         },
     ]
 }
