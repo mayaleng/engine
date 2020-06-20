@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 docker-compose up -d
 
 go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...

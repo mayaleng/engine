@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 trap on_exit INT
 trap on_exit EXIT
 

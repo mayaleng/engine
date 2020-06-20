@@ -30,11 +30,11 @@ type Rule struct {
 
 // NewRule represents a rule to be created
 type NewRule struct {
-	SourceLanguage string       `bson:"source_language"`
-	TargetLanguage string       `bson:"target_language"`
-	Pattern        string       `bson:"pattern"`
-	Details        []RuleDetail `bson:"details"`
-	Output         []RuleOutput `bson:"output"`
+	SourceLanguage string       `bson:"source_language,omitempty"`
+	TargetLanguage string       `bson:"target_language,omitempty"`
+	Pattern        string       `bson:"pattern,omitempty"`
+	Details        []RuleDetail `bson:"details,omitempty"`
+	Output         []RuleOutput `bson:"output,omitempty"`
 }
 
 // Rules is a reference of a db collection
@@ -46,9 +46,8 @@ type Rules struct {
 type RulesHelper interface {
 	New(ctx context.Context, ruleStruct NewRule) (*primitive.ObjectID, error)
 	Find(ctx context.Context, sourceLanguage, targetLanguage, pattern string) ([]Rule, error)
-	UpdateOne(ctx context.Context, filter Rule, updateValue NewRule) error
+	UpdateOne(ctx context.Context, filter map[string]interface{}, updateValue map[string]interface{}) error
 	DeleteOne(ctx context.Context, ObjectID primitive.ObjectID) error
-	DeleteMany(ctx context.Context, filter map[string]string) error
 }
 
 // New creates a rule in database
@@ -92,7 +91,7 @@ func (r Rules) Find(ctx context.Context, sourceLanguage, targetLanguage, pattern
 }
 
 // UpdateOne updates one rule
-func (r Rules) UpdateOne(ctx context.Context, filter Rule, updateValue NewRule) error {
+func (r Rules) UpdateOne(ctx context.Context, filter map[string]interface{}, updateValue map[string]interface{}) error {
 	set := map[string]interface{}{
 		"$set": updateValue,
 	}
@@ -123,22 +122,7 @@ func (r Rules) DeleteOne(ctx context.Context, ObjectID primitive.ObjectID) error
 	}
 
 	if deleteResult.DeletedCount == 0 {
-		return fmt.Errorf("rule didn't find")
-	}
-
-	return nil
-}
-
-// DeleteMany deletes all of the rules that match with a pattern
-func (r Rules) DeleteMany(ctx context.Context, filter map[string]string) error {
-	deleteResult, error := r.Collection.DeleteMany(ctx, filter)
-
-	if error != nil {
-		return error
-	}
-
-	if deleteResult.DeletedCount == 0 {
-		return fmt.Errorf("rules didn't find")
+		return fmt.Errorf("0 documents delted")
 	}
 
 	return nil
