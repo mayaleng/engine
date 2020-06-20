@@ -15,8 +15,8 @@ func TestTranslation(t *testing.T) {
 		TranslationsHelper: test.TranslationsTest{},
 	}
 
-	t.Run("translate an existent target language with a valid pharse", func(t *testing.T) {
-		translation, error := translator.TranslatePhrase(context.TODO(), "hello que tal", "es", "en")
+	t.Run("translate directly with a valid pharse", func(t *testing.T) {
+		translation, error := translator.TranslatePhrase(context.TODO(), "hello que tal unknown.", "es", "en")
 
 		if error != nil {
 			t.Fatal(error)
@@ -25,8 +25,8 @@ func TestTranslation(t *testing.T) {
 		t.Log(translation)
 	})
 
-	t.Run("translate an existent target language with a valid pharse", func(t *testing.T) {
-		translation, error := translator.TranslatePhrase(context.TODO(), "estoy muy feliz", "es", "en")
+	t.Run("translate with rules with a valid pharse", func(t *testing.T) {
+		translation, error := translator.TranslatePhrase(context.TODO(), "estoy muy feliz.", "es", "en")
 
 		if error != nil {
 			t.Fatal(error)

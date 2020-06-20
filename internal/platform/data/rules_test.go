@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -13,6 +14,7 @@ type rulesWrapper struct {
 }
 
 func TestRules(t *testing.T) {
+	var globalID primitive.ObjectID
 	testInfo, error := setupTestInfo()
 
 	if error != nil {
@@ -52,7 +54,7 @@ func TestRules(t *testing.T) {
 			Output: []RuleOutput{
 				{
 					"type":  "direct-translation",
-					"value": "{{(index .Words 2).Lemma}}",
+					"value": "{{( .Words 2).Lemma}}",
 				},
 				{
 					"type":  "literal",
@@ -60,11 +62,11 @@ func TestRules(t *testing.T) {
 				},
 				{
 					"type":  "direct-translation",
-					"value": "{{(index .Words 1).Lemma}}",
+					"value": "{{ .Words2.Lemma }}",
 				},
 				{
 					"type":  "direct-translation",
-					"value": "{{(index .Words 0).Lemma}}",
+					"value": "{{ .Words1.Lemma }}",
 				},
 			},
 		}
@@ -74,6 +76,8 @@ func TestRules(t *testing.T) {
 		if error != nil {
 			t.Fatal(error)
 		}
+
+		globalID = *newID
 
 		t.Logf("First rule created with id %s", newID.Hex())
 	})
@@ -100,11 +104,11 @@ func TestRules(t *testing.T) {
 			Output: []RuleOutput{
 				{
 					"type":  "direct-translation",
-					"value": "{{(index .Words 1).Lemma}}",
+					"value": "{{ .Words2.Lemma }}",
 				},
 				{
 					"type":  "direct-translation",
-					"value": "{{(index .Words 0).Lemma}}",
+					"value": "{{ .Words1.Lemma }}",
 				},
 			},
 		}
@@ -140,22 +144,6 @@ func TestRules(t *testing.T) {
 		}
 	})
 
-	t.Run("delete a group of rules with success when the rules exist", func(t *testing.T) {
-		filter := map[string]string{
-			"source_language": "espaol",
-			"target_language": "kaqchikel",
-			"pattern":         "VERB,ADV,ADJ",
-		}
-
-		error := helper.DeleteMany(context.Background(), filter)
-
-		if error != nil {
-			t.Fatal(error)
-		}
-
-		t.Logf("Rules deleted")
-	})
-
 	t.Run("add short new rule with success when the strucutre is valid", func(t *testing.T) {
 		newRule := NewRule{
 			SourceLanguage: "espaol",
@@ -170,7 +158,7 @@ func TestRules(t *testing.T) {
 			Output: []RuleOutput{
 				{
 					"type":  "direct-translation",
-					"value": "{{(index .Words 0).Lemma}}",
+					"value": "{{ .Words1.Lemma }}",
 				},
 			},
 		}
@@ -185,31 +173,15 @@ func TestRules(t *testing.T) {
 	})
 
 	t.Run("update one rule with success when the rule exists", func(t *testing.T) {
-		filter, error := helper.Find(context.Background(), "espaol", "kaqchikel", "VERB")
-
-		if error != nil {
-			t.Fatal(error)
+		filter := map[string]interface{}{
+			"_id": globalID,
 		}
 
-		sameRuleChange := NewRule{
-			SourceLanguage: "espaol",
-			TargetLanguage: "kaqchikel",
-			Pattern:        "ADJ",
-			Details: []RuleDetail{
-				{
-					Tag:  "ADJ",
-					Type: "",
-				},
-			},
-			Output: []RuleOutput{
-				{
-					"type":  "direct-translation",
-					"value": "{{(index .Words 0).Lemma}}",
-				},
-			},
+		update := map[string]interface{}{
+			"source_language": "es",
 		}
 
-		error = helper.UpdateOne(context.Background(), filter[0], sameRuleChange)
+		error := helper.UpdateOne(context.Background(), filter, update)
 
 		if error != nil {
 			t.Fatal(error)
@@ -218,23 +190,38 @@ func TestRules(t *testing.T) {
 		t.Logf("Rule updated with success")
 	})
 
+	t.Run("get an error updating a rule that does not exist", func(t *testing.T) {
+		filter := map[string]interface{}{
+			"key": "val",
+		}
+
+		update := map[string]interface{}{
+			"source_language": "es",
+		}
+
+		error := helper.UpdateOne(context.Background(), filter, update)
+
+		if error == nil {
+			t.Fatalf("Error expected did not received")
+		}
+	})
+
 	t.Run("delete one rule with success when the rule exists", func(t *testing.T) {
-		rule, error := helper.Find(context.Background(), "espaol", "kaqchikel", "ADJ")
+		error := helper.DeleteOne(context.Background(), globalID)
 
 		if error != nil {
 			t.Fatal(error)
 		}
 
-		if len(rule) == 0 {
-			t.Logf("Rule doesn't exist")
-		} else {
-			errord := helper.DeleteOne(context.Background(), rule[0].ID)
+		t.Logf("Rule found it and deleted")
 
-			if errord != nil {
-				t.Fatal(errord)
-			}
+	})
 
-			t.Logf("Rule found it and deleted")
+	t.Run("get an error deleting a rule that does not exist", func(t *testing.T) {
+		error := helper.DeleteOne(context.Background(), primitive.NewObjectID())
+
+		if error == nil {
+			t.Fatalf("Error expected did not received")
 		}
 	})
 }
