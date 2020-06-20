@@ -33,7 +33,7 @@ var testRule = `
 	"output": [
 	  {
 	    "type": "direct-translation",
-	    "value": "{{(index .Words 2).Lemma}}"
+	    "value": "{{ .Words3.Lemma }}"
 	  },
 	  {
 	    "type": "literal",
@@ -41,11 +41,11 @@ var testRule = `
 	  },
 	  {
 	    "type": "direct-translation",
-	    "value": "{{(index .Words 1).Lemma}}"
+	    "value": "{{ .Words2.Lemma }}"
 	  },
 	  {
 	    "type": "direct-translation",
-	    "value": "{{(index .Words 0).Lemma}}"
+	    "value": "{{ .Words1.Lemma }}"
 	  }
 	]
       }
@@ -83,7 +83,7 @@ func (r RulesTest) Find(ctx context.Context, sourceLanguage, targetLanguage, pat
 }
 
 // UpdateOne always returns nil
-func (r RulesTest) UpdateOne(ctx context.Context, filter data.Rule, updateValue data.NewRule) error {
+func (r RulesTest) UpdateOne(ctx context.Context, filter map[string]interface{}, updateValue map[string]interface{}) error {
 	return nil
 }
 

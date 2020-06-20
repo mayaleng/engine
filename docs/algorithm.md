@@ -1,50 +1,49 @@
-# Deterministic algorithm
+# Deterministic Algorithm
 
-Nowaday we can use Machine Learning to translate sentences from one language to other, using a the `sequence to sequence` model. But in some cases there are a small problem: not enough training data.
+Nowaday we can use Machine Learning to translate sentences from one language to other, using a the `sequence to sequence` model. But in some cases there are a little problem: _not enough training data_.
 
-This was our situation. We tried to translate _Spanish_ sentences to _Kaqchikel_. But we could not find enough data to train a model. So we make a decision: 
+That was what happened to us. We tried to translate _Spanish_ sentences to _Kaqchikel_ (a _Mayan_ language). But we could not find enough data to train a model. So we make a decision: 
 
-1. Use translation based on rule.
+1. Use translation based on rules.
 
-This will allow to us generate training data to then be able to build a model _se2seq_.
+This approach will allow to us generate training data to then be able to build a _se2seq_ model.
 
 In this section we will describe our translation rules.
 
 ## Rule structure
 
-This is an example of a definiton rule structure.
+This is an example of a rule definition.
 
-```js
+```json
 {
-    "pattern": "DET,NOUN,VERB", // Generated based on the rules
+    "pattern": "VERB,ADV,ADJ", // Generated based on the rules
     "details": [
         {
-            "tag": "DET",
-            "type: "",
-            "properties": {
-            }
-        },
-        {
-            "tag": "NOUN",
-            "type: "",
-            "properties": {
-                "gender": "M"
-            }
-        },
-        {
             "tag": "VERB",
-            "type: "",
+            "type": "",
             "properties": {
-                "tense": "P"
+                "number": "s"
+            }
+        },
+        {
+            "tag": "ADV",
+            "type": "",
+            "properties": {
+                
+            }
+        },
+        {
+            "tag": "ADJ",
+            "type": "",
+            "properties": {
+                "number": "S"
             }
         }
     ],
     "output": [
         {
-            "type": "conditional",
-            "when": "${0.number} == \"S\" && ${0.person} == \"3\" || ${0.person} == \"3\"" // 0 is the index in the array
-            "then": "ri",
-            "else": "re"
+            "type": "literal",
+            "value": "{{if and (eq .Word1.Properties.number \"S\") (eq .Word3.Properties.number \"S\")}} {{- \"a\" -}} {{else}} {{- \"r\" -}} {{end}}"
         },
         {
             "type": "literal",
@@ -52,7 +51,7 @@ This is an example of a definiton rule structure.
         },
         {
             "type": "direct-translation",
-            "value": "{{(index .Words 1).Lemma}}",
+            "value": "{{Word1.Lemma}}",
         },
         {
             "type": "literal",
@@ -60,7 +59,7 @@ This is an example of a definiton rule structure.
         },
         {
             "type": "direct-translation",
-            "value": "{{(index .Words 2).Lemma}}",
+            "value": "{{Word2.Lemma}}",
         },
     ]
 }
@@ -104,9 +103,8 @@ Each ouput element always will have one property: `type`, based on the type othe
 **type**
 
 There are 3 possible values:
-- `literal`: will output exactly the value provieded in the property `value`. Special value `<blank>` is exactly the same that ` `.
+- `literal`: will output exactly the value provieded in the property `value`.
 - `direct-translation`: will output the direct translation of the word given in the property `value`. You can use accessor to dynamic values as well (`${...}` will be explained later).
-- `conditional`: this one is more complex. It will generate an output based on `logical` conditions. The logical condition will be provided in the property `when`. Based on the result of the logical operation you can have two possible ways: the consequence (`then`) and the alternative (`alternative`).
 
 **Dynamic accessors**
 

@@ -2,6 +2,7 @@ package utils
 
 import (
 	"bytes"
+	"fmt"
 	"log"
 	"text/template"
 
@@ -11,14 +12,23 @@ import (
 // ReplaceValues receive a Go template an replace values using the given list
 // of words
 func ReplaceValues(templateString string, words []linguakit.Word) string {
-	input := map[string]interface{}{
-		"Words": words,
+	var buf bytes.Buffer
+
+	vars := map[string]linguakit.Word{}
+
+	for i, word := range words {
+		vars[fmt.Sprintf("Word%d", i+1)] = word
 	}
 
-	var buf bytes.Buffer
-	compiledTemplate := template.Must(template.New("tmp").Parse(templateString))
+	parsedTemplate, error := template.New("tmp").Option("missingkey=zero").Parse(templateString)
 
-	error := compiledTemplate.Execute(&buf, input)
+	if error != nil {
+		return templateString
+	}
+
+	compiledTemplate := template.Must(parsedTemplate, error)
+
+	error = compiledTemplate.Execute(&buf, vars)
 
 	if error != nil {
 		log.Println(error)
