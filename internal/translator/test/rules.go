@@ -91,8 +91,3 @@ func (r RulesTest) UpdateOne(ctx context.Context, filter map[string]interface{},
 func (r RulesTest) DeleteOne(ctx context.Context, ObjectID primitive.ObjectID) error {
 	return nil
 }
-
-// DeleteMany always returns nil
-func (r RulesTest) DeleteMany(ctx context.Context, filter map[string]string) error {
-	return nil
-}

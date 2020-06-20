@@ -2,6 +2,7 @@ package test
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -33,7 +34,13 @@ func (w WordsTest) FindByID(ctx context.Context, collectionName string, ID primi
 
 // FindOneByText always returns a word
 func (w WordsTest) FindOneByText(ctx context.Context, collectionName string, text string) (*data.Word, error) {
-	word := data.Word{
+	var word = data.Word{}
+
+	if text == "unknown" {
+		return &word, fmt.Errorf("document not found")
+	}
+
+	word = data.Word{
 		ID:         primitive.NewObjectID(),
 		Categories: data.Categories{},
 		Text:       "test",

@@ -48,7 +48,6 @@ type RulesHelper interface {
 	Find(ctx context.Context, sourceLanguage, targetLanguage, pattern string) ([]Rule, error)
 	UpdateOne(ctx context.Context, filter map[string]interface{}, updateValue map[string]interface{}) error
 	DeleteOne(ctx context.Context, ObjectID primitive.ObjectID) error
-	DeleteMany(ctx context.Context, filter map[string]string) error
 }
 
 // New creates a rule in database
@@ -123,22 +122,7 @@ func (r Rules) DeleteOne(ctx context.Context, ObjectID primitive.ObjectID) error
 	}
 
 	if deleteResult.DeletedCount == 0 {
-		return fmt.Errorf("rule didn't find")
-	}
-
-	return nil
-}
-
-// DeleteMany deletes all of the rules that match with a pattern
-func (r Rules) DeleteMany(ctx context.Context, filter map[string]string) error {
-	deleteResult, error := r.Collection.DeleteMany(ctx, filter)
-
-	if error != nil {
-		return error
-	}
-
-	if deleteResult.DeletedCount == 0 {
-		return fmt.Errorf("rules didn't find")
+		return fmt.Errorf("0 documents delted")
 	}
 
 	return nil

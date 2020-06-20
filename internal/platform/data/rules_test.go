@@ -190,39 +190,38 @@ func TestRules(t *testing.T) {
 		t.Logf("Rule updated with success")
 	})
 
-	t.Run("delete a group of rules with success when the rules exist", func(t *testing.T) {
-		filter := map[string]string{
-			"source_language": "espaol",
-			"target_language": "kaqchikel",
-			"pattern":         "VERB,ADV,ADJ",
+	t.Run("get an error updating a rule that does not exist", func(t *testing.T) {
+		filter := map[string]interface{}{
+			"key": "val",
 		}
 
-		error := helper.DeleteMany(context.Background(), filter)
-
-		if error != nil {
-			t.Fatal(error)
+		update := map[string]interface{}{
+			"source_language": "es",
 		}
 
-		t.Logf("Rules deleted")
+		error := helper.UpdateOne(context.Background(), filter, update)
+
+		if error == nil {
+			t.Fatalf("Error expected did not received")
+		}
 	})
 
 	t.Run("delete one rule with success when the rule exists", func(t *testing.T) {
-		rule, error := helper.Find(context.Background(), "espaol", "kaqchikel", "ADJ")
+		error := helper.DeleteOne(context.Background(), globalID)
 
 		if error != nil {
 			t.Fatal(error)
 		}
 
-		if len(rule) == 0 {
-			t.Logf("Rule doesn't exist")
-		} else {
-			errord := helper.DeleteOne(context.Background(), rule[0].ID)
+		t.Logf("Rule found it and deleted")
 
-			if errord != nil {
-				t.Fatal(errord)
-			}
+	})
 
-			t.Logf("Rule found it and deleted")
+	t.Run("get an error deleting a rule that does not exist", func(t *testing.T) {
+		error := helper.DeleteOne(context.Background(), primitive.NewObjectID())
+
+		if error == nil {
+			t.Fatalf("Error expected did not received")
 		}
 	})
 }
