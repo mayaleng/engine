@@ -77,10 +77,10 @@ func TestRules(t *testing.T) {
 			},
 		}
 
-		rulef, coincidence := FilterRulesByType(rule, words)
+		coincidence := FilterRulesByType(rule, words)
 
 		if coincidence > 0 {
-			t.Logf("Rule found it %v", rulef.Details)
+			t.Logf("Rule found it")
 		}
 	})
 }
