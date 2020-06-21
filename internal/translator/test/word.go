@@ -24,7 +24,7 @@ func (w WordsTest) FindByID(ctx context.Context, collectionName string, ID primi
 	word := data.Word{
 		ID:         primitive.NewObjectID(),
 		Categories: data.Categories{},
-		Text:       "test",
+		Text:       "translated",
 		CreatedAt:  time.Now(),
 		UpdatedAt:  time.Now(),
 	}
@@ -43,7 +43,7 @@ func (w WordsTest) FindOneByText(ctx context.Context, collectionName string, tex
 	word = data.Word{
 		ID:         primitive.NewObjectID(),
 		Categories: data.Categories{},
-		Text:       "test",
+		Text:       fmt.Sprintf("%s-%s", text, collectionName),
 		CreatedAt:  time.Now(),
 		UpdatedAt:  time.Now(),
 	}

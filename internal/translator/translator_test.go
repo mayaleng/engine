@@ -15,23 +15,27 @@ func TestTranslation(t *testing.T) {
 		TranslationsHelper: test.TranslationsTest{},
 	}
 
-	t.Run("translate directly with a valid pharse", func(t *testing.T) {
-		translation, error := translator.TranslatePhrase(context.TODO(), "hello que tal unknown.", "es", "en")
+	t.Run("direct translation with a valid pharse that does not match with any rule", func(t *testing.T) {
+		translation, error := translator.TranslatePhrase(context.TODO(), "hello unknown.", "es", "en")
 
 		if error != nil {
 			t.Fatal(error)
 		}
 
-		t.Log(translation)
+		if translation.Phrase != "translated unknown." {
+			t.Fatalf("Expected %s, but got %s", "translated unknown.", translation.Phrase)
+		}
 	})
 
-	t.Run("translate with rules with a valid pharse", func(t *testing.T) {
-		translation, error := translator.TranslatePhrase(context.TODO(), "estoy muy feliz.", "es", "en")
+	t.Run("translate with rules a valid pharse with the pattern match with a rule", func(t *testing.T) {
+		translation, error := translator.TranslatePhrase(context.TODO(), "el perro.", "es", "kq")
 
 		if error != nil {
 			t.Fatal(error)
 		}
 
-		t.Log(translation)
+		if translation.Phrase != "translated el" {
+			t.Fatalf("Expected %s, but got %s", "translated el", translation.Phrase)
+		}
 	})
 }
