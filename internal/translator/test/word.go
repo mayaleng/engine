@@ -13,10 +13,17 @@ import (
 type WordsTest struct {
 }
 
+// Find always returns an empty lis of word
+func (w WordsTest) Find(ctx context.Context, collectionName string, options data.FindOptions) ([]data.Word, error) {
+	words := make([]data.Word, 0)
+	return words, nil
+}
+
 // New always returns a word
-func (w WordsTest) New(ctx context.Context, collectionName string, newWord data.NewWord) (*primitive.ObjectID, error) {
-	id := primitive.NewObjectID()
-	return &id, nil
+func (w WordsTest) New(ctx context.Context, collectionName string, newWord data.NewWord) (*data.Word, error) {
+	word := data.Word{}
+
+	return &word, nil
 }
 
 // FindByID always returns a word
@@ -52,11 +59,17 @@ func (w WordsTest) FindOneByText(ctx context.Context, collectionName string, tex
 }
 
 // UpdateOne always return nil
-func (w WordsTest) UpdateOne(ctx context.Context, collectionName string, filter map[string]string, newValue map[string]interface{}) error {
-	return nil
+func (w WordsTest) UpdateOne(ctx context.Context, collectionName string, update data.UpdateWord) (*data.Word, error) {
+	var word = data.Word{}
+	return &word, nil
 }
 
 // DeleteOne always return nil
-func (w WordsTest) DeleteOne(ctx context.Context, collectionName string, filter map[string]string) error {
+func (w WordsTest) DeleteOne(ctx context.Context, collectionName string, id primitive.ObjectID) error {
 	return nil
+}
+
+// Count always return 10
+func (w WordsTest) Count(ctx context.Context, collectionName string) (int64, error) {
+	return 10, nil
 }

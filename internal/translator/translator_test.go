@@ -38,4 +38,16 @@ func TestTranslation(t *testing.T) {
 			t.Fatalf("Expected %s, but got %s", "translated el", translation.Phrase)
 		}
 	})
+
+	t.Run("translate with rules a non whole valid pharse with the pattern match with a rule", func(t *testing.T) {
+		translation, error := translator.TranslatePhrase(context.TODO(), "el unknown.", "es", "kq")
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		if translation.Phrase != "unknown el" {
+			t.Fatalf("Expected %s, but got %s", "translated el", translation.Phrase)
+		}
+	})
 }
