@@ -22,3 +22,40 @@ func FilterWordsByRule(words []linguakit.Word, rule data.Rule) []linguakit.Word 
 
 	return filteredWords
 }
+
+// FilterRules returns one rule of an array of Rules filter by Type Property
+func FilterRules(rules []data.Rule, words []linguakit.Word) data.Rule {
+	var foundRule data.Rule
+	var maxCoincidence = 0
+
+	for _, rule := range rules {
+		fRule, coincidence := FilterRulesByType(rule, words)
+
+		if coincidence == len(rule.Details) {
+			foundRule = fRule
+			break
+		} else {
+			if maxCoincidence <= coincidence {
+				foundRule = fRule
+				maxCoincidence = coincidence
+			}
+		}
+	}
+
+	return foundRule
+}
+
+// FilterRulesByType returns the rule and total coincidences of Linguakit Type Words
+func FilterRulesByType(rule data.Rule, words []linguakit.Word) (data.Rule, int) {
+	var coincidence = 0
+
+	for i := 0; i < len(rule.Details); i++ {
+		if rule.Details[i].Type == words[i].Type {
+			coincidence++
+		} else {
+			return rule, coincidence
+		}
+	}
+
+	return rule, coincidence
+}
