@@ -54,7 +54,7 @@ func TestRules(t *testing.T) {
 			Output: []RuleOutput{
 				{
 					"type":  "direct-translation",
-					"value": "{{( .Words 2).Lemma}}",
+					"value": "{{( .Word2.Lemma }}",
 				},
 				{
 					"type":  "literal",
@@ -62,11 +62,11 @@ func TestRules(t *testing.T) {
 				},
 				{
 					"type":  "direct-translation",
-					"value": "{{ .Words2.Lemma }}",
+					"value": "{{ .Word2.Lemma }}",
 				},
 				{
 					"type":  "direct-translation",
-					"value": "{{ .Words1.Lemma }}",
+					"value": "{{ .Word1.Lemma }}",
 				},
 			},
 		}
@@ -104,11 +104,11 @@ func TestRules(t *testing.T) {
 			Output: []RuleOutput{
 				{
 					"type":  "direct-translation",
-					"value": "{{ .Words2.Lemma }}",
+					"value": "{{ .Word2.Lemma }}",
 				},
 				{
 					"type":  "direct-translation",
-					"value": "{{ .Words1.Lemma }}",
+					"value": "{{ .Word1.Lemma }}",
 				},
 			},
 		}
@@ -158,7 +158,7 @@ func TestRules(t *testing.T) {
 			Output: []RuleOutput{
 				{
 					"type":  "direct-translation",
-					"value": "{{ .Words1.Lemma }}",
+					"value": "{{ .Word1.Lemma }}",
 				},
 			},
 		}

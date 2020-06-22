@@ -6,6 +6,7 @@ import (
 
 	"mayaleng.org/engine/internal/platform/linguakit"
 	"mayaleng.org/engine/internal/platform/types"
+	"mayaleng.org/engine/internal/translator/utils"
 )
 
 // TranslatePhrase receives a phrase, a source and a target language to
@@ -44,9 +45,7 @@ func (t *Translator) TranslateSentence(ctx context.Context, sentence linguakit.S
 		return result
 	}
 
-	// TODO filter by details
-	rule := rules[0]
-
+	rule := utils.FilterRules(rules, sentence.Words)
 	result.Sentence, result.UnknownWords = t.TranslateByRule(ctx, sentence, rule)
 	return result
 }
