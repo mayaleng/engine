@@ -4,9 +4,13 @@ import (
 	"context"
 	"testing"
 	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func TestWords(t *testing.T) {
+	var globalID primitive.ObjectID
+
 	testInfo, error := setupTestInfo()
 	collectionName := "words_test"
 
@@ -34,19 +38,36 @@ func TestWords(t *testing.T) {
 			CreatedAt: time.Now(),
 			UpdatedAt: time.Now(),
 		}
-		newID, error := helper.New(context.Background(), collectionName, newWord)
+		word, error := helper.New(context.Background(), collectionName, newWord)
 
 		if error != nil {
 			t.Fatal(error)
 		}
 
-		_, error = helper.FindByID(context.Background(), collectionName, *newID)
+		globalID = word.ID
+
+		t.Logf("New word created with id %s", word.ID)
+	})
+
+	t.Run("find one by id when it exsits", func(t *testing.T) {
+		_, error := helper.FindByID(context.TODO(), collectionName, globalID)
 
 		if error != nil {
 			t.Fatal(error)
 		}
+	})
 
-		t.Logf("New word created with id %s", newID.Hex())
+	t.Run("get all words with success", func(t *testing.T) {
+		options := FindOptions{
+			Filter: map[string]interface{}{},
+			Limit:  10,
+			Skip:   0,
+		}
+		_, error := helper.Find(context.TODO(), collectionName, options)
+
+		if error != nil {
+			t.Fatal(error)
+		}
 	})
 
 	t.Run("get a word with success when it exists", func(t *testing.T) {
@@ -68,22 +89,13 @@ func TestWords(t *testing.T) {
 	})
 
 	t.Run("update a word with success when it exists", func(t *testing.T) {
-		filter := map[string]string{
-			"text": "ingeniero",
+		update := UpdateWord{
+			ID:        globalID,
+			Text:      "ingeniero",
+			UpdatedAt: time.Now(),
 		}
 
-		update := map[string]interface{}{
-			"text":       "graduated_engineer",
-			"updated_at": time.Now(),
-		}
-
-		error := helper.UpdateOne(context.Background(), collectionName, filter, update)
-
-		if error != nil {
-			t.Fatal(error)
-		}
-
-		word, error := helper.FindOneByText(context.Background(), collectionName, "graduated_engineer")
+		word, error := helper.UpdateOne(context.Background(), collectionName, update)
 
 		if error != nil {
 			t.Fatal(error)
@@ -93,16 +105,12 @@ func TestWords(t *testing.T) {
 	})
 
 	t.Run("get an error updating a non existent word", func(t *testing.T) {
-		filter := map[string]string{
-			"text": "unk",
+		update := UpdateWord{
+			Text:      "graduated_engineer",
+			UpdatedAt: time.Now(),
 		}
 
-		update := map[string]interface{}{
-			"text":       "graduated_engineer",
-			"updated_at": time.Now(),
-		}
-
-		error := helper.UpdateOne(context.Background(), collectionName, filter, update)
+		_, error := helper.UpdateOne(context.Background(), collectionName, update)
 
 		if error == nil {
 			t.Fatalf("This should be an error")
@@ -114,7 +122,7 @@ func TestWords(t *testing.T) {
 			"text": "graduated_engineer",
 		}
 
-		error := helper.DeleteOne(context.Background(), collectionName, filter)
+		error := helper.DeleteOne(context.Background(), collectionName, globalID)
 
 		if error != nil {
 			t.Fatal(error)
@@ -124,14 +132,18 @@ func TestWords(t *testing.T) {
 	})
 
 	t.Run("get an error deleting a non existent word", func(t *testing.T) {
-		filter := map[string]string{
-			"text": "unk",
-		}
-
-		error := helper.DeleteOne(context.Background(), collectionName, filter)
+		error := helper.DeleteOne(context.Background(), collectionName, primitive.NewObjectID())
 
 		if error == nil {
 			t.Fatalf("This should be an error")
+		}
+	})
+
+	t.Run("get always success when count docments", func(t *testing.T) {
+		_, error := helper.Count(context.TODO(), collectionName)
+
+		if error != nil {
+			t.Fatal(error)
 		}
 	})
 }
