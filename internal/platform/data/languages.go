@@ -51,6 +51,7 @@ func (l Languages) New(ctx context.Context, newLanguage NewLanguage) (*primitive
 	return &newObjectID, nil
 }
 
+// FindByID gets a word by its id
 func (l Languages) FindByID(ctx context.Context, ID string) (*Language, error) {
 	var result Language
 

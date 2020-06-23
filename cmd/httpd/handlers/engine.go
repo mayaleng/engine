@@ -6,22 +6,23 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/sirupsen/logrus"
+	"mayaleng.org/engine/internal/platform/web"
 	"mayaleng.org/engine/internal/translator"
 )
 
-type translations struct {
+type engine struct {
 	translator translator.Translator
 }
 
-type translationsBody struct {
+type translationBody struct {
 	From   string
 	To     string
 	Phrase string
 }
 
-func (t *translations) translate(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	var body translationsBody
-	var response Response
+func (t *engine) translate(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	var body translationBody
+	var response web.Response
 
 	logrus.WithFields(logrus.Fields{
 		"method": r.Method,
@@ -31,13 +32,14 @@ func (t *translations) translate(w http.ResponseWriter, r *http.Request, ps http
 	error := json.NewDecoder(r.Body).Decode(&body)
 
 	if error != nil {
-		response.Errors = Errors{
+		response.Errors = []web.Error{
 			{
-				"error": "Bad request",
+				Status: http.StatusBadRequest,
+				Detail: "Invalid payload provided",
 			},
 		}
 
-		respondWith(r.Context(), w, http.StatusBadRequest, response)
+		web.RespondWith(r.Context(), w, http.StatusBadRequest, response)
 		return
 	}
 
@@ -50,21 +52,22 @@ func (t *translations) translate(w http.ResponseWriter, r *http.Request, ps http
 	translation, error := t.translator.TranslatePhrase(r.Context(), body.Phrase, body.From, body.To)
 
 	if error != nil {
-		response.Errors = Errors{
+		response.Errors = []web.Error{
 			{
-				"error": "Invalid input given",
+				Status: http.StatusBadRequest,
+				Detail: "Invalid payload provided",
 			},
 		}
 
-		respondWith(r.Context(), w, http.StatusUnprocessableEntity, response)
+		web.RespondWith(r.Context(), w, http.StatusUnprocessableEntity, response)
 		return
 	}
 
-	response.Data = Data{
-		{
+	response.Data = web.Data{
+		map[string]interface{}{
 			"result": translation,
 		},
 	}
 
-	respondWith(r.Context(), w, http.StatusOK, response)
+	web.RespondWith(r.Context(), w, http.StatusOK, response)
 }

@@ -9,7 +9,7 @@ import (
 
 	"github.com/kelseyhightower/envconfig"
 	"github.com/sirupsen/logrus"
-	"mayaleng.org/engine/cmd/httpd/internal/handlers"
+	"mayaleng.org/engine/cmd/httpd/handlers"
 	"mayaleng.org/engine/internal/platform/database"
 	"mayaleng.org/engine/internal/platform/types"
 	"mayaleng.org/engine/version"
