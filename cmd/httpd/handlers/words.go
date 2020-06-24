@@ -53,7 +53,7 @@ func (h *words) list(w http.ResponseWriter, r *http.Request, ps httprouter.Param
 		"totalPages": math.Ceil(float64(count) / float64(pagination.Size)),
 	}
 
-	web.RespondWith(r.Context(), w, 200, response)
+	web.RespondWith(r.Context(), w, http.StatusOK, response)
 }
 
 func (h *words) create(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -65,7 +65,7 @@ func (h *words) create(w http.ResponseWriter, r *http.Request, ps httprouter.Par
 
 	if len(errors) > 0 {
 		response.Errors = errors
-		web.RespondWith(r.Context(), w, 400, response)
+		web.RespondWith(r.Context(), w, http.StatusBadRequest, response)
 		return
 	}
 
@@ -76,13 +76,13 @@ func (h *words) create(w http.ResponseWriter, r *http.Request, ps httprouter.Par
 	word, error := h.Helper.New(r.Context(), languageID, newWord)
 
 	if error != nil {
-		web.RespondWithBadRequest(r.Context(), w)
+		web.RespondWithInternal(r.Context(), w)
 		return
 	}
 
 	response.Data = word
 
-	web.RespondWith(r.Context(), w, 201, response)
+	web.RespondWith(r.Context(), w, http.StatusOK, response)
 }
 
 func (h *words) update(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -143,7 +143,7 @@ func (h *words) get(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 
 	response.Data = word
 
-	web.RespondWith(r.Context(), w, 200, response)
+	web.RespondWith(r.Context(), w, http.StatusOK, response)
 }
 
 func (h *words) delete(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -164,5 +164,5 @@ func (h *words) delete(w http.ResponseWriter, r *http.Request, ps httprouter.Par
 		return
 	}
 
-	web.RespondWith(r.Context(), w, 204, "")
+	web.RespondWith(r.Context(), w, http.StatusNoContent, "")
 }

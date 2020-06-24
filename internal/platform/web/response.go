@@ -48,10 +48,12 @@ func RespondWith(ctx context.Context, w http.ResponseWriter, status int, respons
 
 // RespondWithInternal sends an HTTP 500
 func RespondWithInternal(ctx context.Context, w http.ResponseWriter) error {
-	response := []Error{
-		{
-			Status: 500,
-			Detail: "Internal server error",
+	var response = Response{
+		Errors: []Error{
+			{
+				Status: 500,
+				Detail: "Internal server error",
+			},
 		},
 	}
 
@@ -71,10 +73,12 @@ func RespondWithInternal(ctx context.Context, w http.ResponseWriter) error {
 
 // RespondWithNotFound sends an HTTP 404
 func RespondWithNotFound(ctx context.Context, w http.ResponseWriter) error {
-	response := []Error{
-		{
-			Status: 404,
-			Detail: "Resource not found",
+	response := Response{
+		Errors: []Error{
+			{
+				Status: 404,
+				Detail: "Resource not found",
+			},
 		},
 	}
 
@@ -94,10 +98,12 @@ func RespondWithNotFound(ctx context.Context, w http.ResponseWriter) error {
 
 // RespondWithBadRequest sends an HTTP 404
 func RespondWithBadRequest(ctx context.Context, w http.ResponseWriter) error {
-	response := []Error{
-		{
-			Status: 400,
-			Detail: "Bad request",
+	response := Response{
+		Errors: []Error{
+			{
+				Status: 400,
+				Detail: "Bad request",
+			},
 		},
 	}
 
