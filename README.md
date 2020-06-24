@@ -15,11 +15,22 @@ That data is used to determine the best translation of a sentence.
 
 - [Translator Engine](#translator-engine)
   - [Table of contets](#table-of-contets)
+  - [Motivation](#motivation)
   - [Getting started](#getting-started)
     - [Installation](#installation)
   - [Documentation](#documentation)
   - [Examples](#examples)
   - [Contributing](#contributing)
+
+## Motivation
+
+Our vision is to help reducing the human communication gap.
+
+We don't want to reinvent Google Translate or a similar tool, we want to offer an easy and generic way to incorporate languages that are dying because the lack of importance on them (e.g Mayan languages in Guatemala).
+
+At the beginning of this project we tried to use Machine Learning to use some famous and effective algorithms to create models for language translation. But we didn't foudn enough data to train the models. So that we got the idea to create a platform capable to create translation based on rules to then generate huge amout of data that then could be used to train AI models.
+
+This idea moved us to create this repo, and now we are working to make it happen.
 
 ## Getting started
 
