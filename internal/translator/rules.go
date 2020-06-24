@@ -24,9 +24,6 @@ func (t *Translator) TranslateByRule(ctx context.Context, sentence linguakit.Sen
 		ruleType := outputRule["type"]
 		value := utils.ReplaceValues(outputRule["value"], words)
 
-		// TODO dynamic translation
-		// TODO predefined translation
-
 		switch ruleType {
 		case "direct-translation":
 			translation, error = t.directTranslation(ctx, rule.SourceLanguage, rule.TargetLanguage, value)

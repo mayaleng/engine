@@ -11,37 +11,97 @@ import (
 // TestRule contains a rule that match with a `det,noun` sentence. It will generate
 // the inverse `noun,det` with the same words
 var TestRule = `
-{
-	"source_language": "es",
-	"target_language": "kq",
-	"pattern": "DET,NOUN",
-	"details": [
-		{
-			"tag": "DET",
-			"type": "",
-			"properties": {}
-		},
-		{
-			"tag": "NOUN",
-			"type": "",
-			"properties": {}
-		}
-	],
-	"output": [
-		{
-			"type": "direct-translation",
-			"value": "{{ .Word2.Lemma }}"
-		},
-		{
-			"type": "literal",
-			"value": " "
-		},
-		{
-			"type": "literal",
-			"value": "{{ .Word1.Lemma }}"
-		}
-	]
-}
+[
+	{
+		"source_language": "es",
+		"target_language": "kq",
+		"pattern": "DET,NOUN",
+		"details": [
+			{
+				"tag": "DET",
+				"type": "",
+				"properties": {}
+			},
+			{
+				"tag": "NOUN",
+				"type": "",
+				"properties": {}
+			}
+		],
+		"output": [
+			{
+				"type": "direct-translation",
+				"value": "{{ .Word2.Lemma }}"
+			},
+			{
+				"type": "literal",
+				"value": " "
+			},
+			{
+				"type": "literal",
+				"value": "{{ .Word1.Lemma }}"
+			}
+		]
+	},
+	{
+		"source_language" : "espaol",
+		"target_language" : "kaqchikel",
+		"pattern" : "VERB,ADV",
+		"details" : [ 
+			{
+				"tag" : "VERB",
+				"type" : "M"
+			}, 
+			{
+				"tag" : "ADV",
+				"type" : "G"
+			}
+		],
+		"output" : [ 
+			{
+				"type" : "direct-translation",
+				"value" : "{{ .Word1.Lemma }}"
+			}, 
+			{
+				"type" : "literal",
+				"value" : "{{if (eq .Word2.Lemma \"mucho\") }} q'uiy {{- else}} _ {{end}}"
+			}
+		]
+	},
+	{
+		"source_language" : "espaol",
+		"target_language" : "kaqchikel",
+		"pattern" : "VERB,VERB,ADJ",
+		"details" : [ 
+			{
+				"tag" : "VERB",
+				"type" : "M"
+			}, 
+			{
+				"tag" : "VERB",
+				"type" : "A"
+			}, 
+			{
+				"tag" : "ADJ",
+				"type" : "Q"
+			}
+		],
+		"output" : [ 
+			{
+				"type" : "direct-translation",
+				"value" : "{{ .Word3.Lemma }}"
+			}, 
+			{
+				"type" : "direct-translation",
+				"value" : "{{ .Word2.Lemma }}"
+			}, 
+			{
+				"type" : "direct-translation",
+				"value" : "{{ .Word1.Lemma }}"
+			}
+		]
+	}
+]
 `
 
 // RulesTest is for testing purpose
@@ -56,11 +116,13 @@ func (r RulesTest) New(ctx context.Context, ruleStruct data.NewRule) (*primitive
 
 // Find always returns a 1-length array of rules
 func (r RulesTest) Find(ctx context.Context, sourceLanguage, targetLanguage, pattern string) ([]data.Rule, error) {
-	var rule = data.Rule{}
-	var rules = make([]data.Rule, 0)
+	var rule = []data.Rule{}
+	//var rules = make([]data.Rule, 0)
 
-	if pattern != "DET,NOUN" {
-		return rules, nil
+	if pattern != "DET,NOUN" &&
+		pattern != "VERB,ADV" &&
+		pattern != "VERB,VERB,ADJ" {
+		return rule, nil
 	}
 
 	error := json.Unmarshal([]byte(TestRule), &rule)
@@ -69,9 +131,7 @@ func (r RulesTest) Find(ctx context.Context, sourceLanguage, targetLanguage, pat
 		return []data.Rule{}, error
 	}
 
-	rules = append(rules, rule)
-
-	return rules, nil
+	return rule, nil
 }
 
 // UpdateOne always returns nil
