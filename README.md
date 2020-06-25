@@ -75,6 +75,7 @@ You will see somethig like
 Here you have more documentation to deep dive into some specific topics.
 
 1. [Deterministic translation algorithm](docs/algorithm.md)
+2. [Rule examples](docs/rulesresources.md)
 
 ## Examples
 To make a translation you can execute an `HTTP POST`
