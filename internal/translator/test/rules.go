@@ -19,12 +19,12 @@ var TestRule = `
 		"details": [
 			{
 				"tag": "DET",
-				"type": "",
+				"type": "A",
 				"properties": {}
 			},
 			{
 				"tag": "NOUN",
-				"type": "",
+				"type": "C",
 				"properties": {}
 			}
 		],
@@ -116,22 +116,21 @@ func (r RulesTest) New(ctx context.Context, ruleStruct data.NewRule) (*primitive
 
 // Find always returns a 1-length array of rules
 func (r RulesTest) Find(ctx context.Context, sourceLanguage, targetLanguage, pattern string) ([]data.Rule, error) {
-	var rule = []data.Rule{}
-	//var rules = make([]data.Rule, 0)
+	var rules = make([]data.Rule, 0)
 
 	if pattern != "DET,NOUN" &&
 		pattern != "VERB,ADV" &&
 		pattern != "VERB,VERB,ADJ" {
-		return rule, nil
+		return rules, nil
 	}
 
-	error := json.Unmarshal([]byte(TestRule), &rule)
+	error := json.Unmarshal([]byte(TestRule), &rules)
 
 	if error != nil {
 		return []data.Rule{}, error
 	}
 
-	return rule, nil
+	return rules, nil
 }
 
 // UpdateOne always returns nil
