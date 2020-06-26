@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -20,8 +19,8 @@ type Language struct {
 
 // NewLanguage has the needed properties to create a new language
 type NewLanguage struct {
-	ID        string    `bson:"collection_name"`
-	Name      string    `bson:"name"`
+	ID        string    `bson:"collection_name" validate:"min=1,required"`
+	Name      string    `bson:"name" validate:"min=1,required"`
 	CreatedAt time.Time `bson:"created_at"`
 	UpdatedAt time.Time `bson:"updated_at"`
 }
@@ -34,21 +33,26 @@ type Languages struct {
 // LanguagesHelper has useful functions to work with languages
 type LanguagesHelper interface {
 	FindByID(ctx context.Context, ID string) (*Language, error)
-	New(ctx context.Context, newLanguage NewLanguage) (*primitive.ObjectID, error)
+	New(ctx context.Context, newLanguage NewLanguage) (*Language, error)
 	UpdateOne(ctx context.Context, filter map[string]string, newValue map[string]interface{}) error
 	DeleteOne(ctx context.Context, filter map[string]string) error
 }
 
 // New creates a new language in the database
-func (l Languages) New(ctx context.Context, newLanguage NewLanguage) (*primitive.ObjectID, error) {
-	result, error := l.Collection.InsertOne(ctx, newLanguage)
+func (l Languages) New(ctx context.Context, newLanguage NewLanguage) (*Language, error) {
+	_, error := l.Collection.InsertOne(ctx, newLanguage)
 	if error != nil {
 		return nil, error
 	}
 
-	newObjectID := result.InsertedID.(primitive.ObjectID)
+	language := Language{
+		ID:        newLanguage.ID,
+		Name:      newLanguage.Name,
+		CreatedAt: newLanguage.CreatedAt,
+		UpdatedAt: newLanguage.UpdatedAt,
+	}
 
-	return &newObjectID, nil
+	return &language, nil
 }
 
 // FindByID gets a word by its id

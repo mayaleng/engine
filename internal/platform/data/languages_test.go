@@ -33,20 +33,20 @@ func TestLanguages(t *testing.T) {
 	}(t)
 
 	t.Run("create a language with success when the strucutre is valid", func(t *testing.T) {
-		newWord := NewLanguage{
+		newLanguage := NewLanguage{
 			ID:        "argentino",
 			Name:      "Español Argentino",
 			CreatedAt: time.Now(),
 			UpdatedAt: time.Now(),
 		}
 
-		newID, error := helper.New(context.Background(), newWord)
+		language, error := helper.New(context.Background(), newLanguage)
 
 		if error != nil {
 			t.Fatal(error)
 		}
 
-		t.Logf("New language created with id %s", newID.Hex())
+		t.Logf("New language created with id %s", language.ID)
 	})
 
 	t.Run("get a language with success when it exists", func(t *testing.T) {
