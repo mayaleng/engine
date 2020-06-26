@@ -8,9 +8,9 @@ import (
 	"mayaleng.org/engine/internal/platform/data"
 )
 
-// TestRule contains a rule that match with a `det,noun` sentence. It will generate
+// DN contains a rule that match with a `det,noun` sentence. It will generate
 // the inverse `noun,det` with the same words
-var TestRule = `
+var DN = `
 [
 	{
 		"source_language": "es",
@@ -19,12 +19,12 @@ var TestRule = `
 		"details": [
 			{
 				"tag": "DET",
-				"type": "A",
+				"type": "",
 				"properties": {}
 			},
 			{
 				"tag": "NOUN",
-				"type": "C",
+				"type": "",
 				"properties": {}
 			}
 		],
@@ -42,7 +42,14 @@ var TestRule = `
 				"value": "{{ .Word1.Lemma }}"
 			}
 		]
-	},
+	}
+]
+`
+
+// VA contains a rule that match with a `verb,adv` sentence. It will generate
+// the direct translation to word 1 and a conditional translation to apply q'uiy if the second word is `mucho`
+var VA = `
+[
 	{
 		"source_language" : "espaol",
 		"target_language" : "kaqchikel",
@@ -67,7 +74,14 @@ var TestRule = `
 				"value" : "{{if (eq .Word2.Lemma \"mucho\") }} q'uiy {{- else}} _ {{end}}"
 			}
 		]
-	},
+	}
+]
+`
+
+// VVA contains rules that match with a `verb,verb,adj` sentence. It will generate
+// the direct translation of words
+var VVA = `
+[
 	{
 		"source_language" : "espaol",
 		"target_language" : "kaqchikel",
@@ -100,6 +114,35 @@ var TestRule = `
 				"value" : "{{ .Word1.Lemma }}"
 			}
 		]
+	},
+	{
+		"source_language" : "espaol",
+		"target_language" : "kaqchikel",
+		"pattern" : "VERB,VERB,ADJ",
+		"details" : [ 
+			{
+				"tag" : "VERB",
+				"type" : "M"
+			}, 
+			{
+				"tag" : "VERB",
+				"type" : "S"
+			}, 
+			{
+				"tag" : "ADJ",
+				"type" : "Q"
+			}
+		],
+		"output" : [ 
+			{
+				"type" : "direct-translation",
+				"value" : "{{ .Word3.Lemma }}"
+			}, 
+			{
+				"type" : "direct-translation",
+				"value" : "{{ .Word1.Lemma }}"
+			}
+		]
 	}
 ]
 `
@@ -117,14 +160,20 @@ func (r RulesTest) New(ctx context.Context, ruleStruct data.NewRule) (*primitive
 // Find always returns a 1-length array of rules
 func (r RulesTest) Find(ctx context.Context, sourceLanguage, targetLanguage, pattern string) ([]data.Rule, error) {
 	var rules = make([]data.Rule, 0)
+	var rule string
 
-	if pattern != "DET,NOUN" &&
-		pattern != "VERB,ADV" &&
-		pattern != "VERB,VERB,ADJ" {
+	switch pattern {
+	case "DET,NOUN":
+		rule = DN
+	case "VERB,ADV":
+		rule = VA
+	case "VERB,VERB,AJD":
+		rule = VVA
+	default:
 		return rules, nil
 	}
 
-	error := json.Unmarshal([]byte(TestRule), &rules)
+	error := json.Unmarshal([]byte(rule), &rules)
 
 	if error != nil {
 		return []data.Rule{}, error
