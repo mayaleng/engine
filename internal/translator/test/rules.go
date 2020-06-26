@@ -167,7 +167,7 @@ func (r RulesTest) Find(ctx context.Context, sourceLanguage, targetLanguage, pat
 		rule = DN
 	case "VERB,ADV":
 		rule = VA
-	case "VERB,VERB,AJD":
+	case "VERB,VERB,ADJ":
 		rule = VVA
 	default:
 		return rules, nil
