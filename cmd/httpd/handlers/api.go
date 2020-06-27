@@ -25,6 +25,10 @@ func NewAPI(envs *types.Envs, dbConnection *mongo.Client) http.Handler {
 		Database: database,
 	}
 
+	languagesHelper := helpers.Languages{
+		Collection: database.Collection("languages"),
+	}
+
 	rulesHelper := helpers.Rules{
 		Collection: database.Collection("rules"),
 	}
@@ -54,6 +58,18 @@ func NewAPI(envs *types.Envs, dbConnection *mongo.Client) http.Handler {
 	router.Handle(http.MethodGet, "/v1/languages/:languageId/words/:id", words.get)
 	router.Handle(http.MethodPatch, "/v1/languages/:languageId/words/:id", words.update)
 	router.Handle(http.MethodDelete, "/v1/languages/:languageId/words/:id", words.delete)
+
+	// Languages
+
+	languages := languages{
+		Helper: languagesHelper,
+	}
+
+	router.Handle(http.MethodGet, "/v1/languages", languages.list)
+	router.Handle(http.MethodPost, "/v1/languages", languages.create)
+	router.Handle(http.MethodGet, "/v1/languages/:languageId", languages.get)
+	router.Handle(http.MethodPatch, "/v1/languages/:languageId", languages.update)
+	router.Handle(http.MethodDelete, "/v1/languages/:languageId", languages.delete)
 
 	return router
 }

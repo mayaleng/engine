@@ -33,20 +33,45 @@ func TestLanguages(t *testing.T) {
 	}(t)
 
 	t.Run("create a language with success when the strucutre is valid", func(t *testing.T) {
-		newWord := NewLanguage{
+		newLanguage := NewLanguage{
 			ID:        "argentino",
 			Name:      "Español Argentino",
 			CreatedAt: time.Now(),
 			UpdatedAt: time.Now(),
 		}
 
-		newID, error := helper.New(context.Background(), newWord)
+		language, error := helper.New(context.Background(), newLanguage)
 
 		if error != nil {
 			t.Fatal(error)
 		}
 
-		t.Logf("New language created with id %s", newID.Hex())
+		t.Logf("New language created with id %s", language.ID)
+	})
+
+	t.Run("get all languages with success", func(t *testing.T) {
+		options := FindOptions{
+			Filter: map[string]interface{}{},
+			Limit:  10,
+			Skip:   0,
+		}
+		_, error := helper.Find(context.Background(), options)
+
+		if error != nil {
+			t.Fatal(error)
+		}
+	})
+
+	t.Run("get always success when count docments", func(t *testing.T) {
+		docs, error := helper.Count(context.Background())
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		if docs > 0 {
+			t.Logf("There are %v", docs)
+		}
 	})
 
 	t.Run("get a language with success when it exists", func(t *testing.T) {
@@ -66,35 +91,27 @@ func TestLanguages(t *testing.T) {
 	})
 
 	t.Run("update a language with success when it exists", func(t *testing.T) {
-		filter := map[string]string{
-			"collection_name": "argentino",
+		update := UpdateLanguage{
+			ID:        "kaqchikel",
+			Name:      "Español Kaqchikel",
+			UpdatedAt: time.Now(),
 		}
 
-		update := map[string]interface{}{
-			"collection_name": "kaqchikel",
-			"name":            "Español Kaqchikel",
-			"updated_at":      time.Now(),
-		}
-
-		error := helper.UpdateOne(context.Background(), filter, update)
+		language, error := helper.UpdateOne(context.Background(), "argentino", update)
 
 		if error != nil {
 			t.Fatal(error)
 		}
 
-		t.Logf("Language updated with success")
+		t.Logf("Language updated with success, %v", language.ID)
 	})
 
 	t.Run("get an error updating a non existent language", func(t *testing.T) {
-		filter := map[string]string{
-			"collection_name": "unk",
+		update := UpdateLanguage{
+			UpdatedAt: time.Now(),
 		}
 
-		update := map[string]interface{}{
-			"updated_at": time.Now(),
-		}
-
-		error := helper.UpdateOne(context.Background(), filter, update)
+		_, error := helper.UpdateOne(context.Background(), "unk", update)
 
 		if error == nil {
 			t.Fatalf("This should be an error")
@@ -102,11 +119,7 @@ func TestLanguages(t *testing.T) {
 	})
 
 	t.Run("delete a document with success when exists", func(t *testing.T) {
-		filter := map[string]string{
-			"collection_name": "kaqchikel",
-		}
-
-		error := helper.DeleteOne(context.Background(), filter)
+		error := helper.DeleteOne(context.Background(), "kaqchikel")
 
 		if error != nil {
 			t.Fatal(error)
@@ -116,11 +129,7 @@ func TestLanguages(t *testing.T) {
 	})
 
 	t.Run("get an error deleting a non existent language", func(t *testing.T) {
-		filter := map[string]string{
-			"collection_name": "unk",
-		}
-
-		error := helper.DeleteOne(context.Background(), filter)
+		error := helper.DeleteOne(context.Background(), "unk")
 
 		if error == nil {
 			t.Fatalf("This should be an error")
