@@ -66,35 +66,27 @@ func TestLanguages(t *testing.T) {
 	})
 
 	t.Run("update a language with success when it exists", func(t *testing.T) {
-		filter := map[string]string{
-			"collection_name": "argentino",
+		update := UpdateLanguage{
+			ID:        "kaqchikel",
+			Name:      "Español Kaqchikel",
+			UpdatedAt: time.Now(),
 		}
 
-		update := map[string]interface{}{
-			"collection_name": "kaqchikel",
-			"name":            "Español Kaqchikel",
-			"updated_at":      time.Now(),
-		}
-
-		error := helper.UpdateOne(context.Background(), filter, update)
+		language, error := helper.UpdateOne(context.Background(), "argentino", update)
 
 		if error != nil {
 			t.Fatal(error)
 		}
 
-		t.Logf("Language updated with success")
+		t.Logf("Language updated with success, %v", language.ID)
 	})
 
 	t.Run("get an error updating a non existent language", func(t *testing.T) {
-		filter := map[string]string{
-			"collection_name": "unk",
+		update := UpdateLanguage{
+			UpdatedAt: time.Now(),
 		}
 
-		update := map[string]interface{}{
-			"updated_at": time.Now(),
-		}
-
-		error := helper.UpdateOne(context.Background(), filter, update)
+		_, error := helper.UpdateOne(context.Background(), "unk", update)
 
 		if error == nil {
 			t.Fatalf("This should be an error")
@@ -102,11 +94,7 @@ func TestLanguages(t *testing.T) {
 	})
 
 	t.Run("delete a document with success when exists", func(t *testing.T) {
-		filter := map[string]string{
-			"collection_name": "kaqchikel",
-		}
-
-		error := helper.DeleteOne(context.Background(), filter)
+		error := helper.DeleteOne(context.Background(), "kaqchikel")
 
 		if error != nil {
 			t.Fatal(error)
@@ -116,14 +104,18 @@ func TestLanguages(t *testing.T) {
 	})
 
 	t.Run("get an error deleting a non existent language", func(t *testing.T) {
-		filter := map[string]string{
-			"collection_name": "unk",
-		}
-
-		error := helper.DeleteOne(context.Background(), filter)
+		error := helper.DeleteOne(context.Background(), "unk")
 
 		if error == nil {
 			t.Fatalf("This should be an error")
+		}
+	})
+
+	t.Run("get always success when count docments", func(t *testing.T) {
+		_, error := helper.Count(context.TODO())
+
+		if error != nil {
+			t.Fatal(error)
 		}
 	})
 }
