@@ -118,4 +118,17 @@ func TestLanguages(t *testing.T) {
 			t.Fatal(error)
 		}
 	})
+
+	t.Run("get all languages with success", func(t *testing.T) {
+		options := FindOptions{
+			Filter: map[string]interface{}{},
+			Limit:  10,
+			Skip:   0,
+		}
+		_, error := helper.Find(context.TODO(), options)
+
+		if error != nil {
+			t.Fatal(error)
+		}
+	})
 }
