@@ -49,6 +49,31 @@ func TestLanguages(t *testing.T) {
 		t.Logf("New language created with id %s", language.ID)
 	})
 
+	t.Run("get all languages with success", func(t *testing.T) {
+		options := FindOptions{
+			Filter: map[string]interface{}{},
+			Limit:  10,
+			Skip:   0,
+		}
+		_, error := helper.Find(context.Background(), options)
+
+		if error != nil {
+			t.Fatal(error)
+		}
+	})
+
+	t.Run("get always success when count docments", func(t *testing.T) {
+		docs, error := helper.Count(context.Background())
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		if docs > 0 {
+			t.Logf("There are %v", docs)
+		}
+	})
+
 	t.Run("get a language with success when it exists", func(t *testing.T) {
 		_, error := helper.FindByID(context.Background(), "argentino")
 
@@ -108,27 +133,6 @@ func TestLanguages(t *testing.T) {
 
 		if error == nil {
 			t.Fatalf("This should be an error")
-		}
-	})
-
-	t.Run("get always success when count docments", func(t *testing.T) {
-		_, error := helper.Count(context.TODO())
-
-		if error != nil {
-			t.Fatal(error)
-		}
-	})
-
-	t.Run("get all languages with success", func(t *testing.T) {
-		options := FindOptions{
-			Filter: map[string]interface{}{},
-			Limit:  10,
-			Skip:   0,
-		}
-		_, error := helper.Find(context.TODO(), options)
-
-		if error != nil {
-			t.Fatal(error)
 		}
 	})
 }
