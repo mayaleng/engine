@@ -29,7 +29,7 @@ type NewLanguage struct {
 // UpdateLanguage has the needed properties to update a language
 type UpdateLanguage struct {
 	ID        string    `bson:"collection_name"`
-	Name      string    `bson:"name" validate:"min=1"`
+	Name      string    `bson:"name" validate:"min=1,required"`
 	UpdatedAt time.Time `bson:"updated_at"`
 }
 

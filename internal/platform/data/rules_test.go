@@ -3,6 +3,7 @@ package data
 import (
 	"context"
 	"testing"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -41,6 +42,9 @@ func TestRules(t *testing.T) {
 				{
 					Tag:  "VERB",
 					Type: "A",
+					Properties: map[string]string{
+						"number": "S",
+					},
 				},
 				{
 					Tag:  "ADV",
@@ -69,6 +73,8 @@ func TestRules(t *testing.T) {
 					"value": "{{ .Word1.Lemma }}",
 				},
 			},
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
 		}
 
 		newID, error := helper.New(context.Background(), newRule)
@@ -77,9 +83,9 @@ func TestRules(t *testing.T) {
 			t.Fatal(error)
 		}
 
-		globalID = *newID
+		globalID = *&newID.ID
 
-		t.Logf("First rule created with id %s", newID.Hex())
+		t.Logf("First rule created with id %s", newID.ID)
 	})
 
 	t.Run("save a new rule with success and with the same last pattern but different detail when the strucutre is valid", func(t *testing.T) {
@@ -111,6 +117,8 @@ func TestRules(t *testing.T) {
 					"value": "{{ .Word1.Lemma }}",
 				},
 			},
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
 		}
 
 		newID, error := helper.New(context.Background(), newRule)
@@ -119,11 +127,47 @@ func TestRules(t *testing.T) {
 			t.Fatal(error)
 		}
 
-		t.Logf("Second rule created with id %s", newID.Hex())
+		t.Logf("Second rule created with id %s", newID.ID)
+	})
+
+	t.Run("get an error saving a new rule", func(t *testing.T) {
+		newRule := NewRule{
+			SourceLanguage: "es",
+		}
+
+		_, error := helper.New(context.Background(), newRule)
+
+		if error != nil {
+			t.Fatalf("An error was excpected")
+		}
+	})
+
+	t.Run("get always success when count docments", func(t *testing.T) {
+		_, error := helper.Count(context.Background())
+
+		if error != nil {
+			t.Fatal(error)
+		}
+	})
+
+	t.Run("get an error finding rule by id", func(t *testing.T) {
+		_, error := helper.FindByID(context.Background(), primitive.NewObjectID())
+
+		if error == nil {
+			t.Fatalf("Error expected did not received")
+		}
+	})
+
+	t.Run("find rule by id with success when it exists", func(t *testing.T) {
+		_, error := helper.FindByID(context.Background(), globalID)
+
+		if error != nil {
+			t.Fatal(error)
+		}
 	})
 
 	t.Run("find rule with success when the value exists", func(t *testing.T) {
-		rule, error := helper.Find(context.Background(), "espaol", "kaqchikel", "VERB,ADV,ADJ")
+		rule, error := helper.FindByPattern(context.Background(), "espaol", "kaqchikel", "VERB,ADV,ADJ")
 
 		if error != nil {
 			t.Fatal(error)
@@ -132,8 +176,8 @@ func TestRules(t *testing.T) {
 		t.Logf("Found rules %v", rule)
 	})
 
-	t.Run("get and error finding non existing rule", func(t *testing.T) {
-		rule, error := helper.Find(context.Background(), "espaol", "kaqchikel", "ADJ,ADJ,ADV")
+	t.Run("get and error finding by pattern non existing rule", func(t *testing.T) {
+		rule, error := helper.FindByPattern(context.Background(), "espaol", "kaqchikel", "ADJ,ADJ,ADV")
 
 		if error != nil {
 			t.Fatal(error)
@@ -161,6 +205,8 @@ func TestRules(t *testing.T) {
 					"value": "{{ .Word1.Lemma }}",
 				},
 			},
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
 		}
 
 		newID, error := helper.New(context.Background(), newRule)
@@ -169,37 +215,44 @@ func TestRules(t *testing.T) {
 			t.Fatal(error)
 		}
 
-		t.Logf("New rule created with id %s", newID.Hex())
+		t.Logf("New rule created with id %s", newID.ID)
+	})
+
+	t.Run("get all rules with success", func(t *testing.T) {
+		options := FindOptions{
+			Filter: map[string]interface{}{},
+			Limit:  10,
+			Skip:   0,
+		}
+		_, error := helper.Find(context.Background(), options)
+
+		if error != nil {
+			t.Fatal(error)
+		}
 	})
 
 	t.Run("update one rule with success when the rule exists", func(t *testing.T) {
-		filter := map[string]interface{}{
-			"_id": globalID,
+		update := UpdateRule{
+			ID:             globalID,
+			SourceLanguage: "es",
 		}
 
-		update := map[string]interface{}{
-			"source_language": "es",
-		}
-
-		error := helper.UpdateOne(context.Background(), filter, update)
+		rule, error := helper.UpdateOne(context.Background(), update)
 
 		if error != nil {
 			t.Fatal(error)
 		}
 
-		t.Logf("Rule updated with success")
+		t.Logf("Rule updated with success %v", rule.ID)
 	})
 
 	t.Run("get an error updating a rule that does not exist", func(t *testing.T) {
-		filter := map[string]interface{}{
-			"key": "val",
+		update := UpdateRule{
+			ID:             primitive.NewObjectID(),
+			SourceLanguage: "es",
 		}
 
-		update := map[string]interface{}{
-			"source_language": "es",
-		}
-
-		error := helper.UpdateOne(context.Background(), filter, update)
+		_, error := helper.UpdateOne(context.Background(), update)
 
 		if error == nil {
 			t.Fatalf("Error expected did not received")

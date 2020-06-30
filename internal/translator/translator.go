@@ -38,7 +38,7 @@ func (t *Translator) TranslatePhrase(ctx context.Context, phrase, source, target
 func (t *Translator) TranslateSentence(ctx context.Context, sentence linguakit.Sentence, sourceLanguage, targetLanguage string) types.TranslatedSentence {
 	var result = types.TranslatedSentence{}
 
-	rules, error := t.RulesHelper.Find(ctx, sourceLanguage, targetLanguage, sentence.Pattern)
+	rules, error := t.RulesHelper.FindByPattern(ctx, sourceLanguage, targetLanguage, sentence.Pattern)
 
 	if error != nil || len(rules) == 0 {
 		result.Sentence, result.UnknownWords = t.TranslateWordByWord(ctx, sentence, sourceLanguage, targetLanguage)

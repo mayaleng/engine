@@ -1,0 +1,424 @@
+{
+	"info": {
+		"_postman_id": "f612a1f0-970c-493f-8410-afaf3cb09504",
+		"name": "MayaLeng",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Words",
+			"item": [
+				{
+					"name": "CreateWord",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\":\"tx\",\r\n    \"categories\":{\r\n        \"adj\" : true,\r\n        \"f\" : true\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/languages/espaol/words",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"languages",
+								"espaol",
+								"words"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateWord",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\":\"NTC\",\r\n    \"categories\":{\r\n        \"adj\": true,\r\n        \"m-f\": true\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/languages/espaol/words/5ef811c82b797fad14c317d9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"languages",
+								"espaol",
+								"words",
+								"5ef811c82b797fad14c317d9"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Languages",
+			"item": [
+				{
+					"name": "NewLanguage",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ID\":\"test\",\r\n    \"Name\"   :\"TEST\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/languages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"languages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateLanguage",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ID\":\"tst\",\r\n    \"Name\":\"testx2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/languages/test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"languages",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteLanguage",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/languages/test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"languages",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListLanguages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/v1/languages",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"languages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetLanguage",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/v1/languages/espaol",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"languages",
+								"espaol"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Rules",
+			"item": [
+				{
+					"name": "NewRule",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"source_language\":\"espaol\",\r\n    \"target_language\":\"kaqchikel\",\r\n    \"pattern\":\"VERB\",\r\n    \"details\":[\r\n        {\r\n            \"tag\":\"M\"\r\n        }\r\n    ],\r\n    \"output\":[\r\n        {\r\n            \"type\":\"direct-translation\",\r\n            \"value\":\"{{ .Word3.Lemma }}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/rules",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"rules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListRules",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/rules",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"rules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteRule",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/rules/5ef9734ae07ec8e6c598dc09",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"rules",
+								"5ef9734ae07ec8e6c598dc09"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRule",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/rules/5ef97ad52d6ef8e50c757cd1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"rules",
+								"5ef97ad52d6ef8e50c757cd1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateRule",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"source_language\": \"espaol\",\r\n        \"target_language\": \"kaqchikel\",\r\n        \"pattern\": \"VERB\",\r\n        \"details\": [\r\n            {\r\n                \"tag\":\"VERB\",\r\n                \"type\": \"S\"\r\n            }\r\n        ],\r\n        \"output\": [\r\n            {\r\n                \"type\": \"direct-translation\",\r\n                \"value\": \"{{ .Word1.Lemma }}\"\r\n            }\r\n        ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/rules/5ef97aa01f977e9024ca8a0f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"rules",
+								"5ef97aa01f977e9024ca8a0f"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Translations",
+			"item": [
+				{
+					"name": "Direct",
+					"item": [
+						{
+							"name": "DirectTranslate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"from\":\"espaol\",\n\t\"to\":\"kaqchikel\",\n\t\"phrase\":\"Estoy muy feliz\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/v1/translations",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"v1",
+										"translations"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Conditional",
+					"item": [
+						{
+							"name": "ConditionalTranslate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"salta mucho\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/v1/translations",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"v1",
+										"translations"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Mix",
+					"item": [],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

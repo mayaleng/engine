@@ -106,6 +106,18 @@ func (h *words) update(w http.ResponseWriter, r *http.Request, ps httprouter.Par
 		return
 	}
 
+	if updateWord.Text == "" && updateWord.Categories == nil {
+		response.Errors = web.Error{
+			Status: 400,
+			Source: web.ErrorSource{
+				Pointer: "Empty values",
+			},
+			Detail: "Bad request",
+		}
+		web.RespondWith(r.Context(), w, http.StatusBadRequest, response)
+		return
+	}
+
 	now := time.Now()
 	updateWord.UpdatedAt = now
 	updateWord.ID = ID

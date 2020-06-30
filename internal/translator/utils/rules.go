@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"regexp"
+
 	"mayaleng.org/engine/internal/platform/data"
 	"mayaleng.org/engine/internal/platform/linguakit"
 )
@@ -56,4 +58,11 @@ func FilterRuleByType(rule data.Rule, words []linguakit.Word) int {
 	}
 
 	return coincidence
+}
+
+// ValidatePattern valids if the format of pattern is correct
+func ValidatePattern(pattern string) bool {
+	validPattern := regexp.MustCompile(`^[A-Z]+(,[A-Z]+)*$`)
+
+	return validPattern.MatchString(pattern)
 }
