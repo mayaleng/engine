@@ -33,8 +33,8 @@ type NewWord struct {
 // UpdateWord has the needed properties to update a word
 type UpdateWord struct {
 	ID         primitive.ObjectID `bson:"_id" json:"id"`
-	Text       string             `bson:"text" json:"text" validate:"min=1,required"`
-	Categories Categories         `bson:"categories" json:"categories"`
+	Text       string             `bson:"text,omitempty" json:"text"`
+	Categories Categories         `bson:"categories,omitempty" json:"categories"`
 	UpdatedAt  time.Time          `bson:"updated_at" json:"updated_at"`
 }
 

@@ -170,4 +170,22 @@ func TestRules(t *testing.T) {
 
 		t.Logf("Rule found it %v", rule.ID)
 	})
+
+	t.Run("Get true with success when the pattern is valid", func(t *testing.T) {
+		if ValidatePattern("VERB") {
+			t.Logf("Valid Pattern")
+		}
+	})
+
+	t.Run("Get true with success when the pattern is valid 2", func(t *testing.T) {
+		if ValidatePattern("VERB,ADJ") {
+			t.Logf("Valid Pattern")
+		}
+	})
+
+	t.Run("Get false with success when the pattern is invalid", func(t *testing.T) {
+		if !ValidatePattern("VERB,ADV,") {
+			t.Logf("Invalid Pattern")
+		}
+	})
 }

@@ -71,5 +71,17 @@ func NewAPI(envs *types.Envs, dbConnection *mongo.Client) http.Handler {
 	router.Handle(http.MethodPatch, "/v1/languages/:languageId", languages.update)
 	router.Handle(http.MethodDelete, "/v1/languages/:languageId", languages.delete)
 
+	// Rules
+
+	rules := rules{
+		Helper: rulesHelper,
+	}
+
+	router.Handle(http.MethodGet, "/v1/rules", rules.list)
+	router.Handle(http.MethodPost, "/v1/rules", rules.create)
+	router.Handle(http.MethodGet, "/v1/rules/:id", rules.get)
+	router.Handle(http.MethodPatch, "/v1/rules/:id", rules.update)
+	router.Handle(http.MethodDelete, "/v1/rules/:id", rules.delete)
+
 	return router
 }

@@ -151,14 +151,13 @@ var VVA = `
 type RulesTest struct {
 }
 
-// New always returns a valid ObjectID
-func (r RulesTest) New(ctx context.Context, ruleStruct data.NewRule) (*primitive.ObjectID, error) {
-	id := primitive.NewObjectID()
-	return &id, nil
+// New always nil
+func (r RulesTest) New(ctx context.Context, ruleStruct data.NewRule) (*data.Rule, error) {
+	return nil, nil
 }
 
-// Find always returns a 1-length array of rules
-func (r RulesTest) Find(ctx context.Context, sourceLanguage, targetLanguage, pattern string) ([]data.Rule, error) {
+// FindByPattern always returns a 1-length array of rules
+func (r RulesTest) FindByPattern(ctx context.Context, sourceLanguage, targetLanguage, pattern string) ([]data.Rule, error) {
 	var rules = make([]data.Rule, 0)
 	var rule string
 
@@ -183,11 +182,26 @@ func (r RulesTest) Find(ctx context.Context, sourceLanguage, targetLanguage, pat
 }
 
 // UpdateOne always returns nil
-func (r RulesTest) UpdateOne(ctx context.Context, filter map[string]interface{}, updateValue map[string]interface{}) error {
-	return nil
+func (r RulesTest) UpdateOne(ctx context.Context, update data.UpdateRule) (*data.Rule, error) {
+	return nil, nil
 }
 
 // DeleteOne always returns nil
 func (r RulesTest) DeleteOne(ctx context.Context, ObjectID primitive.ObjectID) error {
 	return nil
+}
+
+// Count always returns 0, nil
+func (r RulesTest) Count(ctx context.Context) (int64, error) {
+	return 0, nil
+}
+
+// Find always return nil
+func (r RulesTest) Find(ctx context.Context, metadata data.FindOptions) ([]data.Rule, error) {
+	return nil, nil
+}
+
+// FindByID always return nil
+func (r RulesTest) FindByID(ctx context.Context, ID primitive.ObjectID) (*data.Rule, error) {
+	return nil, nil
 }
