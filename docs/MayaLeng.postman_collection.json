@@ -46,7 +46,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"text\":\"NTC\",\r\n    \"categories\":{\r\n        \"adj\": true,\r\n        \"m-f\": true\r\n    }\r\n}",
+							"raw": "{\r\n    \"text\":\"Ntc2x\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -68,6 +68,30 @@
 								"5ef811c82b797fad14c317d9"
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetWord",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/languages/espaol/words/5eeaf40cb3938728f1f6e751",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"languages",
+								"espaol",
+								"words",
+								"5eeaf40cb3938728f1f6e751"
+							]
+						},
+						"description": "    "
 					},
 					"response": []
 				}
@@ -309,7 +333,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"source_language\": \"espaol\",\r\n        \"target_language\": \"kaqchikel\",\r\n        \"pattern\": \"VERB\",\r\n        \"details\": [\r\n            {\r\n                \"tag\":\"VERB\",\r\n                \"type\": \"S\"\r\n            }\r\n        ],\r\n        \"output\": [\r\n            {\r\n                \"type\": \"direct-translation\",\r\n                \"value\": \"{{ .Word1.Lemma }}\"\r\n            }\r\n        ]\r\n}",
+							"raw": "{\r\n    \"source_language\": \"espaol\",\r\n        \"target_language\": \"kaqchikel\",\r\n        \"pattern\": \"ADJ\",\r\n        \"details\": [\r\n            {\r\n                \"tag\":\"ADJ\",\r\n                \"type\": \"S\"\r\n            }\r\n        ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -336,7 +360,7 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "Translations",
+			"name": "PhraseTranslate",
 			"item": [
 				{
 					"name": "Direct",
@@ -356,7 +380,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8000/v1/translations",
+									"raw": "http://localhost:8000/v1/traductions",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -364,7 +388,7 @@
 									"port": "8000",
 									"path": [
 										"v1",
-										"translations"
+										"traductions"
 									]
 								}
 							},
@@ -392,7 +416,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8000/v1/translations",
+									"raw": "http://localhost:8000/v1/traductions",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -400,7 +424,7 @@
 									"port": "8000",
 									"path": [
 										"v1",
-										"translations"
+										"traductions"
 									]
 								}
 							},
@@ -415,6 +439,204 @@
 					"item": [],
 					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "23a5faf3-ffb8-4514-abec-b91f4a652789",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "8a3946de-7f0d-4739-afba-43a16f0f9826",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Translations",
+			"item": [
+				{
+					"name": "GetTraduction",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/translations/words/5eeaf40cb3938728f1f6e741?source=espaol&target=kaqchikel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"translations",
+								"words",
+								"5eeaf40cb3938728f1f6e741"
+							],
+							"query": [
+								{
+									"key": "source",
+									"value": "espaol"
+								},
+								{
+									"key": "target",
+									"value": "kaqchikel"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NewTranslation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ka\":\"5efc0073f7858f119353c3fa\",\r\n    \"sa\":\"8efc0072f7858f119353c997\",\r\n    \"ra\": \"8efc0072f7858f119353c123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1//translations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"",
+								"translations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTranslation",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ka\":\"5efc0073f7858f119353c3fa\",\r\n    \"ra\":\"8efc0072f7858f119353c360\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/translations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"translations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTranslation",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ra\": \"8efc0072f7858f119353c360\",\r\n    \"sa\": \"8efc0072f7858f119353c997\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/translations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"translations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListTranslations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/translations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"translations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NewTranslation2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ra\": \"8efc0072f7858f119353c123\",\r\n    \"mam\": \"4efc0072f7858f209353c689\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1//translations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"",
+								"translations"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}

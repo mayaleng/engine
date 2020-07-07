@@ -10,7 +10,7 @@ func (t *Translator) TranslateWord(ctx context.Context, word string, sourceLangu
 		return "", error
 	}
 
-	translatedWordID, error := t.TranslationsHelper.Find(ctx, sourceWord.ID, sourceLanguage, targetLanguage)
+	translatedWordID, error := t.TranslationsHelper.FindByID(ctx, sourceWord.ID, sourceLanguage, targetLanguage)
 
 	if error != nil {
 		return "", error
