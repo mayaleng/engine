@@ -92,10 +92,10 @@ func (h *translations) get(w http.ResponseWriter, r *http.Request, ps httprouter
 	var response = web.Response{}
 	var word = ps.ByName("id")
 
-	sourceLanguageID, exist := r.URL.Query()["source"]
-	targetLanguageID, exist := r.URL.Query()["target"]
+	sourceLanguageID := r.URL.Query().Get("source")
+	targetLanguageID := r.URL.Query().Get("target")
 
-	if !exist || len(sourceLanguageID) == 0 {
+	if len(sourceLanguageID) == 0 {
 		response.Errors = web.Error{
 			Status: 400,
 			Source: web.ErrorSource{
@@ -107,7 +107,7 @@ func (h *translations) get(w http.ResponseWriter, r *http.Request, ps httprouter
 		return
 	}
 
-	if !exist || len(targetLanguageID) == 0 {
+	if len(targetLanguageID) == 0 {
 		response.Errors = web.Error{
 			Status: 400,
 			Source: web.ErrorSource{
@@ -126,28 +126,28 @@ func (h *translations) get(w http.ResponseWriter, r *http.Request, ps httprouter
 		return
 	}
 
-	sourceWord, error := h.WordsHelper.FindByID(r.Context(), sourceLanguageID[0], ID)
+	sourceWord, error := h.WordsHelper.FindByID(r.Context(), sourceLanguageID, ID)
 
 	if error != nil {
 		web.RespondWithNotFound(r.Context(), w)
 		return
 	}
 
-	targetWordID, error := h.TranslationHelper.FindByID(r.Context(), sourceWord.ID, sourceLanguageID[0], targetLanguageID[0])
+	targetWordID, error := h.TranslationHelper.FindByID(r.Context(), sourceWord.ID, sourceLanguageID, targetLanguageID)
 
 	if error != nil {
 		web.RespondWithNotFound(r.Context(), w)
 		return
 	}
 
-	targetWord, error := h.WordsHelper.FindByID(r.Context(), targetLanguageID[0], *targetWordID)
+	targetWord, error := h.WordsHelper.FindByID(r.Context(), targetLanguageID, *targetWordID)
 
 	if error != nil {
 		web.RespondWithNotFound(r.Context(), w)
 		return
 	}
 
-	targetLanguage, error := h.LanguagesHelper.FindByID(r.Context(), targetLanguageID[0])
+	targetLanguage, error := h.LanguagesHelper.FindByID(r.Context(), targetLanguageID)
 
 	if error != nil {
 		web.RespondWithBadRequest(r.Context(), w)
@@ -155,7 +155,7 @@ func (h *translations) get(w http.ResponseWriter, r *http.Request, ps httprouter
 	}
 
 	traduction := Traduction{
-		SourceLanguage: sourceLanguageID[0],
+		SourceLanguage: sourceLanguageID,
 		SourceWord:     sourceWord.ID,
 		TargetLanguage: targetLanguage.ID,
 		TargetWord:     targetWord.ID,

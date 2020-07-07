@@ -380,7 +380,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8000/v1/traductions",
+									"raw": "http://localhost:8000/v1/translate",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -388,7 +388,7 @@
 									"port": "8000",
 									"path": [
 										"v1",
-										"traductions"
+										"translate"
 									]
 								}
 							},
@@ -416,7 +416,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8000/v1/traductions",
+									"raw": "http://localhost:8000/v1/translate",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -424,7 +424,7 @@
 									"port": "8000",
 									"path": [
 										"v1",
-										"traductions"
+										"translate"
 									]
 								}
 							},

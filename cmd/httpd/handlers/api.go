@@ -45,7 +45,7 @@ func NewAPI(envs *types.Envs, dbConnection *mongo.Client) http.Handler {
 		translator: translator,
 	}
 
-	router.Handle(http.MethodPost, "/v1/traductions", engine.translate)
+	router.Handle(http.MethodPost, "/v1/translate", engine.translate)
 
 	// Words
 
