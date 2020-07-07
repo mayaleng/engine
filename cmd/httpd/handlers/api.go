@@ -45,7 +45,7 @@ func NewAPI(envs *types.Envs, dbConnection *mongo.Client) http.Handler {
 		translator: translator,
 	}
 
-	router.Handle(http.MethodPost, "/v1/translations", engine.translate)
+	router.Handle(http.MethodPost, "/v1/translate", engine.translate)
 
 	// Words
 
@@ -82,6 +82,20 @@ func NewAPI(envs *types.Envs, dbConnection *mongo.Client) http.Handler {
 	router.Handle(http.MethodGet, "/v1/rules/:id", rules.get)
 	router.Handle(http.MethodPatch, "/v1/rules/:id", rules.update)
 	router.Handle(http.MethodDelete, "/v1/rules/:id", rules.delete)
+
+	// Translations
+
+	translations := translations{
+		TranslationHelper: translationsHelper,
+		WordsHelper:       wordsHelper,
+		LanguagesHelper:   languagesHelper,
+	}
+
+	router.Handle(http.MethodGet, "/v1/translations", translations.list)
+	router.Handle(http.MethodPost, "/v1/translations", translations.create)
+	router.Handle(http.MethodGet, "/v1/translations/words/:id", translations.get)
+	router.Handle(http.MethodPatch, "/v1/translations", translations.update)
+	router.Handle(http.MethodDelete, "/v1/translations", translations.delete)
 
 	return router
 }
