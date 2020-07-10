@@ -192,7 +192,7 @@ func (r RulesTest) DeleteOne(ctx context.Context, ObjectID primitive.ObjectID) e
 }
 
 // Count always returns 0, nil
-func (r RulesTest) Count(ctx context.Context) (int64, error) {
+func (r RulesTest) Count(ctx context.Context, filter map[string]interface{}) (int64, error) {
 	return 0, nil
 }
 

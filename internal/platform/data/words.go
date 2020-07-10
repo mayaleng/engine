@@ -51,7 +51,7 @@ type WordsHelper interface {
 	FindOneByText(ctx context.Context, collectionName string, text string) (*Word, error)
 	UpdateOne(ctx context.Context, collectionName string, update UpdateWord) (*Word, error)
 	DeleteOne(ctx context.Context, collectionName string, ID primitive.ObjectID) error
-	Count(ctx context.Context, collectionName string) (int64, error)
+	Count(ctx context.Context, collectionName string, filter map[string]interface{}) (int64, error)
 }
 
 // Find retruns a list of words based on the given filter
@@ -201,10 +201,10 @@ func (w Words) DeleteOne(ctx context.Context, collectionName string, id primitiv
 }
 
 // Count returns the number of elements in the collection
-func (w Words) Count(ctx context.Context, collectionName string) (int64, error) {
+func (w Words) Count(ctx context.Context, collectionName string, filter map[string]interface{}) (int64, error) {
 	collection := w.Database.Collection(collectionName)
 
-	result, error := collection.CountDocuments(ctx, map[string]string{})
+	result, error := collection.CountDocuments(ctx, filter)
 
 	if error != nil {
 		return 0, error

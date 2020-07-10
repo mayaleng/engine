@@ -36,7 +36,7 @@ type TranslationsHelper interface {
 	FindByID(ctx context.Context, wordID primitive.ObjectID, source string, target string) (*primitive.ObjectID, error)
 	UpdateOne(ctx context.Context, update UpdateTranslation) (*Translation, error)
 	DeleteOne(ctx context.Context, delete DeleteTranslation) error
-	Count(ctx context.Context) (int64, error)
+	Count(ctx context.Context, filter map[string]interface{}) (int64, error)
 }
 
 // New creates a new translation
@@ -216,8 +216,8 @@ func (t Translations) DeleteOne(ctx context.Context, delete DeleteTranslation) e
 }
 
 // Count returns the number of elements in the collection
-func (t Translations) Count(ctx context.Context) (int64, error) {
-	result, error := t.Collection.CountDocuments(ctx, map[string]string{})
+func (t Translations) Count(ctx context.Context, filter map[string]interface{}) (int64, error) {
+	result, error := t.Collection.CountDocuments(ctx, filter)
 
 	if error != nil {
 		return 0, error

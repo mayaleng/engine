@@ -143,7 +143,7 @@ func TestRules(t *testing.T) {
 	})
 
 	t.Run("get always success when count docments", func(t *testing.T) {
-		_, error := helper.Count(context.Background())
+		_, error := helper.Count(context.Background(), map[string]interface{}{})
 
 		if error != nil {
 			t.Fatal(error)

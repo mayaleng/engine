@@ -75,7 +75,7 @@ type RulesHelper interface {
 	FindByPattern(ctx context.Context, sourceLanguage, targetLanguage, pattern string) ([]Rule, error)
 	UpdateOne(ctx context.Context, update UpdateRule) (*Rule, error)
 	DeleteOne(ctx context.Context, ObjectID primitive.ObjectID) error
-	Count(ctx context.Context) (int64, error)
+	Count(ctx context.Context, filter map[string]interface{}) (int64, error)
 }
 
 // New creates a rule in database
@@ -226,8 +226,8 @@ func (r Rules) DeleteOne(ctx context.Context, ObjectID primitive.ObjectID) error
 }
 
 // Count returns the number of elements in the collection
-func (r Rules) Count(ctx context.Context) (int64, error) {
-	result, error := r.Collection.CountDocuments(ctx, map[string]string{})
+func (r Rules) Count(ctx context.Context, filter map[string]interface{}) (int64, error) {
+	result, error := r.Collection.CountDocuments(ctx, filter)
 
 	if error != nil {
 		return 0, error

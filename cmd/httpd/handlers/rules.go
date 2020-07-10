@@ -3,6 +3,7 @@ package handlers
 import (
 	"math"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/julienschmidt/httprouter"
@@ -18,8 +19,33 @@ type rules struct {
 
 func (h *rules) list(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var response web.Response
+	var filter map[string]interface{}
 
-	count, error := h.Helper.Count(r.Context())
+	queryParams := r.URL.Query()
+
+	if len(queryParams.Get("source")) > 0 {
+		filter = map[string]interface{}{
+			"source_language": map[string]string{
+				"$regex": queryParams.Get("source"),
+			},
+		}
+	} else if len(queryParams.Get("target")) > 0 {
+		filter = map[string]interface{}{
+			"target_language": map[string]string{
+				"$regex": queryParams.Get("target"),
+			},
+		}
+	} else if len(queryParams.Get("pattern")) > 0 {
+		filter = map[string]interface{}{
+			"pattern": map[string]string{
+				"$regex": strings.ToUpper(queryParams.Get("pattern")),
+			},
+		}
+	} else {
+		filter = map[string]interface{}{}
+	}
+
+	count, error := h.Helper.Count(r.Context(), filter)
 
 	if error != nil {
 		web.RespondWithInternal(r.Context(), w)
@@ -35,7 +61,7 @@ func (h *rules) list(w http.ResponseWriter, r *http.Request, ps httprouter.Param
 	}
 
 	options := data.FindOptions{
-		Filter: map[string]interface{}{},
+		Filter: filter,
 		Limit:  pagination.Size,
 		Skip:   pagination.Number - 1,
 	}

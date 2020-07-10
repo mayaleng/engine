@@ -32,7 +32,7 @@ func (t TranslationsTest) DeleteOne(ctx context.Context, delete data.DeleteTrans
 }
 
 // Count returns the number of elements in the collection
-func (t TranslationsTest) Count(ctx context.Context) (int64, error) {
+func (t TranslationsTest) Count(ctx context.Context, filter map[string]interface{}) (int64, error) {
 	return 0, nil
 }
 
