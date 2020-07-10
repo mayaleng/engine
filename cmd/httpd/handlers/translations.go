@@ -26,8 +26,21 @@ type Traduction struct {
 
 func (h *translations) list(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var response web.Response
+	var filter map[string]interface{}
 
-	count, error := h.TranslationHelper.Count(r.Context())
+	language := r.URL.Query().Get("language")
+
+	if len(language) > 0 {
+		filter = map[string]interface{}{
+			language: map[string]bool{
+				"$exists": true,
+			},
+		}
+	} else {
+		filter = map[string]interface{}{}
+	}
+
+	count, error := h.TranslationHelper.Count(r.Context(), filter)
 
 	if error != nil {
 		web.RespondWithInternal(r.Context(), w)
@@ -43,7 +56,7 @@ func (h *translations) list(w http.ResponseWriter, r *http.Request, ps httproute
 	}
 
 	options := data.FindOptions{
-		Filter: map[string]interface{}{},
+		Filter: filter,
 		Limit:  pagination.Size,
 		Skip:   pagination.Number - 1,
 	}

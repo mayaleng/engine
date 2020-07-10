@@ -82,7 +82,7 @@ Here you have more documentation to deep dive into some specific topics.
 To make a translation you can execute an `HTTP POST`
 
 ```
-curl -L -X POST 'http://localhost:8080/v1/traductions' \
+curl -L -X POST 'http://localhost:8080/v1/translate' \
 -H 'Content-Type: application/json' \
 --data-raw '{
 	"from": "espaol",

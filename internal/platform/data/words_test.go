@@ -140,7 +140,7 @@ func TestWords(t *testing.T) {
 	})
 
 	t.Run("get always success when count docments", func(t *testing.T) {
-		_, error := helper.Count(context.TODO(), collectionName)
+		_, error := helper.Count(context.TODO(), collectionName, map[string]interface{}{})
 
 		if error != nil {
 			t.Fatal(error)

@@ -94,6 +94,34 @@
 						"description": "    "
 					},
 					"response": []
+				},
+				{
+					"name": "ListWords",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/languages/espaol/words?text=manta",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"languages",
+								"espaol",
+								"words"
+							],
+							"query": [
+								{
+									"key": "text",
+									"value": "manta"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -270,7 +298,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/v1/rules",
+							"raw": "http://localhost:8080/v1/rules?pattern=ADV",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -279,6 +307,12 @@
 							"path": [
 								"v1",
 								"rules"
+							],
+							"query": [
+								{
+									"key": "pattern",
+									"value": "ADV"
+								}
 							]
 						}
 					},
@@ -594,7 +628,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/v1/translations",
+							"raw": "http://localhost:8080/v1/translations?language=espaol",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -603,6 +637,12 @@
 							"path": [
 								"v1",
 								"translations"
+							],
+							"query": [
+								{
+									"key": "language",
+									"value": "espaol"
+								}
 							]
 						}
 					},

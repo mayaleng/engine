@@ -18,8 +18,27 @@ type words struct {
 func (h *words) list(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var response web.Response
 	var languageID = ps.ByName("languageId")
+	var filter map[string]interface{}
 
-	count, error := h.Helper.Count(r.Context(), languageID)
+	queryParams := r.URL.Query()
+
+	if len(queryParams.Get("text")) > 0 {
+		filter = map[string]interface{}{
+			"text": map[string]string{
+				"$regex": queryParams.Get("text"),
+			},
+		}
+	} else if len(queryParams.Get("categories")) > 0 {
+		filter = map[string]interface{}{
+			"categories": map[string]bool{
+				queryParams.Get("categories"): true,
+			},
+		}
+	} else {
+		filter = map[string]interface{}{}
+	}
+
+	count, error := h.Helper.Count(r.Context(), languageID, filter)
 
 	if error != nil {
 		web.RespondWithInternal(r.Context(), w)
@@ -35,7 +54,7 @@ func (h *words) list(w http.ResponseWriter, r *http.Request, ps httprouter.Param
 	}
 
 	options := data.FindOptions{
-		Filter: map[string]interface{}{},
+		Filter: filter,
 		Limit:  pagination.Size,
 		Skip:   pagination.Number - 1,
 	}

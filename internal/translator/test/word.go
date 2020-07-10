@@ -70,6 +70,6 @@ func (w WordsTest) DeleteOne(ctx context.Context, collectionName string, id prim
 }
 
 // Count always return 10
-func (w WordsTest) Count(ctx context.Context, collectionName string) (int64, error) {
+func (w WordsTest) Count(ctx context.Context, collectionName string, filter map[string]interface{}) (int64, error) {
 	return 10, nil
 }
