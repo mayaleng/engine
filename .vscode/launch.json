@@ -12,7 +12,7 @@
             "program": "${workspaceFolder}/cmd/httpd/main.go",
             "env": {},
             "args": [],
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
         }
     ]
 }
