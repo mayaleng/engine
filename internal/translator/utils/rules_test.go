@@ -171,6 +171,37 @@ func TestRules(t *testing.T) {
 		t.Logf("Rule found it %v", rule.ID)
 	})
 
+	t.Run("Filtering rules with success when one rule match with types and properties", func(t *testing.T) {
+		rules := []data.Rule{
+			{
+				Pattern: "VERB,ADV,ADJ",
+				Details: []data.RuleDetail{
+					{
+						Tag:  "DT",
+						Type: "P",
+						Properties: map[string]string{
+							"type": "P",
+						},
+					},
+				},
+			},
+		}
+
+		words := []linguakit.Word{
+			{
+				Tag:  "DT",
+				Type: "P",
+				Properties: map[string]string{
+					"type": "P",
+				},
+			},
+		}
+
+		rule := FilterRules(rules, words)
+
+		t.Logf("Rule found it %v", rule.ID)
+	})
+
 	t.Run("Get true with success when the pattern is valid", func(t *testing.T) {
 		if ValidatePattern("VERB") {
 			t.Logf("Valid Pattern")
