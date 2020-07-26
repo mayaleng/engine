@@ -77,6 +77,7 @@ Here you have more documentation to deep dive into some specific topics.
 1. [Deterministic translation algorithm](docs/algorithm.md)
 2. [Rule examples](docs/rulesresources.md)
 3. [Postman examples API](docs/MayaLeng.postman_collection.json): here you can import some examples for Postman and you only need to change the port if run in another.
+4. [Kaqchikel Templates](docs/kaqchikel_templates.md): here you can see how to write single templates to translate from spanish to kaqchikel.
 
 ## Examples
 To make a translation you can execute an `HTTP POST`

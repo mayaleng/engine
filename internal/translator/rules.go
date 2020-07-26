@@ -17,6 +17,20 @@ func (t *Translator) TranslateByRule(ctx context.Context, sentence linguakit.Sen
 
 	words := utils.FilterWordsByRule(sentence.Words, rule)
 
+	for count, word := range words {
+		if word.Tag == "VERB" {
+			w, error := t.WordsHelper.FindOneByText(ctx, rule.SourceLanguage, word.Lemma)
+			if error == nil {
+				if w.Categories["tr"] {
+					words[count].Transitive = true
+				}
+				if w.Categories["intr"] {
+					words[count].Intransitive = true
+				}
+			}
+		}
+	}
+
 	for _, outputRule := range rule.Output {
 		var error error
 		var translation string

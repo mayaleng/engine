@@ -13,7 +13,7 @@ func TestSentence(t *testing.T) {
 			t.Error(error)
 		}
 
-		t.Logf("analysis result: %s", result)
+		t.Logf("analysis result: %v", result)
 	})
 
 	t.Run("Get an error with an empty phrase", func(t *testing.T) {
