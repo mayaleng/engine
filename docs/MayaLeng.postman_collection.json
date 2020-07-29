@@ -46,7 +46,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"text\":\"Ntc2x\"\r\n}\r\n",
+							"raw": "{\r\n    \"text\":\"comer\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -54,7 +54,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/v1/languages/espaol/words/5ef811c82b797fad14c317d9",
+							"raw": "http://localhost:8080/v1/languages/espaol/words/5eeaf538b3938728f1f7a07a",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -65,7 +65,7 @@
 								"languages",
 								"espaol",
 								"words",
-								"5ef811c82b797fad14c317d9"
+								"5eeaf538b3938728f1f7a07a"
 							]
 						}
 					},
@@ -77,7 +77,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/v1/languages/espaol/words/5eeaf40cb3938728f1f6e751",
+							"raw": "http://localhost:8080/v1/languages/espaol/words/5eeaf357b3938728f1f65ba1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -88,7 +88,7 @@
 								"languages",
 								"espaol",
 								"words",
-								"5eeaf40cb3938728f1f6e751"
+								"5eeaf357b3938728f1f65ba1"
 							]
 						},
 						"description": "    "
@@ -101,7 +101,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/v1/languages/espaol/words?text=manta",
+							"raw": "http://localhost:8080/v1/languages/espaol/words?text=ese",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -116,7 +116,7 @@
 							"query": [
 								{
 									"key": "text",
-									"value": "manta"
+									"value": "ese"
 								}
 							]
 						}
@@ -345,7 +345,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/v1/rules/5ef97ad52d6ef8e50c757cd1",
+							"raw": "http://localhost:8080/v1/rules/5f0d33de293b1150b8d637d6",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -354,7 +354,7 @@
 							"path": [
 								"v1",
 								"rules",
-								"5ef97ad52d6ef8e50c757cd1"
+								"5f0d33de293b1150b8d637d6"
 							]
 						}
 					},
@@ -367,7 +367,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"source_language\": \"espaol\",\r\n        \"target_language\": \"kaqchikel\",\r\n        \"pattern\": \"ADJ\",\r\n        \"details\": [\r\n            {\r\n                \"tag\":\"ADJ\",\r\n                \"type\": \"S\"\r\n            }\r\n        ]\r\n}",
+							"raw": "{\r\n    \"pattern\" : \"NOUN,NOUN,VERB,DET,NOUN\",\r\n    \"output\" : [ \r\n        {\r\n            \"type\" : \"literal\",\r\n            \"value\" : \"{{ if (eq .Word3.Properties.tense \\\"S\\\") }}x{{end}}\"\r\n        },\r\n        {\r\n            \"type\" : \"literal\",\r\n            \"value\" : \"{{ if and (eq .Word3.Properties.person \\\"3\\\") (eq .Word3.Properties.number \\\"S\\\") }}u{{end}}\"\r\n        },\r\n        {\r\n            \"type\" : \"direct-translation\",\r\n            \"value\" : \"{{ .Word3.Lemma }}\"\r\n        },\r\n        {\r\n            \"type\" : \"literal\",\r\n            \"value\" : \" \"\r\n        },\r\n        {\r\n            \"type\" : \"direct-translation\",\r\n            \"value\" : \"{{ .Word4.Lemma }}\"\r\n        },\r\n        {\r\n            \"type\" : \"literal\",\r\n            \"value\" : \" \"\r\n        },\r\n        {\r\n            \"type\" : \"direct-translation\",\r\n            \"value\" : \"{{ .Word5.Lemma }}\"\r\n        },\r\n        {\r\n            \"type\" : \"literal\",\r\n            \"value\" : \" \"\r\n        },\r\n        {\r\n            \"type\" : \"direct-translation\",\r\n            \"value\" : \"{{ .Word1.Lemma }}\"\r\n        },\r\n        {\r\n            \"type\" : \"literal\",\r\n            \"value\" : \" \"\r\n        },\r\n        {\r\n            \"type\" : \"direct-translation\",\r\n            \"value\" : \"{{ .Word2.Lemma }}\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -375,7 +375,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/v1/rules/5ef97aa01f977e9024ca8a0f",
+							"raw": "http://localhost:8080/v1/rules/5f0d33f3293b1150b8d637d8",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -384,7 +384,7 @@
 							"path": [
 								"v1",
 								"rules",
-								"5ef97aa01f977e9024ca8a0f"
+								"5f0d33f3293b1150b8d637d8"
 							]
 						}
 					},
@@ -406,7 +406,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"from\":\"espaol\",\n\t\"to\":\"kaqchikel\",\n\t\"phrase\":\"Estoy muy feliz\"\n}\n",
+									"raw": "{\n\t\"from\":\"espaol\",\n\t\"to\":\"kaqchikel\",\n\t\"phrase\":\"Doña Ixim regó una planta\"\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -470,7 +470,95 @@
 				},
 				{
 					"name": "Mix",
-					"item": [],
+					"item": [
+						{
+							"name": "VERB",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"come\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/v1/translate",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"v1",
+										"translate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Possesive Noun",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"mi casa\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/v1/translate",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"v1",
+										"translate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Articles",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"el perro\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/v1/translate",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"v1",
+										"translate"
+									]
+								}
+							},
+							"response": []
+						}
+					],
 					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
 				}
@@ -503,22 +591,22 @@
 			"name": "Translations",
 			"item": [
 				{
-					"name": "GetTraduction",
+					"name": "GetTranslation",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/v1/translations/words/5eeaf40cb3938728f1f6e741?source=espaol&target=kaqchikel",
+							"raw": "http://localhost:8000/v1/translations/words/5eeaf538b3938728f1f7a07a?source=espaol&target=kaqchikel",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8000",
 							"path": [
 								"v1",
 								"translations",
 								"words",
-								"5eeaf40cb3938728f1f6e741"
+								"5eeaf538b3938728f1f7a07a"
 							],
 							"query": [
 								{

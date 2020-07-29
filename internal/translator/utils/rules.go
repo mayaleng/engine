@@ -29,13 +29,17 @@ func FilterWordsByRule(words []linguakit.Word, rule data.Rule) []linguakit.Word 
 func FilterRules(rules []data.Rule, words []linguakit.Word) data.Rule {
 	var foundRule data.Rule
 	var maxCoincidence = 0
+	var maxProperties = 0
 
 	for _, rule := range rules {
-		coincidence := FilterRuleByType(rule, words)
+		coincidence, properties := FilterRuleByType(rule, words)
 
-		if coincidence == len(rule.Details) {
+		if coincidence == len(rule.Details) && properties > maxProperties {
 			foundRule = rule
-			break
+			maxProperties = properties
+		} else if coincidence == len(rule.Details) {
+			foundRule = rule
+			maxCoincidence = coincidence
 		} else {
 			if maxCoincidence <= coincidence {
 				foundRule = rule
@@ -48,11 +52,28 @@ func FilterRules(rules []data.Rule, words []linguakit.Word) data.Rule {
 }
 
 // FilterRuleByType returns the total coincidences  between rule details type and linguakit words type
-func FilterRuleByType(rule data.Rule, words []linguakit.Word) int {
+func FilterRuleByType(rule data.Rule, words []linguakit.Word) (int, int) {
 	var coincidence = 0
+	var properties = 0
 
 	for i := 0; i < len(rule.Details); i++ {
 		if rule.Details[i].Type == words[i].Type {
+			coincidence++
+			if rule.Details[i].Properties != nil {
+				properties += FilterRuleByProperties(rule.Details[i].Properties, words[i].Properties)
+			}
+		}
+	}
+
+	return coincidence, properties
+}
+
+// FilterRuleByProperties returns the total coincidences  between rule details properties and linguakit words properties
+func FilterRuleByProperties(ruleProperties map[string]string, wordProperties map[string]string) int {
+	var coincidence = 0
+
+	for key, value := range ruleProperties {
+		if wordProperties[key] == value {
 			coincidence++
 		}
 	}

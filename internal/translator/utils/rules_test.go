@@ -77,9 +77,9 @@ func TestRules(t *testing.T) {
 			},
 		}
 
-		coincidence := FilterRuleByType(rule, words)
+		coincidence, properties := FilterRuleByType(rule, words)
 
-		if coincidence == len(rule.Details) {
+		if coincidence == len(rule.Details) && properties >= 0 {
 			t.Logf("Rule found it")
 		}
 	})
@@ -118,9 +118,9 @@ func TestRules(t *testing.T) {
 			},
 		}
 
-		coincidence := FilterRuleByType(rule, words)
+		coincidence, properties := FilterRuleByType(rule, words)
 
-		if coincidence < len(rule.Details) {
+		if coincidence < len(rule.Details) && properties >= 0 {
 			t.Logf("Rule found it without all types")
 		}
 	})
@@ -171,6 +171,37 @@ func TestRules(t *testing.T) {
 		t.Logf("Rule found it %v", rule.ID)
 	})
 
+	t.Run("Filtering rules with success when one rule match with types and properties", func(t *testing.T) {
+		rules := []data.Rule{
+			{
+				Pattern: "VERB,ADV,ADJ",
+				Details: []data.RuleDetail{
+					{
+						Tag:  "DT",
+						Type: "P",
+						Properties: map[string]string{
+							"type": "P",
+						},
+					},
+				},
+			},
+		}
+
+		words := []linguakit.Word{
+			{
+				Tag:  "DT",
+				Type: "P",
+				Properties: map[string]string{
+					"type": "P",
+				},
+			},
+		}
+
+		rule := FilterRules(rules, words)
+
+		t.Logf("Rule found it %v", rule.ID)
+	})
+
 	t.Run("Get true with success when the pattern is valid", func(t *testing.T) {
 		if ValidatePattern("VERB") {
 			t.Logf("Valid Pattern")
@@ -186,6 +217,27 @@ func TestRules(t *testing.T) {
 	t.Run("Get false with success when the pattern is invalid", func(t *testing.T) {
 		if !ValidatePattern("VERB,ADV,") {
 			t.Logf("Invalid Pattern")
+		}
+	})
+
+	t.Run("Filtering rules with success when one rule match with properties", func(t *testing.T) {
+		rule := map[string]string{
+			"tense":  "P",
+			"person": "3",
+			"number": "S",
+		}
+
+		words := map[string]string{
+			"tense":  "P",
+			"lemma":  "perro",
+			"type":   "C",
+			"person": "3",
+		}
+
+		coincidence := FilterRuleByProperties(rule, words)
+
+		if coincidence > 0 {
+			t.Logf("Properties found it")
 		}
 	})
 }
