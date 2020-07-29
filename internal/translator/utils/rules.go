@@ -72,12 +72,9 @@ func FilterRuleByType(rule data.Rule, words []linguakit.Word) (int, int) {
 func FilterRuleByProperties(ruleProperties map[string]string, wordProperties map[string]string) int {
 	var coincidence = 0
 
-	for rProperty, rValue := range ruleProperties {
-		for wProperty, wValue := range wordProperties {
-			if rProperty == wProperty && rValue == wValue {
-				coincidence++
-				break
-			}
+	for key, value := range ruleProperties {
+		if wordProperties[key] == value {
+			coincidence++
 		}
 	}
 

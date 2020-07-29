@@ -22,10 +22,10 @@ func (t *Translator) TranslateByRule(ctx context.Context, sentence linguakit.Sen
 			w, error := t.WordsHelper.FindOneByText(ctx, rule.SourceLanguage, word.Lemma)
 			if error == nil {
 				if w.Categories["tr"] {
-					words[count].Transitive = true
+					words[count].Properties["tr"] = "true"
 				}
 				if w.Categories["intr"] {
-					words[count].Intransitive = true
+					words[count].Properties["intr"] = "true"
 				}
 			}
 		}

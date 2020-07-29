@@ -256,7 +256,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"1\") (eq .WordX.Properties.number \"S\") ( .WordX.Transitive ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}w{{else}}nu{{end}}{{end}}"
+    "value":"{{ if and (eq .WordX.Properties.person \"1\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}w{{else}}nu{{end}}{{end}}"
 }
 ```
 ___
@@ -266,7 +266,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"2\") (eq .WordX.Properties.number \"S\") ( .WordX.Transitive ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}aw{{else}}a{{end}}{{end}}"
+    "value":"{{ if and (eq .WordX.Properties.person \"2\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}aw{{else}}a{{end}}{{end}}"
 }
 ```
 ___
@@ -275,7 +275,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"3\") (eq .WordX.Properties.number \"S\") ( .WordX.Transitive ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}r{{else}}u{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"3\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}r{{else}}u{{end}}{{end}}
 }
 ```
 ___
@@ -285,7 +285,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"1\") (eq .WordX.Properties.number \"P\") ( .WordX.Transitive ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}q{{else}}qa{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"1\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}q{{else}}qa{{end}}{{end}}
 }
 ```
 ___
@@ -295,7 +295,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"2\") (eq .WordX.Properties.number \"P\") ( .WordX.Transitive ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}iw{{else}}i{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"2\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}iw{{else}}i{{end}}{{end}}
 }
 ```
 ___
@@ -305,7 +305,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"3\") (eq .WordX.Properties.number \"P\") ( .WordX.Transitive ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}k{{else}}ki{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"3\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}k{{else}}ki{{end}}{{end}}
 }
 ```
 
@@ -320,7 +320,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"1\") (eq .WordX.Properties.number \"S\") ( .WordX.Intransitive ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}in{{else}}i{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"1\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}in{{else}}i{{end}}{{end}}
 }
 ```
 ___
@@ -330,7 +330,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"2\") (eq .WordX.Properties.number \"S\") ( .WordX.Intransitive ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}at{{else}}a{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"2\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}at{{else}}a{{end}}{{end}}
 }
 ```
 ___
@@ -340,7 +340,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"3\") (eq .WordX.Properties.number \"S\") ( .WordX.Intransitive ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}Ø{{else}}Ø{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"3\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}Ø{{else}}Ø{{end}}{{end}}
 }
 ```
 ___
@@ -350,7 +350,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"1\") (eq .WordX.Properties.number \"P\") ( .WordX.Intransitive ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}oj{{else}}oj{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"1\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}oj{{else}}oj{{end}}{{end}}
 }
 ```
 ___
@@ -360,7 +360,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"2\") (eq .WordX.Properties.number \"P\") ( .WordX.Intransitive ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}ix{{else}}ix{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"2\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}ix{{else}}ix{{end}}{{end}}
 }
 ```
 ___
@@ -370,7 +370,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"3\") (eq .WordX.Properties.number \"P\") ( .WordX.Intransitive ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}e'{{else}}e{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"3\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}e'{{else}}e{{end}}{{end}}
 }
 ```
 ___

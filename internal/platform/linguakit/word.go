@@ -12,12 +12,10 @@ import (
 // Where Tag=NOUN, Lemma=perro and Properties=gender:M|lemma:perro|number:S|person:3|pos:1|token:perro|type:C
 //
 type Word struct {
-	Tag          string            `json:"tag"`
-	Lemma        string            `json:"lemma"`
-	Type         string            `json:"type"`
-	Properties   map[string]string `json:"properties"`
-	Transitive   bool              `json:"transitive"`
-	Intransitive bool              `json:"intransitive"`
+	Tag        string            `json:"tag"`
+	Lemma      string            `json:"lemma"`
+	Type       string            `json:"type"`
+	Properties map[string]string `json:"properties"`
 }
 
 // StartWithVowel validates if a word starts with vowel

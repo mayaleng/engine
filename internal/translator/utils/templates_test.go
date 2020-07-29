@@ -203,12 +203,14 @@ func TestTemplates(t *testing.T) {
 	t.Run("Validate if word is transitive and intransitive with success when using properties", func(t *testing.T) {
 		vars := []linguakit.Word{
 			{
-				Transitive:   true,
-				Intransitive: true,
+				Properties: map[string]string{
+					"tr":   "true",
+					"intr": "true",
+				},
 			},
 		}
 
-		template := "{{ if and ( .Word1.Transitive ) ( .Word1.Intransitive ) }}tr-intr{{end}}"
+		template := "{{ if and ( .Word1.Properties.tr ) ( .Word1.Properties.intr ) }}tr-intr{{end}}"
 
 		output := ReplaceValues(template, vars)
 

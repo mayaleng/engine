@@ -224,6 +224,7 @@ func TestRules(t *testing.T) {
 		rule := map[string]string{
 			"tense":  "P",
 			"person": "3",
+			"number": "S",
 		}
 
 		words := map[string]string{
