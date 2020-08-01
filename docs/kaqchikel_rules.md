@@ -101,6 +101,76 @@ Template
     ]
 }
 ```
+To express verbs we have other form, a main verb and an auxiliary verb, we use the auxiliary verb to analyze the phrase and translate the second verb, on this scenario we don't use the time aspect; like this (for these examples the phrase will be in spanish because the translator works with spanish to kaqchikel):
+
+* He ayudado        (1st person singular)
+* Le he ayudado     (1st person singular)
+* Han ayudado       (3rd person plural)
+* Le han ayudado    (3rd person plural)
+
+There are two patterns to apply this case but the output is the same.
+
+Templates:
+```
+/*1*/
+{
+    "source_language" : "espaol",
+    "target_language" : "kaqchikel",
+    "pattern" : "PRO,VERB,VERB",
+    "details" : [
+        {
+            "tag" : "PRO",
+            "type" : "P"
+        },
+        {
+            "tag" : "VERB",
+            "type" : "A"
+        },
+        {
+            "tag" : "VERB",
+            "type" : "M"
+        }
+    ],
+    "output" : [
+        {
+            "type":"literal",
+            "value":"{{ if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"1\") (eq .Word2.Properties.number \"S\") ( .Word2.StartWithVowel .Word2.Lemma ) }}w{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"1\") (eq .Word2.Properties.number \"S\") ( .Word2.StartWithConsonant .Word2.Lemma )}}nu{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"1\") (eq .Word2.Properties.number \"P\") ( .Word2.StartWithVowel .Word2.Lemma )}}qa{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"1\") (eq .Word2.Properties.number \"P\") ( .Word2.StartWithConsonant .Word2.Lemma )}}a{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"2\") (eq .Word2.Properties.number \"S\") ( .Word2.StartWithVowel .Word2.Lemma )}}aw{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"2\") (eq .Word2.Properties.number \"S\") ( .Word2.StartWithConsonant .Word2.Lemma )}}a{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"2\") (eq .Word2.Properties.number \"P\") ( .Word2.StartWithVowel .Word2.Lemma )}}iw{{ else if and ( .Word2.Properties.tr ) (eq .Word2.Properties.person \"2\") (eq .Word2.Properties.number \"P\") ( .Word2.StartWithConsonant .Word2.Lemma )}}i{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"3\") (eq .Word2.Properties.number \"S\") ( .Word2.StartWithVowel .Word2.Lemma )}}r{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"3\") (eq .Word2.Properties.number \"S\") ( .Word2.StartWithConsonant .Word2.Lemma )}}u{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"3\") (eq .Word2.Properties.number \"P\") ( .Word2.StartWithVowel .Word2.Lemma )}}k{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"3\") (eq .Word2.Properties.number \"P\") ( .Word2.StartWithConsonant .Word2.Lemma )}}ki{{end}}"
+        },
+        {
+            "type":"direct-translation",
+            "value":"{{ .Word3.Lemma }}"
+        }
+    ]
+}
+```
+```
+/*2*/
+{
+    "source_language" : "espaol",
+    "target_language" : "kaqchikel",
+    "pattern" : "VERB,VERB",
+    "details" : [
+        {
+            "tag" : "VERB",
+            "type" : "A"
+        },
+        {
+            "tag" : "VERB",
+            "type" : "M"
+        }
+    ],
+    "output" : [ 
+        {
+            "type":"literal",
+            "value":"{{ if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithVowel .Word1.Lemma ) }}w{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithConsonant .Word1.Lemma )}}nu{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithVowel .Word1.Lemma )}}qa{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithConsonant .Word1.Lemma )}}a{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithVowel .Word1.Lemma )}}aw{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithConsonant .Word1.Lemma )}}a{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithVowel .Word1.Lemma )}}iw{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithConsonant .Word1.Lemma )}}i{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithVowel .Word1.Lemma )}}r{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithConsonant .Word1.Lemma )}}u{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithVowel .Word1.Lemma )}}k{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithConsonant .Word1.Lemma )}}ki{{end}}"
+        },
+        {
+            "type":"direct-translation",
+            "value":"{{ .Word2.Lemma }}"
+        }
+    ]
+}
+```
 ___
 ## `[NOUN]`
 When you have a possesive adjective + noun, you need to apply this group of templates, where X in WordX is the number of word and Word is the NOUN you want to apply the rule.
