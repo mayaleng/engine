@@ -77,18 +77,18 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/v1/languages/espaol/words/5eeaf357b3938728f1f65ba1",
+							"raw": "http://localhost:8000/v1/languages/kaqchikel/words/5eeaf538b3938728f1f79eec",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8000",
 							"path": [
 								"v1",
 								"languages",
-								"espaol",
+								"kaqchikel",
 								"words",
-								"5eeaf357b3938728f1f65ba1"
+								"5eeaf538b3938728f1f79eec"
 							]
 						},
 						"description": "    "
@@ -478,7 +478,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"come\"\r\n}\r\n",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"ha comido\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -761,6 +761,41 @@
 								"v1",
 								"",
 								"translations"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Linguakit",
+			"item": [
+				{
+					"name": "NewSentence",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phrase\":\"Yo corro. Juan camina\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/v1/linguakit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"v1",
+								"linguakit"
 							]
 						}
 					},

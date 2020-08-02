@@ -97,5 +97,8 @@ func NewAPI(envs *types.Envs, dbConnection *mongo.Client) http.Handler {
 	router.Handle(http.MethodPatch, "/v1/translations", translations.update)
 	router.Handle(http.MethodDelete, "/v1/translations", translations.delete)
 
+	// Linguakit
+
+	router.Handle(http.MethodPost, "/v1/linguakit", analyze)
 	return router
 }
