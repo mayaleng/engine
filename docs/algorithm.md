@@ -51,7 +51,7 @@ This is an example of a rule definition.
         },
         {
             "type": "direct-translation",
-            "value": "{{ .Word1.Lemma }}",
+            "value": "{{ .Word1.Translation }}",
         },
         {
             "type": "literal",
@@ -59,7 +59,7 @@ This is an example of a rule definition.
         },
         {
             "type": "direct-translation",
-            "value": "{{ .Word2.Lemma }}",
+            "value": "{{ .Word2.Translation }}",
         },
     ]
 }

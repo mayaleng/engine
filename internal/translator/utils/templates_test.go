@@ -10,18 +10,22 @@ func TestTemplates(t *testing.T) {
 	t.Run("X", func(t *testing.T) {
 		vars := []linguakit.Word{
 			{
+				Lemma: "muy",
 				Properties: map[string]string{
 					"tr":   "true",
 					"intr": "true",
 				},
 			},
+			{
+				Translation: "vaca",
+			},
 		}
 
-		template := "{{ if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithVowel .Word1.Lemma ) }}w{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithConsonant .Word1.Lemma )}}nu{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithVowel .Word1.Lemma )}}qa{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithConsonant .Word1.Lemma )}}a{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithVowel .Word1.Lemma )}}aw{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithConsonant .Word1.Lemma )}}a{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithVowel .Word1.Lemma )}}iw{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithConsonant .Word1.Lemma )}}i{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithVowel .Word1.Lemma )}}r{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithConsonant .Word1.Lemma )}}u{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithVowel .Word1.Lemma )}}k{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithConsonant .Word1.Lemma )}}ki{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithVowel .Word1.Lemma ) }}in{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithConsonant .Word1.Lemma )}}i{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithVowel .Word1.Lemma )}}oj{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithConsonant .Word1.Lemma )}}oj{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithVowel .Word1.Lemma )}}at{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithConsonant .Word1.Lemma )}}a{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithVowel .Word1.Lemma )}}ix{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithConsonant .Word1.Lemma )}}ix{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithVowel .Word1.Lemma )}}Ø{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithConsonant .Word1.Lemma )}}Ø{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithVowel .Word1.Lemma )}}e'{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( .Word1.StartWithConsonant .Word1.Lemma )}}e{{end}}"
+		template := "{{ if (eq .Word1.ToLower \"muy\") }}{{.Word2.Translation}} {{.Word2.Translation}}{{ else if (eq .Word1.ToLower \"medio\") }}{{ .Word2.Translation }}{{ .Word2.FirstLetter }}oj{{ else if (eq .Word1.ToLower \"muchísimo\")}}{{end}}"
 
 		output := ReplaceValues(template, vars)
 
-		if output != "tr-intr" {
+		if len(output) <= 0 {
 			t.Fatalf("Expecting %s, got %s", "SI", template)
 		}
 	})
@@ -150,11 +154,11 @@ func TestTemplates(t *testing.T) {
 	t.Run("Validate if word starts with vowel with success when using functions inside template", func(t *testing.T) {
 		vars := []linguakit.Word{
 			{
-				Lemma: "abrir",
+				Translation: "abrir",
 			},
 		}
 
-		template := "{{if ( .Word1.StartWithVowel .Word1.Lemma )}} SI {{else}} NO {{end}}"
+		template := "{{if ( .Word1.StartWithVowel )}} SI {{else}} NO {{end}}"
 
 		output := ReplaceValues(template, vars)
 
@@ -166,11 +170,11 @@ func TestTemplates(t *testing.T) {
 	t.Run("Validate if word doesn't start with vowel with success when using functions inside template", func(t *testing.T) {
 		vars := []linguakit.Word{
 			{
-				Lemma: "carro",
+				Translation: "carro",
 			},
 		}
 
-		template := "{{if not ( .Word1.StartWithVowel .Word1.Lemma )}} NO {{else}} SI {{end}}"
+		template := "{{if not ( .Word1.StartWithVowel )}} NO {{else}} SI {{end}}"
 
 		output := ReplaceValues(template, vars)
 
@@ -182,7 +186,7 @@ func TestTemplates(t *testing.T) {
 	t.Run("Validate if word starts with vowel, person 1 and number S with success when using functions inside template", func(t *testing.T) {
 		vars := []linguakit.Word{
 			{
-				Lemma: "arbol",
+				Translation: "arbol",
 				Properties: map[string]string{
 					"number": "S",
 					"person": "1",
@@ -190,7 +194,7 @@ func TestTemplates(t *testing.T) {
 			},
 		}
 
-		template := "{{ if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithVowel .Word1.Lemma ) }}nu{{end}}"
+		template := "{{ if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithVowel ) }}nu{{end}}"
 
 		output := ReplaceValues(template, vars)
 
@@ -202,7 +206,7 @@ func TestTemplates(t *testing.T) {
 	t.Run("Validate if word starts with consonant, person 1 and number S with success when using functions inside template", func(t *testing.T) {
 		vars := []linguakit.Word{
 			{
-				Lemma: "perro",
+				Translation: "perro",
 				Properties: map[string]string{
 					"number": "S",
 					"person": "1",
@@ -210,7 +214,7 @@ func TestTemplates(t *testing.T) {
 			},
 		}
 
-		template := "{{ if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithConsonant .Word1.Lemma ) }}u{{end}}"
+		template := "{{ if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithConsonant ) }}u{{end}}"
 
 		output := ReplaceValues(template, vars)
 

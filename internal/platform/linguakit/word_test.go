@@ -7,10 +7,10 @@ import (
 func TestWord(t *testing.T) {
 	t.Run("get true with success when the word starts with vowel", func(t *testing.T) {
 		word := Word{
-			Lemma: "aula",
+			Translation: "aula",
 		}
 
-		validVowel := Word.StartWithVowel(word, word.Lemma)
+		validVowel := Word.StartWithVowel(word)
 
 		if !validVowel {
 			t.Fatalf("The value expected was TRUE")
@@ -19,10 +19,10 @@ func TestWord(t *testing.T) {
 
 	t.Run("get false with success when the word doesn't start with vowel", func(t *testing.T) {
 		word := Word{
-			Lemma: "carro",
+			Translation: "carro",
 		}
 
-		validVowel := Word.StartWithVowel(word, word.Lemma)
+		validVowel := Word.StartWithVowel(word)
 
 		if validVowel {
 			t.Fatalf("The value expected was FALSE")
@@ -31,10 +31,10 @@ func TestWord(t *testing.T) {
 
 	t.Run("get false with success when the word doesn't start with consonant", func(t *testing.T) {
 		word := Word{
-			Lemma: "ave",
+			Translation: "ave",
 		}
 
-		validVowel := Word.StartWithConsonant(word, word.Lemma)
+		validVowel := Word.StartWithConsonant(word)
 
 		if validVowel {
 			t.Fatalf("The value expected was FALSE")
@@ -43,13 +43,37 @@ func TestWord(t *testing.T) {
 
 	t.Run("get true with success when the word starts with consonant", func(t *testing.T) {
 		word := Word{
-			Lemma: "queso",
+			Translation: "queso",
 		}
 
-		validVowel := Word.StartWithConsonant(word, word.Lemma)
+		validVowel := Word.StartWithConsonant(word)
 
 		if !validVowel {
 			t.Fatalf("The value expected was TRUE")
+		}
+	})
+
+	t.Run("get the first letter of a word with success", func(t *testing.T) {
+		word := Word{
+			Translation: "t'zi",
+		}
+
+		character := Word.FirstLetter(word)
+
+		if len(character) == 0 {
+			t.Fatalf("The length of string would be greater than 0")
+		}
+	})
+
+	t.Run("get the lowercase of a word with success", func(t *testing.T) {
+		word := Word{
+			Lemma: "MAsa",
+		}
+
+		value := Word.ToLower(word)
+
+		if value != "masa" {
+			t.Fatalf("The value expected was masa")
 		}
 	})
 }

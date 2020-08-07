@@ -29,10 +29,27 @@ func (t *Translator) TranslateByRule(ctx context.Context, sentence linguakit.Sen
 				}
 			}
 		}
+
+		translation, err := t.directTranslation(ctx, rule.SourceLanguage, rule.TargetLanguage, word.Lemma)
+
+		if err != nil {
+			uw := types.UnknownWord{
+				SourceLanguage: rule.SourceLanguage,
+				TargetLanguage: rule.TargetLanguage,
+				Word:           word.Lemma,
+			}
+
+			unknownWords = append(unknownWords, uw)
+			words[count].Translation = word.Lemma
+
+			continue
+		}
+
+		words[count].Translation = translation
 	}
 
 	for _, outputRule := range rule.Output {
-		var error error
+
 		var translation string
 
 		ruleType := outputRule["type"]
@@ -40,22 +57,9 @@ func (t *Translator) TranslateByRule(ctx context.Context, sentence linguakit.Sen
 
 		switch ruleType {
 		case "direct-translation":
-			translation, error = t.directTranslation(ctx, rule.SourceLanguage, rule.TargetLanguage, value)
+			translation = value
 		case "literal":
 			translation = value
-		}
-
-		if error != nil {
-			uw := types.UnknownWord{
-				SourceLanguage: rule.SourceLanguage,
-				TargetLanguage: rule.TargetLanguage,
-				Word:           value,
-			}
-
-			unknownWords = append(unknownWords, uw)
-			output = append(output, value)
-
-			continue
 		}
 
 		output = append(output, translation)
