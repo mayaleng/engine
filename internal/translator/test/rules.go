@@ -39,7 +39,7 @@ var DN = `
 			},
 			{
 				"type": "literal",
-				"value": "{{ .Word1.Translation }}"
+				"value": "{{ .Word1.Lemma }}"
 			}
 		]
 	}
