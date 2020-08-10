@@ -42,7 +42,7 @@ Kaqchikel result: **xukiranïk jun q'ayïs don Ixim**
         },
         {
             "type" : "direct-translation",
-            "value" : "{{ .Word3.Lemma }}"
+            "value" : "{{ .Word3.Translation }}"
         }
     ]
 }
@@ -86,7 +86,7 @@ Kaqchikel result: **xukiranïk jun q'ayïs don Ixim**
         },
         {
             "type" : "direct-translation",
-            "value" : "{{ .Word3.Lemma }}"
+            "value" : "{{ .Word3.Translation }}"
         },
         {
             "type" : "literal",
@@ -94,7 +94,7 @@ Kaqchikel result: **xukiranïk jun q'ayïs don Ixim**
         },
         {
             "type" : "direct-translation",
-            "value" : "{{ .Word4.Lemma }}"
+            "value" : "{{ .Word4.Translation }}"
         },
         {
             "type" : "literal",
@@ -102,7 +102,7 @@ Kaqchikel result: **xukiranïk jun q'ayïs don Ixim**
         },
         {
             "type" : "direct-translation",
-            "value" : "{{ .Word5.Lemma }}"
+            "value" : "{{ .Word5.Translation }}"
         }
     ]
 }
@@ -150,7 +150,7 @@ Kaqchikel result: **xukiranïk jun q'ayïs don Ixim**
         },
         {
             "type" : "direct-translation",
-            "value" : "{{ .Word3.Lemma }}"
+            "value" : "{{ .Word3.Translation }}"
         },
         {
             "type" : "literal",
@@ -158,7 +158,7 @@ Kaqchikel result: **xukiranïk jun q'ayïs don Ixim**
         },
         {
             "type" : "direct-translation",
-            "value" : "{{ .Word4.Lemma }}"
+            "value" : "{{ .Word4.Translation }}"
         },
         {
             "type" : "literal",
@@ -166,7 +166,7 @@ Kaqchikel result: **xukiranïk jun q'ayïs don Ixim**
         },
         {
             "type" : "direct-translation",
-            "value" : "{{ .Word5.Lemma }}"
+            "value" : "{{ .Word5.Translation }}"
         },
         {
             "type" : "literal",
@@ -174,7 +174,7 @@ Kaqchikel result: **xukiranïk jun q'ayïs don Ixim**
         },
         {
             "type" : "direct-translation",
-            "value" : "{{ .Word1.Lemma }}"
+            "value" : "{{ .Word1.Translation }}"
         },
         {
             "type" : "literal",
@@ -182,7 +182,7 @@ Kaqchikel result: **xukiranïk jun q'ayïs don Ixim**
         },
         {
             "type" : "direct-translation",
-            "value" : "{{ .Word2.Lemma }}"
+            "value" : "{{ .Word2.Translation }}"
         }
     ]
 }
@@ -256,7 +256,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"1\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}w{{else}}nu{{end}}{{end}}"
+    "value":"{{ if and (eq .WordX.Properties.person \"1\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel ) }}w{{else}}nu{{end}}{{end}}"
 }
 ```
 ___
@@ -266,7 +266,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"2\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}aw{{else}}a{{end}}{{end}}"
+    "value":"{{ if and (eq .WordX.Properties.person \"2\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel ) }}aw{{else}}a{{end}}{{end}}"
 }
 ```
 ___
@@ -275,7 +275,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"3\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}r{{else}}u{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"3\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel ) }}r{{else}}u{{end}}{{end}}
 }
 ```
 ___
@@ -285,7 +285,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"1\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}q{{else}}qa{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"1\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel ) }}q{{else}}qa{{end}}{{end}}
 }
 ```
 ___
@@ -295,7 +295,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"2\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}iw{{else}}i{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"2\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel ) }}iw{{else}}i{{end}}{{end}}
 }
 ```
 ___
@@ -305,7 +305,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"3\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}k{{else}}ki{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"3\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.tr ) }}{{if ( .WordX.StartWithVowel ) }}k{{else}}ki{{end}}{{end}}
 }
 ```
 
@@ -320,7 +320,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"1\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}in{{else}}i{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"1\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel ) }}in{{else}}i{{end}}{{end}}
 }
 ```
 ___
@@ -330,7 +330,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"2\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}at{{else}}a{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"2\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel ) }}at{{else}}a{{end}}{{end}}
 }
 ```
 ___
@@ -340,7 +340,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"3\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}Ø{{else}}Ø{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"3\") (eq .WordX.Properties.number \"S\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel ) }}Ø{{else}}Ø{{end}}{{end}}
 }
 ```
 ___
@@ -350,7 +350,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"1\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}oj{{else}}oj{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"1\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel ) }}oj{{else}}oj{{end}}{{end}}
 }
 ```
 ___
@@ -360,7 +360,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"2\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}ix{{else}}ix{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"2\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel ) }}ix{{else}}ix{{end}}{{end}}
 }
 ```
 ___
@@ -370,7 +370,7 @@ IF starts with Vowel ELSE starts with Consonant
 ```
 {
     "type":"literal",
-    "value":"{{ if and (eq .WordX.Properties.person \"3\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel .WordX.Lemma ) }}e'{{else}}e{{end}}{{end}}
+    "value":"{{ if and (eq .WordX.Properties.person \"3\") (eq .WordX.Properties.number \"P\") ( .WordX.Properties.intr ) }}{{if ( .WordX.StartWithVowel ) }}e'{{else}}e{{end}}{{end}}
 }
 ```
 ___
@@ -400,6 +400,32 @@ Known Article
 }
 ```
 ___
+## `Adjectives [ADV+ADJ]`
+An adjective modified the noun, and only is going to be applied if we write the next ajectives.
+
+MUY - to express a lot
+```
+{
+    "type":"literal",
+    "value":"{{ if (eq .WordX.Translation \"muy\")}}.WordX.Translation .WordX.Translation{{end}}"
+}
+```
+MEDIO - to express more or less
+```
+{
+    "type":"literal",
+    "value":"{{ if (eq .WordX.Translation \"medio\")}}.WordX.Translation+[.WordX.FirstLetter]+oj{{end}}"
+}
+```
+MUCHÍSIMO - to express more than a lot
+```
+{
+    "type":"literal",
+    "value":"{{ if (eq .WordX.Translation \"muchísimo\")}}.WordX.Translation+iläj{{end}}"
+}
+```
+___
+
 You know how to write individual templates to a rule, now we are going to see how to apply it together to translate short sentences.
 
 These are rules you can load in your database.

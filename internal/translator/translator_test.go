@@ -63,7 +63,7 @@ func TestTranslation(t *testing.T) {
 		}
 	})
 
-	t.Run("direct translate with rules a valida phrase with the patterns match with a rule", func(t *testing.T) {
+	t.Run("direct translate with rules a valid phrase with the patterns match with a rule", func(t *testing.T) {
 		translation, error := translator.TranslatePhrase(context.TODO(), "cantando estoy alegre", "es", "kq")
 
 		if error != nil {

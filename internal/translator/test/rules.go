@@ -31,7 +31,7 @@ var DN = `
 		"output": [
 			{
 				"type": "direct-translation",
-				"value": "{{ .Word2.Lemma }}"
+				"value": "{{ .Word2.Translation }}"
 			},
 			{
 				"type": "literal",
@@ -67,7 +67,7 @@ var VA = `
 		"output" : [ 
 			{
 				"type" : "direct-translation",
-				"value" : "{{ .Word1.Lemma }}"
+				"value" : "{{ .Word1.Translation }}"
 			}, 
 			{
 				"type" : "literal",
@@ -103,15 +103,15 @@ var VVA = `
 		"output" : [ 
 			{
 				"type" : "direct-translation",
-				"value" : "{{ .Word3.Lemma }}"
+				"value" : "{{ .Word3.Translation }}"
 			}, 
 			{
 				"type" : "direct-translation",
-				"value" : "{{ .Word2.Lemma }}"
+				"value" : "{{ .Word2.Translation }}"
 			}, 
 			{
 				"type" : "direct-translation",
-				"value" : "{{ .Word1.Lemma }}"
+				"value" : "{{ .Word1.Translation }}"
 			}
 		]
 	},
@@ -136,11 +136,11 @@ var VVA = `
 		"output" : [ 
 			{
 				"type" : "direct-translation",
-				"value" : "{{ .Word3.Lemma }}"
+				"value" : "{{ .Word3.Translation }}"
 			}, 
 			{
 				"type" : "direct-translation",
-				"value" : "{{ .Word1.Lemma }}"
+				"value" : "{{ .Word1.Translation }}"
 			}
 		]
 	}
