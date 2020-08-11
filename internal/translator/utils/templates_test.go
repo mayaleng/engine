@@ -10,18 +10,33 @@ func TestTemplates(t *testing.T) {
 	t.Run("X", func(t *testing.T) {
 		vars := []linguakit.Word{
 			{
-				Lemma: "muy",
+				Lemma:       "MeDio",
+				Translation: "t'zi",
 				Properties: map[string]string{
-					"tr":   "true",
-					"intr": "true",
+					"tr":     "true",
+					"intr":   "true",
+					"person": "1",
+					"number": "S",
 				},
 			},
 			{
 				Translation: "vaca",
+				Properties: map[string]string{
+					"person": "1",
+					"number": "S",
+					"tr":     "true",
+				},
+			},
+			{
+				Lemma:       "regado",
+				Translation: "regado",
+				Properties: map[string]string{
+					"tr": "true",
+				},
 			},
 		}
 
-		template := "{{ if (eq .Word1.ToLower \"muy\") }}{{.Word2.Translation}} {{.Word2.Translation}}{{ else if (eq .Word1.ToLower \"medio\") }}{{ .Word2.Translation }}{{ .Word2.FirstLetter }}oj{{ else if (eq .Word1.ToLower \"muchísimo\")}}{{end}}"
+		template := "{{ if (eq ( ToLower .Word1.Lemma ) \"muy\") }}{{.Word2.Translation}} {{.Word2.Translation}}{{ else if (eq ( ToLower .Word1.Lemma ) \"medio\") }}{{ .Word2.Translation }}{{ FirstLetter .Word2.Translation }}oj{{end}}"
 
 		output := ReplaceValues(template, vars)
 
@@ -158,7 +173,7 @@ func TestTemplates(t *testing.T) {
 			},
 		}
 
-		template := "{{if ( .Word1.StartWithVowel )}} SI {{else}} NO {{end}}"
+		template := "{{if ( StartWithVowel .Word1.Translation )}} SI {{else}} NO {{end}}"
 
 		output := ReplaceValues(template, vars)
 
@@ -174,7 +189,7 @@ func TestTemplates(t *testing.T) {
 			},
 		}
 
-		template := "{{if not ( .Word1.StartWithVowel )}} NO {{else}} SI {{end}}"
+		template := "{{if not ( StartWithVowel .Word1.Translation )}} NO {{else}} SI {{end}}"
 
 		output := ReplaceValues(template, vars)
 
@@ -194,7 +209,7 @@ func TestTemplates(t *testing.T) {
 			},
 		}
 
-		template := "{{ if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithVowel ) }}nu{{end}}"
+		template := "{{ if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartWithVowel .Word1.Translation ) }}nu{{end}}"
 
 		output := ReplaceValues(template, vars)
 
@@ -214,7 +229,7 @@ func TestTemplates(t *testing.T) {
 			},
 		}
 
-		template := "{{ if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( .Word1.StartWithConsonant ) }}u{{end}}"
+		template := "{{ if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartWithConsonant .Word1.Translation ) }}u{{end}}"
 
 		output := ReplaceValues(template, vars)
 

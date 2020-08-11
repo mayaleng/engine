@@ -1,10 +1,5 @@
 package linguakit
 
-import (
-	"regexp"
-	"strings"
-)
-
 // Word represent a word analyzed by Linguakit
 //
 // It is the representation of an analysis like this:
@@ -18,28 +13,4 @@ type Word struct {
 	Translation string            `json:"translation"`
 	Type        string            `json:"type"`
 	Properties  map[string]string `json:"properties"`
-}
-
-// StartWithVowel validates if a word starts with vowel
-func (w Word) StartWithVowel() bool {
-	validPattern := regexp.MustCompile(`^[aeiouAEIOU]+`)
-
-	return validPattern.MatchString(w.Translation)
-}
-
-// StartWithConsonant validates if a word starts with consonant
-func (w Word) StartWithConsonant() bool {
-	validPattern := regexp.MustCompile(`^[aeiouAEIOU]+`)
-
-	return !validPattern.MatchString(w.Translation)
-}
-
-// FirstLetter returns the character number one of a string
-func (w Word) FirstLetter() string {
-	return w.Translation[0:1]
-}
-
-// ToLower returns the given string to lowercase
-func (w Word) ToLower() string {
-	return strings.ToLower(w.Lemma)
 }

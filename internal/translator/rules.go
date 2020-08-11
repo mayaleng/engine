@@ -56,8 +56,6 @@ func (t *Translator) TranslateByRule(ctx context.Context, sentence linguakit.Sen
 		value := utils.ReplaceValues(outputRule["value"], words)
 
 		switch ruleType {
-		case "direct-translation":
-			translation = value
 		case "literal":
 			translation = value
 		}

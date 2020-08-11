@@ -30,7 +30,7 @@ var DN = `
 		],
 		"output": [
 			{
-				"type": "direct-translation",
+				"type": "literal",
 				"value": "{{ .Word2.Translation }}"
 			},
 			{
@@ -66,7 +66,7 @@ var VA = `
 		],
 		"output" : [ 
 			{
-				"type" : "direct-translation",
+				"type" : "literal",
 				"value" : "{{ .Word1.Translation }}"
 			}, 
 			{
@@ -102,15 +102,15 @@ var VVA = `
 		],
 		"output" : [ 
 			{
-				"type" : "direct-translation",
+				"type" : "literal",
 				"value" : "{{ .Word3.Translation }}"
 			}, 
 			{
-				"type" : "direct-translation",
+				"type" : "literal",
 				"value" : "{{ .Word2.Translation }}"
 			}, 
 			{
-				"type" : "direct-translation",
+				"type" : "literal",
 				"value" : "{{ .Word1.Translation }}"
 			}
 		]
@@ -135,11 +135,11 @@ var VVA = `
 		],
 		"output" : [ 
 			{
-				"type" : "direct-translation",
+				"type" : "literal",
 				"value" : "{{ .Word3.Translation }}"
 			}, 
 			{
-				"type" : "direct-translation",
+				"type" : "literal",
 				"value" : "{{ .Word1.Translation }}"
 			}
 		]
