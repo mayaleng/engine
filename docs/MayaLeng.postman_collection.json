@@ -414,12 +414,12 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/v1/translate",
+									"raw": "http://localhost:8000/v1/translate",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "8000",
 									"path": [
 										"v1",
 										"translate"
@@ -478,7 +478,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"la ha regado\"\r\n}\r\n",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"regaron\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -507,7 +507,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"tu casa\"\r\n}\r\n",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"su casa\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -536,7 +536,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"un perro\"\r\n}\r\n",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"el perro\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -565,7 +565,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"muy caliente\"\r\n}\r\n",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"muchísimo más caliente\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -625,17 +625,17 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/v1/translations/words/5eeaf447b3938728f1f7137b?source=kaqchikel&target=espaol",
+							"raw": "http://localhost:8000/v1/translations/words/5eeaf49ab3938728f1f74ea7?source=kaqchikel&target=espaol",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8000",
 							"path": [
 								"v1",
 								"translations",
 								"words",
-								"5eeaf447b3938728f1f7137b"
+								"5eeaf49ab3938728f1f74ea7"
 							],
 							"query": [
 								{

@@ -44,20 +44,20 @@ Rule to translate that kind of phrase
     ],
     "output" : [ 
         {
-            "type" : "direct-translation",
-            "value" : "{{ .Word3.Lemma }}"
+            "type" : "literal",
+            "value" : "{{ .Word3.Translation }}"
         }, 
         {
             "type" : "literal",
             "value" : " "
         }, 
         {
-            "type" : "direct-translation",
-            "value" : "{{ .Word2.Lemma }}"
+            "type" : "literal",
+            "value" : "{{ .Word2.Translation }}"
         }, 
         {
-            "type" : "direct-translation",
-            "value" : "{{ .Word1.Lemma }}"
+            "type" : "literal",
+            "value" : "{{ .Word1.Translation }}"
         }
     ]
 }
@@ -96,8 +96,8 @@ Rule to translate that kind of phrase
     ],
     "output" : [ 
         {
-            "type" : "direct-translation",
-            "value" : "{{ .Word1.Lemma }}"
+            "type" : "literal",
+            "value" : "{{ .Word1.Translation }}"
         }, 
         {
             "type" : "literal",
@@ -161,8 +161,8 @@ Rule to translate that kind of phrase
     ],
     "output" : [ 
         {
-            "type" : "direct-translation",
-            "value" : "{{ .Word2.Lemma }}"
+            "type" : "literal",
+            "value" : "{{ .Word2.Translation }}"
         }, 
         {
             "type" : "literal",
@@ -170,11 +170,11 @@ Rule to translate that kind of phrase
         },
         {
             "type" : "literal",
-            "value" : "{{if (eq .Word5.Properties.number \"S\") nu {{else}}  {{end}}"
+            "value" : "{{if (eq .Word5.Properties.number \"S\")nu{{end}}"
         },
         {
-            "type" : "direct-translation",
-            "value" : "{{{ .Word5.Lemma }}"
+            "type" : "literal",
+            "value" : "{{{ .Word5.Translation }}"
         },
         {
             "type" : "literal",

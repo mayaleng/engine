@@ -50,7 +50,7 @@ This is an example of a rule definition.
             "value": " "
         },
         {
-            "type": "direct-translation",
+            "type": "literal",
             "value": "{{ .Word1.Translation }}",
         },
         {
@@ -58,7 +58,7 @@ This is an example of a rule definition.
             "value": " "
         },
         {
-            "type": "direct-translation",
+            "type": "literal",
             "value": "{{ .Word2.Translation }}",
         },
     ]
@@ -105,7 +105,7 @@ Each ouput element always will have two properties: `type` and `value`, based on
 
 There are 2 possible values:
 - `literal`: will output exactly the value provieded.
-- `direct-translation`: will output the _direct translation_ of the word given in the property `value`.
+- `.WordX.Translation`: will output the _direct translation_ of the word given in the property `value`.
 
 ### **value**
 

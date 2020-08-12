@@ -1,4 +1,4 @@
-package linguakit
+package utils
 
 import (
 	"testing"
@@ -6,11 +6,9 @@ import (
 
 func TestWord(t *testing.T) {
 	t.Run("get true with success when the word starts with vowel", func(t *testing.T) {
-		word := Word{
-			Translation: "aula",
-		}
+		word := "aula"
 
-		validVowel := Word.StartWithVowel(word)
+		validVowel := StartWithVowel(word)
 
 		if !validVowel {
 			t.Fatalf("The value expected was TRUE")
@@ -18,11 +16,9 @@ func TestWord(t *testing.T) {
 	})
 
 	t.Run("get false with success when the word doesn't start with vowel", func(t *testing.T) {
-		word := Word{
-			Translation: "carro",
-		}
+		word := "carro"
 
-		validVowel := Word.StartWithVowel(word)
+		validVowel := StartWithVowel(word)
 
 		if validVowel {
 			t.Fatalf("The value expected was FALSE")
@@ -30,11 +26,9 @@ func TestWord(t *testing.T) {
 	})
 
 	t.Run("get false with success when the word doesn't start with consonant", func(t *testing.T) {
-		word := Word{
-			Translation: "ave",
-		}
+		word := "ave"
 
-		validVowel := Word.StartWithConsonant(word)
+		validVowel := StartWithConsonant(word)
 
 		if validVowel {
 			t.Fatalf("The value expected was FALSE")
@@ -42,11 +36,9 @@ func TestWord(t *testing.T) {
 	})
 
 	t.Run("get true with success when the word starts with consonant", func(t *testing.T) {
-		word := Word{
-			Translation: "queso",
-		}
+		word := "queso"
 
-		validVowel := Word.StartWithConsonant(word)
+		validVowel := StartWithConsonant(word)
 
 		if !validVowel {
 			t.Fatalf("The value expected was TRUE")
@@ -54,11 +46,9 @@ func TestWord(t *testing.T) {
 	})
 
 	t.Run("get the first letter of a word with success", func(t *testing.T) {
-		word := Word{
-			Translation: "t'zi",
-		}
+		word := "t'zi"
 
-		character := Word.FirstLetter(word)
+		character := FirstLetter(word)
 
 		if len(character) == 0 {
 			t.Fatalf("The length of string would be greater than 0")
@@ -66,11 +56,9 @@ func TestWord(t *testing.T) {
 	})
 
 	t.Run("get the lowercase of a word with success", func(t *testing.T) {
-		word := Word{
-			Lemma: "MAsa",
-		}
+		word := "MAsa"
 
-		value := Word.ToLower(word)
+		value := ToLower(word)
 
 		if value != "masa" {
 			t.Fatalf("The value expected was masa")
