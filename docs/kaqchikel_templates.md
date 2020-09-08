@@ -425,7 +425,34 @@ MUCHÍSIMO - to express more than a lot
 }
 ```
 ___
+## `Numbers [CARD]`
+Numbers from 1 to 10 are, and the number root is in bold:
+* 1  = **ju**n
+* 2  = **kab'**, this have an exception, the number is **ka'i'**
+* 3  = **ox**'i
+* 4  = **kaj**i'
+* 5  = **wo**'o
+* 6  = **waq**i'
+* 7  = **wuq**u'
+* 8  = **waqxaq**i'
+* 9  = **b'elej**e'
+* 10 = **lajuj**
 
+From 11 to 19 you use the number root from 1 to 9 + number 10
+
+* 11  = **ju**lajuj
+* 12  = **kab'** lajuj
+* 13  = **ox**lajuj
+* 14  = **kaj**lajuj
+* 15  = **wo**lajuj
+* 16  = **waq**lajuj
+* 17  = **wuq**lajuj
+* 18  = **waqxaq**lajuj
+* 19  = **b'elej**lajuj
+
+For numbers higher than 20, we apply other prefixes.
+
+___
 You know how to write individual templates to a rule, now we are going to see how to apply it together to translate short sentences.
 
 These are rules you can load in your database.

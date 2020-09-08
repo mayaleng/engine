@@ -20,12 +20,11 @@ func ReplaceValues(templateString string, words []linguakit.Word) string {
 		vars[fmt.Sprintf("Word%d", i+1)] = word
 	}
 
-	//parsedTemplate, error := template.New("tmp").Option("missingkey=zero").Parse(templateString)
 	parsedTemplate, error := template.New("tmp").Funcs(template.FuncMap{
-		"StartWithVowel":     StartWithVowel,
-		"StartWithConsonant": StartWithConsonant,
-		"FirstLetter":        FirstLetter,
-		"ToLower":            ToLower,
+		"StartsWithVowel":     StartsWithVowel,
+		"StartsWithConsonant": StartsWithConsonant,
+		"GetFirstLetter":      GetFirstLetter,
+		"ToLower":             ToLower,
 	}).Option("missingkey=zero").Parse(templateString)
 
 	if error != nil {
