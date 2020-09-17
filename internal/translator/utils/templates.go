@@ -25,6 +25,7 @@ func ReplaceValues(templateString string, words []linguakit.Word) string {
 		"StartsWithConsonant": StartsWithConsonant,
 		"GetFirstLetter":      GetFirstLetter,
 		"ToLower":             ToLower,
+		"GetKaqchikelNumber":  GetKaqchikelNumber,
 	}).Option("missingkey=zero").Parse(templateString)
 
 	if error != nil {
