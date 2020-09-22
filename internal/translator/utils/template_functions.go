@@ -2,6 +2,7 @@ package utils
 
 import (
 	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -30,10 +31,15 @@ func ToLower(data string) string {
 }
 
 // GetKaqchikelNumber returns a number in kaqchikel
-func GetKaqchikelNumber(number int, units, numberRoots, exponentialRoots string) string {
+func GetKaqchikelNumber(num, units, numberRoots, exponentialRoots string) string {
 	var finalNumber string
 	var root int
 	var tmp int
+
+	number, error := strconv.Atoi(num)
+	if error != nil {
+		return "error"
+	}
 
 	units = "_," + units
 	numberRoots = "_," + numberRoots

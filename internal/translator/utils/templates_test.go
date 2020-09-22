@@ -7,7 +7,23 @@ import (
 )
 
 func TestTemplates(t *testing.T) {
-	t.Run("X", func(t *testing.T) {
+	t.Run("Get kaqchikel number with success when using a cardinal number ", func(t *testing.T) {
+		vars := []linguakit.Word{
+			{
+				Lemma: "120",
+			},
+		}
+
+		template := "{{ GetKaqchikelNumber .Word1.Lemma \"jun,ka'i',oxi',kaji',wo'o,waqi',wuqu',waqxaqi',b'eleje'\" \"ju,ka,ox,kaj,o,waq,wuq,waqxaq,b'elej,laj,julaj,kab'laj,oxlaj,kajlaj,wolaj,waqlaj,wuqlaj,waqxaqlaj,b'elejlaj\" \"k'al,q'o',chuy,k'ala'\" }}"
+
+		output := ReplaceValues(template, vars)
+
+		if output != "waqk'al" {
+			t.Fatalf("The expected value for 120 would be waqk'al")
+		}
+	})
+
+	t.Run("Applying ToLower and GetFirstLetter with success when using multiple words to evaluate", func(t *testing.T) {
 		vars := []linguakit.Word{
 			{
 				Lemma:       "MeDio",
@@ -36,12 +52,12 @@ func TestTemplates(t *testing.T) {
 			},
 		}
 
-		template := "{{ if (eq ( ToLower .Word1.Lemma ) \"muy\") }}{{.Word2.Translation}} {{.Word2.Translation}}{{ else if (eq ( ToLower .Word1.Lemma ) \"medio\") }}{{ .Word2.Translation }}{{ FirstLetter .Word2.Translation }}oj{{end}}"
+		template := "{{ if (eq ( ToLower .Word1.Lemma ) \"muy\") }}{{.Word2.Translation}} {{.Word2.Translation}}{{ else if (eq ( ToLower .Word1.Lemma ) \"medio\") }}{{ .Word2.Translation }}{{ GetFirstLetter .Word2.Translation }}oj{{end}}"
 
 		output := ReplaceValues(template, vars)
 
-		if len(output) <= 0 {
-			t.Fatalf("Expecting %s, got %s", "SI", template)
+		if output != "vacavoj" {
+			t.Fatalf("The expected value was vacavoj, it was retured %s", output)
 		}
 	})
 
@@ -173,7 +189,7 @@ func TestTemplates(t *testing.T) {
 			},
 		}
 
-		template := "{{if ( StartWithVowel .Word1.Translation )}} SI {{else}} NO {{end}}"
+		template := "{{if ( StartsWithVowel .Word1.Translation )}} SI {{else}} NO {{end}}"
 
 		output := ReplaceValues(template, vars)
 
@@ -189,7 +205,7 @@ func TestTemplates(t *testing.T) {
 			},
 		}
 
-		template := "{{if not ( StartWithVowel .Word1.Translation )}} NO {{else}} SI {{end}}"
+		template := "{{if not ( StartsWithVowel .Word1.Translation )}} NO {{else}} SI {{end}}"
 
 		output := ReplaceValues(template, vars)
 
@@ -209,7 +225,7 @@ func TestTemplates(t *testing.T) {
 			},
 		}
 
-		template := "{{ if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartWithVowel .Word1.Translation ) }}nu{{end}}"
+		template := "{{ if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartsWithVowel .Word1.Translation ) }}nu{{end}}"
 
 		output := ReplaceValues(template, vars)
 
@@ -229,7 +245,7 @@ func TestTemplates(t *testing.T) {
 			},
 		}
 
-		template := "{{ if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartWithConsonant .Word1.Translation ) }}u{{end}}"
+		template := "{{ if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartsWithConsonant .Word1.Translation ) }}u{{end}}"
 
 		output := ReplaceValues(template, vars)
 

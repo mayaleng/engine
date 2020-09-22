@@ -73,6 +73,10 @@ ELSE IF Word.Intransitive AND Word.Person == "3" AND Word.Number == "P" AND Star
     return "e"
 END
 ```
+
+* Example: **camina**
+* Result: **yupalaqinïk**
+
 Template
 ```
 {
@@ -109,6 +113,9 @@ To express verbs we have other form, a main verb and an auxiliary verb, we use t
 * Le han ayudado    (3rd person plural)
 
 There are two patterns to apply this case but the output is the same.
+
+* Example: **le he regado / he regado**
+* Result: **nukiranïk**
 
 Templates:
 ```
@@ -203,6 +210,9 @@ ELSE IF Word.Person == "3" AND Word.Number == "P" AND StartsWithConsonant(Word.T
     return "ki"
 END
 ```
+* Example: **su casa**
+* Result: **uja**
+
 Template
 ```
 {
@@ -245,6 +255,9 @@ ELSE IF Word.Type == "A" THEN
     return "ri"
 END
 ```
+* Example: **ese perro**
+* Result: **ri jun tz'i'**
+
 Template
 ```
 /*1*/
@@ -352,6 +365,10 @@ ELSE IF Word == MUCHÍSIMO Then
     return {Adjective}+iläj
 END
 ```
+
+* Example: **muy caliente**
+* Result: **k'atän k'atän**
+
 Template
 ```
 /*MUY - MEDIO*/
@@ -437,21 +454,28 @@ Template
 }
 ```
 ## `[CARD] - Numbers`
-We use a direct-translation to numbers from 1 to 10, from 11 to onwards, we are going to apply these rules.
+We use specific text to numbers from 1 to 10, from 11 to onwards, we are going to apply these rules.
 
+```
 IF Word >= 1 AND Word <= 9 THEN
-    direct-translation
+    number
 ELSE IF Word >= 10 AND Word <= 19 THEN
     [root]+uj
-ELSE IF GetVigito(Word) >= 1 AND GetVigito(Word) < 20 THEN
-    [root]+k'al
-ELSE IF GetVigito(Word) >= 20 AND GetVigito(Word) < 400 THEN
-    [root]+q'o'
-ELSE IF GetVigito(Word) >= 400 AND GetVigito(Word) < 8000 THEN
-    [root]+chuy
-ELSE IF GetVigito(Word) >= 8000 AND GetVigito(Word) < 160000 THEN 
-    [root]+k'ala'
+ELSE IF Word >= 20 THEN
+    GetUnity = MOD_10(number)
+
+    While number >= 1 Then
+        number = number / 20
+        concat [base_20_root]
+    End While
+
+    concat [root]
+    concat GetUnity
 END IF
+```
+
+* Example: **3200**
+* Result: **waqxaqk'alq'o'**
 
 Template
 ```
@@ -467,7 +491,7 @@ Template
     "output" : [
         {
            "type":"literal",
-            "value":""
+            "value":"{{ GetKaqchikelNumber .Word1.Lemma \"jun,ka'i',oxi',kaji',wo'o,waqi',wuqu',waqxaqi',b'eleje'\" \"ju,ka,ox,kaj,o,waq,wuq,waqxaq,b'elej,laj,julaj,kab'laj,oxlaj,kajlaj,wolaj,waqlaj,wuqlaj,waqxaqlaj,b'elejlaj\" \"k'al,q'o',chuy,k'ala'\" }}"
         }
     ]
 }
