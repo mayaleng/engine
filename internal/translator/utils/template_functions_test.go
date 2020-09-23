@@ -38,6 +38,11 @@ func TestWord(t *testing.T) {
 			t.Fatalf("The expected value for 20 would be juk'al")
 		}
 
+		result = GetKaqchikelNumber("21", units, roots, exponential)
+		if result != "juk'al jun" {
+			t.Fatalf("The expected value for 21 would be juk'al jun")
+		}
+
 		result = GetKaqchikelNumber("120", units, roots, exponential)
 		if result != "waqk'al" {
 			t.Fatalf("The expected value for 120 would be waqk'al")
@@ -56,6 +61,11 @@ func TestWord(t *testing.T) {
 		result = GetKaqchikelNumber("1600000", units, roots, exponential)
 		if result != "lajk'alq'o'chuyk'ala'" {
 			t.Fatalf("The expected value for 1600000 would be lajk'alq'o'chuyk'ala'")
+		}
+
+		result = GetKaqchikelNumber("hola", units, roots, exponential)
+		if result != "error" {
+			t.Fatalf("The expected value would be error")
 		}
 	})
 

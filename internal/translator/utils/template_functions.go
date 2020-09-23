@@ -67,7 +67,7 @@ func GetKaqchikelNumber(num, units, numberRoots, exponentialRoots string) string
 		finalNumber = mainRoots[root] + finalNumber
 
 		if unity != 0 {
-			finalNumber += unitNumbers[unity]
+			finalNumber += " " + unitNumbers[unity]
 		}
 	}
 
