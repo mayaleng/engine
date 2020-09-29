@@ -425,7 +425,101 @@ MUCHÍSIMO - to express more than a lot
 }
 ```
 ___
+## `Numbers [CARD]`
+Numbers from 1 to 10 are, and the number root is in bold:
+* 1  = **ju**n
+* 2  = **kab'**, this have an exception, the number is **ka'i'**
+* 3  = **ox**'i
+* 4  = **kaj**i'
+* 5  = **wo**'o
+* 6  = **waq**i'
+* 7  = **wuq**u'
+* 8  = **waqxaq**i'
+* 9  = **b'elej**e'
+* 10 = **lajuj**
 
+From 11 to 19 you use the number root from 1 to 9 + number 10
+
+* 11  = **julaj**uj
+* 12  = **kab'laj**uj
+* 13  = **oxlaj**uj
+* 14  = **kajlaj**uj
+* 15  = **wolaj**uj
+* 16  = **waqlaj**uj
+* 17  = **wuqlaj**uj
+* 18  = **waqxaqlaj**uj
+* 19  = **b'elejlaj**uj
+
+For numbers higher than 20, we apply other prefixes.
+
+The mayan numbers works in base 20, every potencial of 20, we have a different prefix to numbers higher than 19.
+
+* 20 to 399 (20^2 - 1) = **k'al**
+* 400 to 7,999 (20^3 - 1) = **q'o'**
+* 8,000 to 159,999 (20^4 - 1) = **chuy**
+* 160,000 to 3,^199,999 (20^5 - 1) = **k'ala'**
+
+The costruction to numbers greater than 19 are with those prefix and using the 19 roots.
+
+The 19 roots
+```
+1  = ju
+2  = kab
+3  = ox
+4  = kaj
+5  = wo
+6  = waq
+7  = wuq
+8  = waqxaq
+9  = b'elej
+10 = laj
+11 = julaj
+12 = kab'laj
+13 = oxlaj
+14 = kajlaj
+15 = wolaj
+16 = waqlaj
+17 = wuqlaj
+18 = waqxaqlaj
+19 = b'elejlaj
+```
+
+Examples
+```
+20 = juk'al
+
+ju = 20 / 20 = 1, the root to use is the first
+k'al = 20 <= 20 < 400, the prefix to use is the first
+```
+```
+120 = waqk'al
+
+waq = 120 / 20 = 6, the root to use is the sixth
+k'al = 20 <= 120 < 400
+```
+```
+3200 = waqxaqk'alq'o
+
+waqxaq = 3200 / 20 / 20 = 8, the root to use is the eigth
+ka'l = 3200 > 400, we have to concat the previous prefix
+q'o = 400 <= 3200 < 8000
+```
+```
+9600 = kab'lajk'alq'o'chuy
+
+kab'laj = 9600 / 20 / 20 / 20 = 12, the root so use is the twelveth
+k'al = 9600 > 400, we have to concat the previous prefix
+q'o = 9600 > 8000, we have to concat the previous prefix
+chuy = 8000 <= 9600 < 160000
+```
+Cardinal Numbers
+```
+{
+    "type":"literal",
+    "value":"{{ if (eq .WordX.Lemma \"muchísimo\")}}.WordX.Translation+iläj{{end}}"
+}
+```
+___
 You know how to write individual templates to a rule, now we are going to see how to apply it together to translate short sentences.
 
 These are rules you can load in your database.

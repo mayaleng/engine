@@ -472,13 +472,13 @@
 					"name": "Mix",
 					"item": [
 						{
-							"name": "VERB",
+							"name": "Verb",
 							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"regaron\"\r\n}\r\n",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"camina\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -536,7 +536,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"el perro\"\r\n}\r\n",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"un perro\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -565,7 +565,65 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"muchísimo más caliente\"\r\n}\r\n",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"muy caliente\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/v1/translate",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"v1",
+										"translate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Aux_Verb",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"le he regado\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/v1/translate",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"v1",
+										"translate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Numbers",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"3200\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -625,26 +683,26 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/v1/translations/words/5eeaf49ab3938728f1f74ea7?source=kaqchikel&target=espaol",
+							"raw": "http://localhost:8080/v1/translations/words/5eeaf556b3938728f1f7ae6c?source=espaol&target=kaqchikel",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8000",
+							"port": "8080",
 							"path": [
 								"v1",
 								"translations",
 								"words",
-								"5eeaf49ab3938728f1f74ea7"
+								"5eeaf556b3938728f1f7ae6c"
 							],
 							"query": [
 								{
 									"key": "source",
-									"value": "kaqchikel"
+									"value": "espaol"
 								},
 								{
 									"key": "target",
-									"value": "espaol"
+									"value": "kaqchikel"
 								}
 							]
 						}

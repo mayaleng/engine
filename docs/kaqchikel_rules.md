@@ -19,60 +19,64 @@ ELSE IF
 ```
 **output[1.1] - Number and Person Indicator - Transitive**
 ```
-IF Word.Transitive AND Word.Person == "1" AND Word.Number == "S" AND StartWithVowel(Word.Translation) THEN
+IF Word.Transitive AND Word.Person == "1" AND Word.Number == "S" AND StartsWithVowel(Word.Translation) THEN
     return "w"
-ELSE IF Word.Transitive AND Word.Person == "1" AND Word.Number == "S" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Transitive AND Word.Person == "1" AND Word.Number == "S" AND StartsWithConsonant(Word.Translation) THEN
     return "nu"
-ELSE IF Word.Transitive AND Word.Person == "1" AND Word.Number == "P" AND StartWithVowel(Word.Translation) THEN
+ELSE IF Word.Transitive AND Word.Person == "1" AND Word.Number == "P" AND StartsWithVowel(Word.Translation) THEN
     return "qa"
-ELSE IF Word.Transitive AND Word.Person == "1" AND Word.Number == "P" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Transitive AND Word.Person == "1" AND Word.Number == "P" AND StartsWithConsonant(Word.Translation) THEN
     return "a"
-ELSE IF Word.Transitive AND Word.Person == "2" AND Word.Number == "S" AND StartWithVowel(Word.Translation) THEN
+ELSE IF Word.Transitive AND Word.Person == "2" AND Word.Number == "S" AND StartsWithVowel(Word.Translation) THEN
     return "aw"
-ELSE IF Word.Transitive AND Word.Person == "2" AND Word.Number == "S" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Transitive AND Word.Person == "2" AND Word.Number == "S" AND StartsWithConsonant(Word.Translation) THEN
     return "a"
-ELSE IF Word.Transitive AND Word.Person == "2" AND Word.Number == "P" AND StartWithVowel(Word.Translation) THEN
+ELSE IF Word.Transitive AND Word.Person == "2" AND Word.Number == "P" AND StartsWithVowel(Word.Translation) THEN
     return "iw"
-ELSE IF Word.Transitive AND Word.Person == "2" AND Word.Number == "P" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Transitive AND Word.Person == "2" AND Word.Number == "P" AND StartsWithConsonant(Word.Translation) THEN
     return "i"
-ELSE IF Word.Transitive AND Word.Person == "3" AND Word.Number == "S" AND StartWithVowel(Word.Translation) THEN    
+ELSE IF Word.Transitive AND Word.Person == "3" AND Word.Number == "S" AND StartsWithVowel(Word.Translation) THEN    
     return "r"
-ELSE IF Word.Transitive AND Word.Person == "3" AND Word.Number == "S" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Transitive AND Word.Person == "3" AND Word.Number == "S" AND StartsWithConsonant(Word.Translation) THEN
     return "u"
-ELSE IF Word.Transitive AND Word.Person == "3" AND Word.Number == "P" AND StartWithVowel(Word.Translation) THEN    
+ELSE IF Word.Transitive AND Word.Person == "3" AND Word.Number == "P" AND StartsWithVowel(Word.Translation) THEN    
     return "k"
-ELSE IF Word.Transitive AND Word.Person == "3" AND Word.Number == "P" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Transitive AND Word.Person == "3" AND Word.Number == "P" AND StartsWithConsonant(Word.Translation) THEN
     return "ki"
 END
 ```
 **output[1.2] - Number and Person Indicator - Intransitive**
 ```
-IF Word.Intransitive AND Word.Person == "1" AND Word.Number == "S" AND StartWithVowel(Word.Translation) THEN
+IF Word.Intransitive AND Word.Person == "1" AND Word.Number == "S" AND StartsWithVowel(Word.Translation) THEN
     return "in"
-ELSE IF Word.Intransitive AND Word.Person == "1" AND Word.Number == "S" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Intransitive AND Word.Person == "1" AND Word.Number == "S" AND StartsWithConsonant(Word.Translation) THEN
     return "i"
-ELSE IF Word.Intransitive AND Word.Person == "1" AND Word.Number == "P" AND StartWithVowel(Word.Translation) THEN
+ELSE IF Word.Intransitive AND Word.Person == "1" AND Word.Number == "P" AND StartsWithVowel(Word.Translation) THEN
     return "oj"
-ELSE IF Word.Intransitive AND Word.Person == "1" AND Word.Number == "P" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Intransitive AND Word.Person == "1" AND Word.Number == "P" AND StartsWithConsonant(Word.Translation) THEN
     return "oj"
-ELSE IF Word.Intransitive AND Word.Person == "2" AND Word.Number == "S" AND StartWithVowel(Word.Translation) THEN
+ELSE IF Word.Intransitive AND Word.Person == "2" AND Word.Number == "S" AND StartsWithVowel(Word.Translation) THEN
     return "at"
-ELSE IF Word.Intransitive AND Word.Person == "2" AND Word.Number == "S" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Intransitive AND Word.Person == "2" AND Word.Number == "S" AND StartsWithConsonant(Word.Translation) THEN
     return "a"
-ELSE IF Word.Intransitive AND Word.Person == "2" AND Word.Number == "P" AND StartWithVowel(Word.Translation) THEN
+ELSE IF Word.Intransitive AND Word.Person == "2" AND Word.Number == "P" AND StartsWithVowel(Word.Translation) THEN
     return "ix"
-ELSE IF Word.Intransitive AND Word.Person == "2" AND Word.Number == "P" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Intransitive AND Word.Person == "2" AND Word.Number == "P" AND StartsWithConsonant(Word.Translation) THEN
     return "ix"
-ELSE IF Word.Intransitive AND Word.Person == "3" AND Word.Number == "S" AND StartWithVowel(Word.Translation) THEN    
+ELSE IF Word.Intransitive AND Word.Person == "3" AND Word.Number == "S" AND StartsWithVowel(Word.Translation) THEN    
     return "Ø"
-ELSE IF Word.Intransitive AND Word.Person == "3" AND Word.Number == "S" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Intransitive AND Word.Person == "3" AND Word.Number == "S" AND StartsWithConsonant(Word.Translation) THEN
     return "Ø"
-ELSE IF Word.Intransitive AND Word.Person == "3" AND Word.Number == "P" AND StartWithVowel(Word.Translation) THEN    
+ELSE IF Word.Intransitive AND Word.Person == "3" AND Word.Number == "P" AND StartsWithVowel(Word.Translation) THEN    
     return "e'"
-ELSE IF Word.Intransitive AND Word.Person == "3" AND Word.Number == "P" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Intransitive AND Word.Person == "3" AND Word.Number == "P" AND StartsWithConsonant(Word.Translation) THEN
     return "e"
 END
 ```
+
+* Example: **camina**
+* Result: **yupalaqinïk**
+
 Template
 ```
 {
@@ -92,7 +96,7 @@ Template
         },
         {
             "type":"literal",
-            "value":"{{ if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartWithVowel .Word1.Translation ) }}w{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartWithConsonant .Word1.Translation )}}nu{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( StartWithVowel .Word1.Translation )}}qa{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( StartWithConsonant .Word1.Translation )}}a{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( StartWithVowel .Word1.Translation )}}aw{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( StartWithConsonant .Word1.Translation )}}a{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( StartWithVowel .Word1.Translation )}}iw{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( StartWithConsonant .Word1.Translation )}}i{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( StartWithVowel .Word1.Translation )}}r{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( StartWithConsonant .Word1.Translation )}}u{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( StartWithVowel .Word1.Translation )}}k{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( StartWithConsonant .Word1.Translation )}}ki{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartWithVowel .Word1.Translation ) }}in{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartWithConsonant .Word1.Translation )}}i{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( StartWithVowel .Word1.Translation )}}oj{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( StartWithConsonant .Word1.Translation )}}oj{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( StartWithVowel .Word1.Translation )}}at{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( StartWithConsonant .Word1.Translation )}}a{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( StartWithVowel .Word1.Translation )}}ix{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( StartWithConsonant .Word1.Translation )}}ix{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( StartWithVowel .Word1.Translation )}}Ø{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( StartWithConsonant .Word1.Translation )}}Ø{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( StartWithVowel .Word1.Translation )}}e'{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( StartWithConsonant .Word1.Translation )}}e{{end}}"
+            "value":"{{ if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartsWithVowel .Word1.Translation ) }}w{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartsWithConsonant .Word1.Translation )}}nu{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( StartsWithVowel .Word1.Translation )}}qa{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( StartsWithConsonant .Word1.Translation )}}a{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( StartsWithVowel .Word1.Translation )}}aw{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( StartsWithConsonant .Word1.Translation )}}a{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( StartsWithVowel .Word1.Translation )}}iw{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( StartsWithConsonant .Word1.Translation )}}i{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( StartsWithVowel .Word1.Translation )}}r{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( StartsWithConsonant .Word1.Translation )}}u{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( StartsWithVowel .Word1.Translation )}}k{{ else if and ( .Word1.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( StartsWithConsonant .Word1.Translation )}}ki{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartsWithVowel .Word1.Translation ) }}in{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartsWithConsonant .Word1.Translation )}}i{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( StartsWithVowel .Word1.Translation )}}oj{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( StartsWithConsonant .Word1.Translation )}}oj{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( StartsWithVowel .Word1.Translation )}}at{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( StartsWithConsonant .Word1.Translation )}}a{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( StartsWithVowel .Word1.Translation )}}ix{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( StartsWithConsonant .Word1.Translation )}}ix{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( StartsWithVowel .Word1.Translation )}}Ø{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( StartsWithConsonant .Word1.Translation )}}Ø{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( StartsWithVowel .Word1.Translation )}}e'{{ else if and ( .Word1.Properties.intr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( StartsWithConsonant .Word1.Translation )}}e{{end}}"
         },
         {
             "type":"literal",
@@ -109,6 +113,9 @@ To express verbs we have other form, a main verb and an auxiliary verb, we use t
 * Le han ayudado    (3rd person plural)
 
 There are two patterns to apply this case but the output is the same.
+
+* Example: **le he regado / he regado**
+* Result: **nukiranïk**
 
 Templates:
 ```
@@ -134,7 +141,7 @@ Templates:
     "output" : [
         {
             "type":"literal",
-            "value":"{{ if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"1\") (eq .Word2.Properties.number \"S\") ( StartWithVowel .Word3.Translation ) }}w{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"1\") (eq .Word2.Properties.number \"S\") ( StartWithConsonant .Word3.Translation )}}nu{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"1\") (eq .Word2.Properties.number \"P\") ( StartWithVowel .Word3.Translation )}}qa{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"1\") (eq .Word2.Properties.number \"P\") ( StartWithConsonant .Word3.Translation )}}a{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"2\") (eq .Word2.Properties.number \"S\") ( StartWithVowel .Word3.Translation )}}aw{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"2\") (eq .Word2.Properties.number \"S\") ( StartWithConsonant .Word3.Translation )}}a{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"2\") (eq .Word2.Properties.number \"P\") ( StartWithVowel .Word3.Translation )}}iw{{ else if and ( .Word2.Properties.tr ) (eq .Word2.Properties.person \"2\") (eq .Word2.Properties.number \"P\") ( StartWithConsonant .Word3.Translation )}}i{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"3\") (eq .Word2.Properties.number \"S\") ( StartWithVowel .Word3.Translation )}}r{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"3\") (eq .Word2.Properties.number \"S\") ( StartWithConsonant .Word3.Translation )}}u{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"3\") (eq .Word2.Properties.number \"P\") ( StartWithVowel .Word3.Translation )}}k{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"3\") (eq .Word2.Properties.number \"P\") ( StartWithConsonant .Word3.Translation )}}ki{{end}}"
+            "value":"{{ if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"1\") (eq .Word2.Properties.number \"S\") ( StartsWithVowel .Word3.Translation ) }}w{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"1\") (eq .Word2.Properties.number \"S\") ( StartsWithConsonant .Word3.Translation )}}nu{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"1\") (eq .Word2.Properties.number \"P\") ( StartsWithVowel .Word3.Translation )}}qa{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"1\") (eq .Word2.Properties.number \"P\") ( StartsWithConsonant .Word3.Translation )}}a{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"2\") (eq .Word2.Properties.number \"S\") ( StartsWithVowel .Word3.Translation )}}aw{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"2\") (eq .Word2.Properties.number \"S\") ( StartsWithConsonant .Word3.Translation )}}a{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"2\") (eq .Word2.Properties.number \"P\") ( StartsWithVowel .Word3.Translation )}}iw{{ else if and ( .Word2.Properties.tr ) (eq .Word2.Properties.person \"2\") (eq .Word2.Properties.number \"P\") ( StartsWithConsonant .Word3.Translation )}}i{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"3\") (eq .Word2.Properties.number \"S\") ( StartsWithVowel .Word3.Translation )}}r{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"3\") (eq .Word2.Properties.number \"S\") ( StartsWithConsonant .Word3.Translation )}}u{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"3\") (eq .Word2.Properties.number \"P\") ( StartsWithVowel .Word3.Translation )}}k{{ else if and ( .Word3.Properties.tr ) (eq .Word2.Properties.person \"3\") (eq .Word2.Properties.number \"P\") ( StartsWithConsonant .Word3.Translation )}}ki{{end}}"
         },
         {
             "type":"literal",
@@ -162,7 +169,7 @@ Templates:
     "output" : [ 
         {
             "type":"literal",
-            "value":"{{ if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartWithVowel .Word2.Translation ) }}w{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartWithConsonant .Word2.Translation )}}nu{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( StartWithVowel .Word2.Translation )}}qa{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( StartWithConsonant .Word2.Translation )}}a{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( StartWithVowel .Word2.Translation )}}aw{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( StartWithConsonant .Word2.Translation )}}a{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( StartWithVowel .Word2.Translation )}}iw{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( StartWithConsonant .Word2.Translation )}}i{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( StartWithVowel .Word2.Translation )}}r{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( StartWithConsonant .Word2.Translation )}}u{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( StartWithVowel .Word2.Translation )}}k{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( StartWithConsonant .Word2.Translation )}}ki{{end}}"
+            "value":"{{ if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartsWithVowel .Word2.Translation ) }}w{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartsWithConsonant .Word2.Translation )}}nu{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( StartsWithVowel .Word2.Translation )}}qa{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( StartsWithConsonant .Word2.Translation )}}a{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( StartsWithVowel .Word2.Translation )}}aw{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( StartsWithConsonant .Word2.Translation )}}a{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( StartsWithVowel .Word2.Translation )}}iw{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( StartsWithConsonant .Word2.Translation )}}i{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( StartsWithVowel .Word2.Translation )}}r{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( StartsWithConsonant .Word2.Translation )}}u{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( StartsWithVowel .Word2.Translation )}}k{{ else if and ( .Word2.Properties.tr ) (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( StartsWithConsonant .Word2.Translation )}}ki{{end}}"
         },
         {
             "type":"literal",
@@ -177,32 +184,35 @@ When you have a possesive adjective + noun, you need to apply this group of temp
 
 **[0] - Number and Person Indicator**
 ```
-IF Word.Person == "1" AND Word.Number == "S" AND StartWithVowel(Word.Translation) THEN
+IF Word.Person == "1" AND Word.Number == "S" AND StartsWithVowel(Word.Translation) THEN
     return "w"
-ELSE IF Word.Person == "1" AND Word.Number == "S" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Person == "1" AND Word.Number == "S" AND StartsWithConsonant(Word.Translation) THEN
     return "nu"
-ELSE IF Word.Person == "1" AND Word.Number == "P" AND StartWithVowel(Word.Translation) THEN
+ELSE IF Word.Person == "1" AND Word.Number == "P" AND StartsWithVowel(Word.Translation) THEN
     return "qa"
-ELSE IF Word.Person == "1" AND Word.Number == "P" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Person == "1" AND Word.Number == "P" AND StartsWithConsonant(Word.Translation) THEN
     return "a"
-ELSE IF Word.Person == "2" AND Word.Number == "S" AND StartWithVowel(Word.Translation) THEN
+ELSE IF Word.Person == "2" AND Word.Number == "S" AND StartsWithVowel(Word.Translation) THEN
     return "aw"
-ELSE IF Word.Person == "2" AND Word.Number == "S" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Person == "2" AND Word.Number == "S" AND StartsWithConsonant(Word.Translation) THEN
     return "a"
-ELSE IF Word.Person == "2" AND Word.Number == "P" AND StartWithVowel(Word.Translation) THEN
+ELSE IF Word.Person == "2" AND Word.Number == "P" AND StartsWithVowel(Word.Translation) THEN
     return "iw"
-ELSE IF Word.Person == "2" AND Word.Number == "P" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Person == "2" AND Word.Number == "P" AND StartsWithConsonant(Word.Translation) THEN
     return "i"
-ELSE IF Word.Person == "3" AND Word.Number == "S" AND StartWithVowel(Word.Translation) THEN    
+ELSE IF Word.Person == "3" AND Word.Number == "S" AND StartsWithVowel(Word.Translation) THEN    
     return "r"
-ELSE IF Word.Person == "3" AND Word.Number == "S" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Person == "3" AND Word.Number == "S" AND StartsWithConsonant(Word.Translation) THEN
     return "u"
-ELSE IF Word.Person == "3" AND Word.Number == "P" AND StartWithVowel(Word.Translation) THEN    
+ELSE IF Word.Person == "3" AND Word.Number == "P" AND StartsWithVowel(Word.Translation) THEN    
     return "k"
-ELSE IF Word.Person == "3" AND Word.Number == "P" AND StartWithConsonant(Word.Translation) THEN
+ELSE IF Word.Person == "3" AND Word.Number == "P" AND StartsWithConsonant(Word.Translation) THEN
     return "ki"
 END
 ```
+* Example: **su casa**
+* Result: **uja**
+
 Template
 ```
 {
@@ -222,7 +232,7 @@ Template
     "output" : [
         {
             "type":"literal",
-            "value":"{{ if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartWithVowel .Word2.Translation ) }}w{{ else if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartWithConsonant .Word2.Translation )}}nu{{ else if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( StartWithVowel .Word2.Translation )}}qa{{ else if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( StartWithConsonant .Word2.Translation )}}a{{ else if and (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( StartWithVowel .Word2.Translation )}}aw{{ else if and (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( StartWithConsonant .Word2.Translation )}}a{{ else if and (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( StartWithVowel .Word2.Translation )}}iw{{ else if and (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( StartWithConsonant .Word2.Translation )}}i{{ else if and (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( StartWithVowel .Word2.Translation )}}r{{ else if and (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( StartWithConsonant .Word2.Translation )}}u{{ else if and (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( StartWithVowel .Word2.Translation )}}k{{ else if and (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( StartWithConsonant .Word2.Translation )}}ki{{end}}"
+            "value":"{{ if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartsWithVowel .Word2.Translation ) }}w{{ else if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"S\") ( StartsWithConsonant .Word2.Translation )}}nu{{ else if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( StartsWithVowel .Word2.Translation )}}qa{{ else if and (eq .Word1.Properties.person \"1\") (eq .Word1.Properties.number \"P\") ( StartsWithConsonant .Word2.Translation )}}a{{ else if and (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( StartsWithVowel .Word2.Translation )}}aw{{ else if and (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"S\") ( StartsWithConsonant .Word2.Translation )}}a{{ else if and (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( StartsWithVowel .Word2.Translation )}}iw{{ else if and (eq .Word1.Properties.person \"2\") (eq .Word1.Properties.number \"P\") ( StartsWithConsonant .Word2.Translation )}}i{{ else if and (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( StartsWithVowel .Word2.Translation )}}r{{ else if and (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"S\") ( StartsWithConsonant .Word2.Translation )}}u{{ else if and (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( StartsWithVowel .Word2.Translation )}}k{{ else if and (eq .Word1.Properties.person \"3\") (eq .Word1.Properties.number \"P\") ( StartsWithConsonant .Word2.Translation )}}ki{{end}}"
         },
         {
             "type":"literal",
@@ -245,6 +255,9 @@ ELSE IF Word.Type == "A" THEN
     return "ri"
 END
 ```
+* Example: **ese perro**
+* Result: **ri jun tz'i'**
+
 Template
 ```
 /*1*/
@@ -347,11 +360,15 @@ An adjective has its own significant and we are going to apply these rules for 3
 IF Word == MUY Then
     return {Adjective}+{Adjective}
 ELSE IF Word == MEDIO Then
-    return {Adjective}+{FirstLetter}+oj
+    return {Adjective}+{GetFirstLetter}+oj
 ELSE IF Word == MUCHÍSIMO Then
     return {Adjective}+iläj
 END
 ```
+
+* Example: **muy caliente**
+* Result: **k'atän k'atän**
+
 Template
 ```
 /*MUY - MEDIO*/
@@ -372,7 +389,7 @@ Template
     "output" : [
         {
            "type":"literal",
-            "value":"{{ if (eq ( ToLower .Word1.Lemma ) \"muy\") }}{{.Word2.Translation}} {{.Word2.Translation}}{{ else if (eq ( ToLower .Word1.Lemma ) \"medio\") }}{{ .Word2.Translation }}{{ FirstLetter .Word2.Translation }}oj{{end}}"
+            "value":"{{ if (eq ( ToLower .Word1.Lemma ) \"muy\") }}{{.Word2.Translation}} {{.Word2.Translation}}{{ else if (eq ( ToLower .Word1.Lemma ) \"medio\") }}{{ .Word2.Translation }}{{ GetFirstLetter .Word2.Translation }}oj{{end}}"
         }
     ]
 }
@@ -432,6 +449,49 @@ Template
         {
            "type":"literal",
            "value":"{{ .Word3.Translation }}iläj"
+        }
+    ]
+}
+```
+## `[CARD] - Numbers`
+We use specific text to numbers from 1 to 10, from 11 to onwards, we are going to apply these rules.
+
+```
+IF Word >= 1 AND Word <= 9 THEN
+    number
+ELSE IF Word >= 10 AND Word <= 19 THEN
+    [root]+uj
+ELSE IF Word >= 20 THEN
+    GetUnity = MOD_10(number)
+
+    While number >= 1 Then
+        number = number / 20
+        concat [base_20_root]
+    End While
+
+    concat [root]
+    concat GetUnity
+END IF
+```
+
+* Example: **3200**
+* Result: **waqxaqk'alq'o'**
+
+Template
+```
+{
+    "source_language" : "espaol",
+    "target_language" : "kaqchikel",
+    "pattern" : "CARD",
+    "details" : [
+        {
+            "tag" : "CARD"
+        }
+    ],
+    "output" : [
+        {
+           "type":"literal",
+            "value":"{{ GetKaqchikelNumber .Word1.Lemma \"jun,ka'i',oxi',kaji',wo'o,waqi',wuqu',waqxaqi',b'eleje'\" \"ju,ka,ox,kaj,o,waq,wuq,waqxaq,b'elej,laj,julaj,kab'laj,oxlaj,kajlaj,wolaj,waqlaj,wuqlaj,waqxaqlaj,b'elejlaj\" \"k'al,q'o',chuy,k'ala'\" }}"
         }
     ]
 }
