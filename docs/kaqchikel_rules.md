@@ -453,6 +453,7 @@ Template
     ]
 }
 ```
+___
 ## `[CARD] - Numbers`
 We use specific text to numbers from 1 to 10, from 11 to onwards, we are going to apply these rules.
 
@@ -492,6 +493,30 @@ Template
         {
            "type":"literal",
             "value":"{{ GetKaqchikelNumber .Word1.Lemma \"jun,ka'i',oxi',kaji',wo'o,waqi',wuqu',waqxaqi',b'eleje'\" \"ju,ka,ox,kaj,o,waq,wuq,waqxaq,b'elej,laj,julaj,kab'laj,oxlaj,kajlaj,wolaj,waqlaj,wuqlaj,waqxaqlaj,b'elejlaj\" \"k'al,q'o',chuy,k'ala'\" }}"
+        }
+    ]
+}
+```
+___
+## `Re-Use Rules`
+```
+{
+    "source_language" : "espaol",
+    "target_language" : "kaqchikel",
+    "pattern" : "VERB",
+    "details" : [
+        {
+            "tag" : "VERB",
+            "type" : "M",
+            "properties":{
+                "f":"true"
+            }
+        }
+    ],
+    "output" : [ 
+        {
+            "type":"predefined",
+            "value":"5f696a6d84b7dc8b08728565"
         }
     ]
 }

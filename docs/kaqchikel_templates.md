@@ -515,9 +515,9 @@ chuy = 8000 <= 9600 < 160000
 Cardinal Numbers
 ```
 {
-    "type":"literal",
-    "value":"{{ if (eq .WordX.Lemma \"muchísimo\")}}.WordX.Translation+iläj{{end}}"
-}
+           "type":"literal",
+            "value":"{{ GetKaqchikelNumber .Word1.Lemma \"jun,ka'i',oxi',kaji',wo'o,waqi',wuqu',waqxaqi',b'eleje'\" \"ju,ka,ox,kaj,o,waq,wuq,waqxaq,b'elej,laj,julaj,kab'laj,oxlaj,kajlaj,wolaj,waqlaj,wuqlaj,waqxaqlaj,b'elejlaj\" \"k'al,q'o',chuy,k'ala'\" }}"
+ }
 ```
 ___
 You know how to write individual templates to a rule, now we are going to see how to apply it together to translate short sentences.

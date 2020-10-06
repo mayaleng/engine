@@ -4,6 +4,7 @@ import (
 	"context"
 	"strings"
 
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"mayaleng.org/engine/internal/platform/data"
 	"mayaleng.org/engine/internal/platform/linguakit"
 	"mayaleng.org/engine/internal/platform/types"
@@ -58,9 +59,35 @@ func (t *Translator) TranslateByRule(ctx context.Context, sentence linguakit.Sen
 		switch ruleType {
 		case "literal":
 			translation = value
-		}
+			output = append(output, translation)
+		case "predefined":
+			ID, error := primitive.ObjectIDFromHex(value)
+			if error != nil {
+				uw := types.UnknownWord{
+					SourceLanguage: rule.SourceLanguage,
+					TargetLanguage: rule.TargetLanguage,
+					Word:           value,
+				}
 
-		output = append(output, translation)
+				unknownWords = append(unknownWords, uw)
+			} else {
+				rule, error := t.RulesHelper.FindByID(ctx, ID)
+				if error != nil {
+					uw := types.UnknownWord{
+						SourceLanguage: rule.SourceLanguage,
+						TargetLanguage: rule.TargetLanguage,
+						Word:           value,
+					}
+
+					unknownWords = append(unknownWords, uw)
+					output = append(output, "")
+				} else {
+					resultSentence, unkWords := t.TranslateByRule(ctx, sentence, *rule)
+					unknownWords = append(unknownWords, unkWords...)
+					output = append(output, resultSentence)
+				}
+			}
+		}
 	}
 
 	return strings.Join(output, ""), unknownWords
