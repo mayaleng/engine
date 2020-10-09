@@ -2,6 +2,7 @@ package translator
 
 import (
 	"context"
+	"strconv"
 	"strings"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -15,6 +16,7 @@ import (
 func (t *Translator) TranslateByRule(ctx context.Context, sentence linguakit.Sentence, rule data.Rule) (string, []types.UnknownWord) {
 	var output = make([]string, 0)
 	var unknownWords = make([]types.UnknownWord, 0)
+	var linguakitWords = make([]linguakit.Word, 0)
 
 	words := utils.FilterWordsByRule(sentence.Words, rule)
 
@@ -50,7 +52,6 @@ func (t *Translator) TranslateByRule(ctx context.Context, sentence linguakit.Sen
 	}
 
 	for _, outputRule := range rule.Output {
-
 		var translation string
 
 		ruleType := outputRule["type"]
@@ -61,6 +62,7 @@ func (t *Translator) TranslateByRule(ctx context.Context, sentence linguakit.Sen
 			translation = value
 			output = append(output, translation)
 		case "predefined":
+			startWord, error := strconv.Atoi(outputRule["start_word"])
 			ID, error := primitive.ObjectIDFromHex(value)
 			if error != nil {
 				uw := types.UnknownWord{
@@ -82,7 +84,20 @@ func (t *Translator) TranslateByRule(ctx context.Context, sentence linguakit.Sen
 					unknownWords = append(unknownWords, uw)
 					output = append(output, "")
 				} else {
-					resultSentence, unkWords := t.TranslateByRule(ctx, sentence, *rule)
+					//Analyze amount of words
+					amountWords := len(rule.Details)
+					if (len(sentence.Words) - 1) == startWord {
+						linguakitWords = append(linguakitWords, sentence.Words[startWord])
+					} else {
+						linguakitWords = sentence.Words[startWord:amountWords]
+					}
+
+					tmpSentence := linguakit.Sentence{
+						Words:   linguakitWords,
+						Pattern: sentence.Pattern,
+					}
+
+					resultSentence, unkWords := t.TranslateByRule(ctx, tmpSentence, *rule)
 					unknownWords = append(unknownWords, unkWords...)
 					output = append(output, resultSentence)
 				}

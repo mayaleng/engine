@@ -499,6 +499,11 @@ Template
 ```
 ___
 ## `Re-Use Rules`
+
+Using VERB rule.
+
+**Camina**
+
 ```
 {
     "source_language" : "espaol",
@@ -517,6 +522,46 @@ ___
         {
             "type":"predefined",
             "value":"5f696a6d84b7dc8b08728565"
+        }
+    ]
+}
+```
+Using VERB and Possesive NOUN rule.
+
+**Mi espada corta**
+```
+{
+    "source_language" : "espaol",
+    "target_language" : "kaqchikel",
+    "pattern" : "DET,NOUN,VERB",
+    "details" : [
+        {
+            "tag" : "DET",
+            "type" : "P"
+        },
+        {
+            "tag" : "NOUN",
+            "type" : "C"
+        },
+        {
+            "tag" : "VERB",
+            "type" : "M"
+        }
+    ],
+    "output" : [ 
+        {
+            "type":"predefined",
+            "value":"5f696a6d84b7dc8b08728565",
+            "start_word":"2"
+        },
+        {
+            "type" : "literal",
+            "value" : " "
+        },
+        {
+            "type":"predefined",
+            "value":"5f696aa384b7dc8b08728568",
+            "start_word":"0"
         }
     ]
 }
