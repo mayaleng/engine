@@ -478,7 +478,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"camina\"\r\n}\r\n",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"grito\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -536,7 +536,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"un perro\"\r\n}\r\n",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"ese perro\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -624,6 +624,35 @@
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"3200\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/v1/translate",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"v1",
+										"translate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Predefined_Rules",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"from\":\"espaol\",\r\n\t\"to\":\"kaqchikel\",\r\n\t\"phrase\":\"mi casa es roja\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"

@@ -502,7 +502,8 @@ ___
 
 Using VERB rule.
 
-**Camina**
+* Example: **Camina**
+* Result: **yisik'inïk**
 
 ```
 {
@@ -521,14 +522,18 @@ Using VERB rule.
     "output" : [ 
         {
             "type":"predefined",
-            "value":"5f696a6d84b7dc8b08728565"
+            "value":"5f696a6d84b7dc8b08728565",
+            "start_word":"0"
         }
     ]
 }
 ```
 Using VERB and Possesive NOUN rule.
 
-**Mi espada corta**
+* Example: **Mi perro camina**
+* Result: **yupalaqinïk nutz'i'**
+
+Where the first ID is the ObjectID from `[VERB]` rule and the second one is from `[NOUN]` rule.
 ```
 {
     "source_language" : "espaol",
@@ -553,6 +558,52 @@ Using VERB and Possesive NOUN rule.
             "type":"predefined",
             "value":"5f696a6d84b7dc8b08728565",
             "start_word":"2"
+        },
+        {
+            "type" : "literal",
+            "value" : " "
+        },
+        {
+            "type":"predefined",
+            "value":"5f696aa384b7dc8b08728568",
+            "start_word":"0"
+        }
+    ]
+}
+```
+
+* Example: **Mi casa es roja**
+* Result: **käq nuja**
+
+Where the ID is the ObjectID from `[NOUN]` rule and a normal `literal` type template to translate.
+
+```
+{
+    "source_language" : "espaol",
+    "target_language" : "kaqchikel",
+    "pattern" : "DET,NOUN,VERB,ADJ",
+    "details" : [
+        {
+            "tag" : "DET",
+            "type" : "P"
+        },
+        {
+            "tag" : "NOUN",
+            "type" : "C"
+        },
+        {
+            "tag" : "VERB",
+            "type" : "S"
+        },
+        {
+            "tag" : "ADJ",
+            "type" : "Q"
+        }
+    ],
+    "output" : [ 
+        {
+            "type" : "literal",
+            "value" : "{{ .Word4.Translation }}"
         },
         {
             "type" : "literal",
