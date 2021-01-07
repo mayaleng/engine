@@ -147,6 +147,48 @@ var VVA = `
 ]
 `
 
+// DNV contains a rule that match with a `det,noun,verb` sentence, translation is going to be apply it
+// using other rules that are already defined
+var DNV = `
+[
+	{
+		"source_language" : "espaol",
+		"target_language" : "kaqchikel",
+		"pattern" : "DET,NOUN,VERB",
+		"details" : [
+			{
+				"tag" : "DET",
+				"type" : "P"
+			},
+			{
+				"tag" : "NOUN",
+				"type" : "C"
+			},
+			{
+				"tag" : "VERB",
+				"type" : "M"
+			}
+		],
+		"output" : [
+			{
+				"type":"predefined",
+				"value":"5f696a6d84b7dc8b08728565",
+				"start_word":"2"
+			},
+			{
+				"type" : "literal",
+				"value" : " "
+			},
+			{
+				"type":"predefined",
+				"value":"5f696aa384b7dc8b08728568",
+				"start_word":"0"
+			}
+		]
+	}
+]
+`
+
 // RulesTest is for testing purpose
 type RulesTest struct {
 }
@@ -168,6 +210,8 @@ func (r RulesTest) FindByPattern(ctx context.Context, sourceLanguage, targetLang
 		rule = VA
 	case "VERB,VERB,ADJ":
 		rule = VVA
+	case "DET,NOUN,VERB":
+		rule = DNV
 	default:
 		return rules, nil
 	}
@@ -201,7 +245,33 @@ func (r RulesTest) Find(ctx context.Context, metadata data.FindOptions) ([]data.
 	return nil, nil
 }
 
-// FindByID always return nil
+// FindByID always the specified rule for predefined
 func (r RulesTest) FindByID(ctx context.Context, ID primitive.ObjectID) (*data.Rule, error) {
-	return nil, nil
+	rule := data.Rule{
+		SourceLanguage: "espaol",
+		TargetLanguage: "kaqchikel",
+		Pattern:        "DET,NOUN,VERB",
+		Details: []data.RuleDetail{
+			{
+				Tag:  "DET",
+				Type: "P",
+			},
+		},
+		Output: []data.RuleOutput{
+			{
+				"type":  "literal",
+				"value": "tz'i",
+			},
+			{
+				"type":  "literal",
+				"value": " ",
+			},
+			{
+				"type":  "literal",
+				"value": "nu",
+			},
+		},
+	}
+
+	return &rule, nil
 }

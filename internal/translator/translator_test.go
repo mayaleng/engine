@@ -15,6 +15,18 @@ func TestTranslation(t *testing.T) {
 		TranslationsHelper: test.TranslationsTest{},
 	}
 
+	t.Run("translate with success using predefined rules", func(t *testing.T) {
+		translation, error := translator.TranslatePhrase(context.TODO(), "mi perro camina", "es", "kq")
+
+		if error != nil {
+			t.Fatal(error)
+		}
+
+		if translation.Phrase != "tz'i nu tz'i nu" {
+			t.Fatalf("Expected %s, but got %s", "tz'i nu tz'i nu", translation.Phrase)
+		}
+	})
+
 	t.Run("direct translation with a valid phrase that does not match with any rule", func(t *testing.T) {
 		translation, error := translator.TranslatePhrase(context.TODO(), "hello unknown.", "es", "en")
 

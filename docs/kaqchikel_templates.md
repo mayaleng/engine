@@ -401,7 +401,7 @@ Known Article
 ```
 ___
 ## `Adjectives [ADV+ADJ]`
-An adjective modified the noun, and only is going to be applied if we write the next ajectives.
+An adjective modified the noun, and only is going to be applied if we write the next adjectives.
 
 MUY - to express a lot
 ```
@@ -516,7 +516,29 @@ Cardinal Numbers
 ```
 {
     "type":"literal",
-    "value":"{{ if (eq .WordX.Lemma \"muchísimo\")}}.WordX.Translation+iläj{{end}}"
+    "value":"{{ GetKaqchikelNumber .Word1.Lemma \"jun,ka'i',oxi',kaji',wo'o,waqi',wuqu',waqxaqi',b'eleje'\" \"ju,ka,ox,kaj,o,waq,wuq,waqxaq,b'elej,laj,julaj,kab'laj,oxlaj,kajlaj,wolaj,waqlaj,wuqlaj,waqxaqlaj,b'elejlaj\" \"k'al,q'o',chuy,k'ala'\" }}"
+}
+```
+___
+## `Predefined Rules`
+
+We can create a rule using existing rules, to do this we have new information, in the `output` we have a new `type` that it is `predefined`, and the value to a `predefined` is the mongo ObjectId that correspond to an existing rule.
+
+When a type is `predefined` we need a new property for that output, the name is `start_word` that indicates the start position in the words array you need to send in order to evaluate in the rule found and depending the rule, is going to be taken the amount of words that the detail indicates. 
+
+The position of the first word starts in zero.
+
+For example, you have a sentence with 5 words and one element of your output is a `predefined` type that is the rule for `[NOUN]`, in the sentence your section to nouns start in the 4th element, in your output you have to send the ObjectID for nouns and the `start_word` is the number 3, the detail for that rule are 2 words, to evalute it, it will be send it the words number 4 and 5.
+
+The template to indicate the example above.
+
+**Ustedes corren a mi casa**
+
+```
+{
+    "type":"predefined",
+    "value":"5f696a6d84b7dc8b08728565",
+    "start_word":"3"
 }
 ```
 ___
