@@ -15,6 +15,7 @@ before_install:
   - sudo perl -MCPAN -e 'install (Storable)'
   - git clone https://github.com/citiususc/Linguakit.git
   - cd Linguakit
+  - git checkout e1558154d32b87546f35ad2d36bc214f65fa2f53
   - sudo make deps
   - sudo make install
   - cd ../
