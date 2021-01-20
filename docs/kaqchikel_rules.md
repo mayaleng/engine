@@ -453,6 +453,7 @@ Template
     ]
 }
 ```
+___
 ## `[CARD] - Numbers`
 We use specific text to numbers from 1 to 10, from 11 to onwards, we are going to apply these rules.
 
@@ -492,6 +493,126 @@ Template
         {
            "type":"literal",
             "value":"{{ GetKaqchikelNumber .Word1.Lemma \"jun,ka'i',oxi',kaji',wo'o,waqi',wuqu',waqxaqi',b'eleje'\" \"ju,ka,ox,kaj,o,waq,wuq,waqxaq,b'elej,laj,julaj,kab'laj,oxlaj,kajlaj,wolaj,waqlaj,wuqlaj,waqxaqlaj,b'elejlaj\" \"k'al,q'o',chuy,k'ala'\" }}"
+        }
+    ]
+}
+```
+___
+## `Re-Use Rules`
+
+Using VERB rule.
+
+* Example: **Camina**
+* Result: **yisik'inïk**
+
+```
+{
+    "source_language" : "espaol",
+    "target_language" : "kaqchikel",
+    "pattern" : "VERB",
+    "details" : [
+        {
+            "tag" : "VERB",
+            "type" : "M",
+            "properties":{
+                "f":"true"
+            }
+        }
+    ],
+    "output" : [ 
+        {
+            "type":"predefined",
+            "value":"5f696a6d84b7dc8b08728565",
+            "start_word":"0"
+        }
+    ]
+}
+```
+Using VERB and Possesive NOUN rule.
+
+* Example: **Mi perro camina**
+* Result: **yupalaqinïk nutz'i'**
+
+Where the first ID is the ObjectID from `[VERB]` rule and the second one is from `[NOUN]` rule.
+```
+{
+    "source_language" : "espaol",
+    "target_language" : "kaqchikel",
+    "pattern" : "DET,NOUN,VERB",
+    "details" : [
+        {
+            "tag" : "DET",
+            "type" : "P"
+        },
+        {
+            "tag" : "NOUN",
+            "type" : "C"
+        },
+        {
+            "tag" : "VERB",
+            "type" : "M"
+        }
+    ],
+    "output" : [ 
+        {
+            "type":"predefined",
+            "value":"5f696a6d84b7dc8b08728565",
+            "start_word":"2"
+        },
+        {
+            "type" : "literal",
+            "value" : " "
+        },
+        {
+            "type":"predefined",
+            "value":"5f696aa384b7dc8b08728568",
+            "start_word":"0"
+        }
+    ]
+}
+```
+
+* Example: **Mi casa es roja**
+* Result: **käq nuja**
+
+Where the ID is the ObjectID from `[NOUN]` rule and a normal `literal` type template to translate.
+
+```
+{
+    "source_language" : "espaol",
+    "target_language" : "kaqchikel",
+    "pattern" : "DET,NOUN,VERB,ADJ",
+    "details" : [
+        {
+            "tag" : "DET",
+            "type" : "P"
+        },
+        {
+            "tag" : "NOUN",
+            "type" : "C"
+        },
+        {
+            "tag" : "VERB",
+            "type" : "S"
+        },
+        {
+            "tag" : "ADJ",
+            "type" : "Q"
+        }
+    ],
+    "output" : [ 
+        {
+            "type" : "literal",
+            "value" : "{{ .Word4.Translation }}"
+        },
+        {
+            "type" : "literal",
+            "value" : " "
+        },
+        {
+            "type":"predefined",
+            "value":"5f696aa384b7dc8b08728568",
+            "start_word":"0"
         }
     ]
 }

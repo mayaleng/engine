@@ -46,6 +46,6 @@ func (t *Translator) TranslateSentence(ctx context.Context, sentence linguakit.S
 	}
 
 	rule := utils.FilterRules(rules, sentence.Words)
-	result.Sentence, result.UnknownWords = t.TranslateByRule(ctx, sentence, rule)
+	result.Sentence, result.UnknownWords = t.TranslateByRule(ctx, sentence, rule, false)
 	return result
 }
