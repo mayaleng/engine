@@ -1,0 +1,130 @@
+{
+    "inputs": [
+      {
+        "id": "LC_",
+        "tag": "adj",
+        "name": "adjetivo (#LC_)"
+      },
+      {
+        "id": "8PT",
+        "tag": "verb",
+        "name": "verbo (#8PT)",
+        "features": {},
+        "index": 1,
+        "chosen": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "Z-3",
+        "type": "simple",
+        "simple": {
+          "blocks": [
+            {
+              "key": "dov6m",
+              "text": "verbo (#8PT) ",
+              "type": "unstyled",
+              "depth": 0,
+              "inlineStyleRanges": [],
+              "entityRanges": [
+                {
+                  "offset": 0,
+                  "length": 12,
+                  "key": 0
+                }
+              ],
+              "data": {}
+            }
+          ],
+          "entityMap": {
+            "0": {
+              "type": "mention",
+              "mutability": "IMMUTABLE",
+              "data": {
+                "mention": {
+                  "id": "8PT",
+                  "tag": "verb",
+                  "name": "verbo (#8PT)",
+                  "features": {},
+                  "index": 1,
+                  "chosen": false
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "nfd",
+        "type": "conditional",
+        "simple": {
+          "blocks": [
+            {
+              "key": "d7ode",
+              "text": "",
+              "type": "unstyled",
+              "depth": 0,
+              "inlineStyleRanges": [],
+              "entityRanges": [],
+              "data": {}
+            }
+          ],
+          "entityMap": {}
+        },
+        "conditional": {
+          "alternatives": [
+            {
+              "condition": {
+                "operator": "or",
+                "operands": [
+                  {
+                    "operator": "eq",
+                    "operands": [
+                      {
+                        "word": 1,
+                        "propety": "name"
+                      },
+                      {
+                        "literal": "name"
+                      }
+                    ]
+                  },
+                  {
+                    "operator": "and",
+                    "operands": [
+                      {
+                        "operator": "eq",
+                        "operands": [
+                          {
+                            "word": 1,
+                            "property": "person"
+                          },
+                          {
+                            "literal": 3
+                          }
+                        ]
+                      },
+                      {
+                        "operator": "startsWith",
+                        "operands": [
+                          {
+                            "word": 1,
+                            "property": "tag"
+                          },
+                          {
+                            "literal": "h"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "value": {}
+            }
+          ]
+        }
+      }
+    ]
+  }
+  

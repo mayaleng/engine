@@ -100,5 +100,9 @@ func NewAPI(envs *types.Envs, dbConnection *mongo.Client) http.Handler {
 	// Linguakit
 
 	router.Handle(http.MethodPost, "/v1/linguakit", analyze)
+
+	// NewRule
+	router.Handle(http.MethodPost, "/v1/newrule", newrule)
+
 	return router
 }
